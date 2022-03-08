@@ -1,0 +1,59 @@
+<%- include('partials/header.ejs'); %>
+
+<div class="card w-[320px]">
+  <div class="w-full">
+    <h2>Entrar</h2>
+    <% if (locals.success) { %>
+      <div class="success">
+        <ul>
+          <li><%= success %></li>
+          <% if (locals.token) { %>
+            <li class="break-all"><%= token %></li>
+          <% } %>
+        </ul>
+      </div>
+    <% }; %>
+    <% if (locals.error) { %>
+      <% if (error.length > 0) { %>
+        <div class="error">
+          <ul>
+            <li><%= error %></li>
+          </ul>
+        </div>
+      <% }; %>
+    <% }; %>
+    <% if (locals.errors) { %>
+      <div class="error <%= errors == '' ? 'hidden' : '' %>">
+        <ul>
+          <% errors.forEach(error => { %>
+            <li><%= error.msg %></li>
+          <% }); %>
+        </ul>
+      </div>
+  <% }; %>
+    <div>
+      <form method="post" action="/login">
+        <div class="form-line">
+          <label for="email">E-mail</label>
+          <div>
+            <input type="text" name="email" id="email" placeholder="Digite seu e-mail" autofocus />
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="password">Senha</label>
+          <div>
+            <input type="password" name="password" id="password" placeholder="Digite sua senha" />
+            <div class="flex justify-end mt-1">
+              <a href="/resetPassword">&nbsp;&nbsp;Esqueci minha senha&nbsp;&nbsp;</a>
+            </div>
+          </div>          
+        </div> 
+        <div class="flex justify-center pb-3 mt-6">
+          <button type="submit" class="button button-primary">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer.ejs'); %>

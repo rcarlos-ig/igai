@@ -1,0 +1,73 @@
+<%- include('partials/header.ejs'); %>
+
+<div class="card w-[320px] sm:w-1/2 lg:w-1/3">
+  <div class="w-full">
+    <h2>Criar usuário</h2>
+    <% if (locals.emailValidation) { %>
+      <div class="error">
+        <ul>
+          <li><%= emailValidation %></li>
+        </ul>
+      </div>
+    <% }; %>
+    <% if (locals.errors) { %>      
+      <div class="error <%= errors == '' ? 'hidden' : '' %>">
+        <ul>
+          <% errors.forEach(error => { %>
+            <li><%= error.msg %></li>
+          <% }); %>
+        </ul>
+      </div>
+    <% }; %>
+    <div>
+      <form method="post" action="<%= `/register/${token.token}` %>">
+        <div class="form-line">
+          <label for="name">Nome<span class="required">*</span></label>
+            <div>
+              <% if (locals.name) { %>
+                <input type="text" name="name" id="name" placeholder="Digite seu nome" value="<%= name %>" autofocus />
+              <% } else { %>
+                <input type="text" name="name" id="name" placeholder="Digite seu nome" autofocus />
+              <% } %>
+            </div>
+        </div>
+        <div class="form-line">
+          <label for="email">E-mail<span class="required">*</span></label>
+          <div>
+            <% if (locals.email) { %>
+                <input type="text" name="email" id="email" placeholder="Digite seu e-mail" value="<%= email %>" autofocus />
+              <% } else { %>
+                <input type="text" name="email" id="email" placeholder="Digite seu e-mail" />
+              <% } %>
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="password" control-label">Senha<span class="required">*</span></label>
+          <div>
+            <% if (locals.password) { %>
+                <input type="password" name="password" id="password" placeholder="Digite sua senha" value="<%= password %>" />
+              <% } else { %>
+                <input type="password" name="password" id="password" placeholder="Digite sua senha" />
+              <% } %>
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="confirm">Confirme a senha<span class="required">*</span></label>
+          <div>
+            <% if (locals.confirm) { %>
+                <input type="password" name="confirm" id="confirm" placeholder="Confirme sua senha" value="<%= confirm %>" />
+              <% } else { %>
+                <input type="password" name="confirm" id="confirm" placeholder="Confirme sua senha" />
+              <% } %>
+          </div>
+        </div>
+        <div class="flex justify-end gap-4 mt-6">
+          <button type="button" class="button button-tertiary" onclick="window.location='/login'">Início</button>
+          <button type="submit" class="button button-primary">Criar usuário</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer.ejs'); %>

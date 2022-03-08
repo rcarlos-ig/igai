@@ -1,0 +1,94 @@
+<%- include('partials/header.ejs'); %>
+
+<div class="card w-[320px] sm:w-1/2 lg:w-1/3">
+  <div class="w-full">
+    <h2>Cadastrar unidade</h2>
+    <% if (locals.success) { %>
+      <% if (success.length > 0) { %>
+        <div class="success">
+          <ul>
+            <li><%= success %></li>
+          </ul>
+        </div>
+      <% }; %>
+    <% }; %>
+    <% if (locals.error) { %>
+      <% if (error.length > 0) { %>
+        <div class="error">
+          <ul>
+            <li><%= error %></li>
+          </ul>
+        </div>
+      <% }; %>
+    <% }; %>
+    <div>
+      <form method="post" action="/register-school">
+        <div class="form-line">
+          <label for="codigo">Código<span class="required">*</span></label>
+          <div>
+            <% if (locals.codigo) { %>
+              <input type="number" name="codigo" id="codigo" placeholder="Código da escola" value="<%= codigo %>" autofocus />
+            <% } else { %>
+              <input type="number" name="codigo" id="codigo" placeholder="Código da escola" autofocus />
+            <% } %>
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="nome">Nome<span class="required">*</span></label>
+          <div>
+            <% if (locals.nome) { %>
+              <input type="text" name="nome" id="nome" placeholder="Nome da escola" value="<%= nome %>" />
+            <% } else { %>
+              <input type="text" name="nome" id="nome" placeholder="Nome da escola" />
+            <% } %>
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="bairro">Bairro<span class="required">*</span></label>
+          <div>
+            <% if (locals.bairro) { %>
+              <input type="text" name="bairro" id="bairro" placeholder="Bairro da escola" value="<%= bairro %>" />
+            <% } else { %>
+              <input type="text" name="bairro" id="bairro" placeholder="Bairro da escola" />
+            <% } %>
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="ocupacao">Ocupação</label>
+          <div>
+            <% if (locals.ocupacao) { %>
+              <input type="text" name="ocupacao" id="ocupacao" placeholder="Tipo de ocupação da escola" value="<%= ocupacao %>" />
+            <% } else { %>
+              <input type="text" name="ocupacao" id="ocupacao" placeholder="Tipo de ocupação da escola" />
+            <% } %>
+          </div>
+        </div>
+        <div class="form-line">
+          <label for="reservatorio">Reservatório</label>
+          <div>
+            <% if (locals.reservatorio) { %>
+              <input type="text" name="reservatorio" id="reservatorio" placeholder="Tipo de reservatório da escola" value="<%= reservatorio %>" />
+            <% } else { %>
+              <input type="text" name="reservatorio" id="reservatorio" placeholder="Tipo de reservatório da escola" />
+            <% } %>
+          </div>
+        </div>
+        <div class="form-line">          
+          <% if (locals.ativa) { %>
+            <input type="checkbox" name="ativa" id="ativa" class="toggle" <%= ativa == true ? 'checked' : ''; %> />
+          <% } else { %>
+            <input type="checkbox" name="ativa" id="ativa" class="toggle" />
+          <% }; %>
+          <label for="ativa">Ativa?</label>
+        </div>
+        <div class="flex justify-end gap-4 mt-6">
+          <button type="button" class="button button-tertiary" onClick="window.location = '/dashboard'">Retornar</button>
+          <button type="submit" class="button button-primary">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/logoutButton.ejs'); %>
+<%- include('partials/footer.ejs'); %>

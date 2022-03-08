@@ -1,0 +1,76 @@
+<%- include('partials/header.ejs'); %>
+
+<div class="card w-[320px] sm:w-2/3">
+  <div class="w-full">
+    <div>
+      <h2>Dashboard</h2>
+      <% if (locals.success) { %>
+        <div class="success">
+          <ul>
+            <li><%= success %></li>
+          </ul>
+        </div>
+      <% }; %>
+      <% if (locals.error) { %>
+        <div class="error">
+          <ul>
+            <li><%= error %></li>
+          </ul>
+        </div>
+      <% }; %>
+      <div class="flex flex-col items-center mt-4 pb-2 border-b-2 border-gray-300">
+        <% const hour = new Date().getHours(); %>
+        <% let greeting = 'Boa noite'; %>
+        <% if (hour >= 6) greeting = 'Bom dia';  %>
+        <% if (hour >= 12) greeting = 'Boa tarde';  %>
+        <% if (hour >= 19) greeting = 'Boa noite';  %>
+        <p><%= greeting %>, <span class="font-medium text-lg text-primary"><%= user.name %></span>.</p>
+        &nbsp;
+        <p>Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas.</p>
+        <div class="mt-8 <%= user.role !== 'admin' ? 'hidden' : '' %>">
+          <button type="button" class="button button-secondary" onclick="window.location='/register-school'">Cadastrar unidade</button>
+        </div>        
+      </div>
+      <div class="flex justify-start mt-8">
+        <input type="checkbox" name="ativa" id="ativa" class="toggle" />
+        <label for="ativa">Mostrar inativas?</label>
+      </div>
+      <div class="flex justify-center mt-4 mb-8 w-full md:border md:border-primary md:h-[500px] md:overflow-y-scroll">
+        <table class="relative text-center font-medium w-full select-none lg:whitespace-nowrap" id="escolas">
+          <thead class="sticky top-0 z-10">
+            <tr>
+              <th>Cód.</th>
+              <th>Nome</th>
+              <th>Bairro</th>
+              <th>IGAI</th>
+              <th>Avaliação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% schools.forEach((school) => { %>
+            <tr
+              class="<%= user.role !== 'admin' ? '' : 'cursor-pointer' %> <%= school.ativa === false ? 'hidden' : ''; %>"
+              <%= user.role !== 'admin' ? '' : `onClick=window.location='/school?unidade=${school.codigo}'` %>
+            >
+              <td><%= school.codigo %></td>
+              <td class="text-left"><%= school.nome %></td>
+              <td><%= school.bairro %></td>
+              <td>
+                <%= school.indicador.toLocaleString("default", {style:
+                "decimal", maximumFractionDigits: 1}) %>
+              </td>
+              <td><%= school.avaliacao %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex justify-center mt-8 mb-4">
+        <button type="button" class="button button-primary" onclick="window.location='/audit'">Auditar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/logoutButton.ejs'); %>
+<%- include('partials/footer.ejs'); %>

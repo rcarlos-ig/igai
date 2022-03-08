@@ -1,0 +1,73 @@
+<%- include('partials/header.ejs'); %>
+
+<div class="card w-[320px] sm:w-2/3 lg:w-1/3">
+  <div class="w-full">
+    <h2>Dados da Unidade</h2>
+    <% if (locals.success) { %>
+      <div class="success">
+        <ul>
+          <li><%= success %></li>
+        </ul>
+      </div>
+    <% }; %>
+    <div class="mt-4">
+      <h3>Dados:</h3>
+      <div class="border-b-2 border-gray-200 pb-2">
+        <p>Escola: <span class="font-semibold"><%= school.nome %></span></p>
+        <p>Bairro: <span class="font-semibold"><%= school.bairro %></span></p>
+        <p>Ocupação: <span class="font-semibold"><%= school.ocupacao %></span></p>
+        <p>Reservatório: <span class="font-semibold"><%= school.reservatorio %></span></p>
+        <p>Ativa: <span class="font-semibold"><%= school.ativa === true ? 'Sim' : 'Não' %></span></p>
+        <div class="mt-2">
+          <button type="button" class="button button-secondary" onclick="window.location='<%= `/edit-school?unidade=${school.codigo}` %>'">Editar</button>
+        </div>
+      </div>
+      <h3 class="mt-4">Avaliação:</h3>
+      <div class="border-b-2 border-gray-200 pb-2">
+        <p>Indicador: <span class="font-semibold"><%= school.indicador.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) %></span></p>
+        <p>Avaliação: <span class="font-semibold"><%= school.avaliacao %></span></p>
+        <% const atualizadoEm = new Intl.DateTimeFormat("default", { 
+          day:"2-digit",
+          month: "2-digit",
+          year: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          }).format(school.atualizadoEm); %>
+        <p>Última atualização em <span class="font-semibold"><%= atualizadoEm %></span>, por <span class="font-semibold"><%= user %></span></p>
+      </div>
+    </div>
+    <h3 class="mt-8 mb-4">Índices:</h3>
+    <div>
+      <form action="/school" method="post">
+        <input type="hidden" name="codigo" value="<%= school.codigo %>">
+        <% for (let i = 4; i < 12; i++) { %>
+          <div class="mb-2 capitalize w-full py-2 <%= i % 2 === 0 ? '' : 'bg-gray-200' %>">
+            <p class="text-center font-medium mb-2"><%= fields[i][0] %></p>
+            <div class="mt-1">
+              <% for (let key in fields[i][1]) { %>
+                <div class="flex items-center form-line text-sm px-4 sm:text-base">
+                  <label for="<%= fields[i][0] %>.<%= key %>" class="w-full"><%= key %>:</label>
+                  <select name="<%= fields[i][0] %>.<%= key %>" <%= school.ativa === true ? '' : 'disabled' %> >
+                    <option value="0" <%= school[fields[i][0]][key] === null ? "selected" : "" %> >X</option>
+                    <option value="1" <%= school[fields[i][0]][key] === 1 ? "selected" : "" %> >1</option>
+                    <option value="2" <%= school[fields[i][0]][key] === 2 ? "selected" : "" %> >2</option>
+                    <option value="3" <%= school[fields[i][0]][key] === 3 ? "selected" : "" %> >3</option>
+                    <option value="4" <%= school[fields[i][0]][key] === 4 ? "selected" : "" %> >4</option>
+                    <option value="5" <%= school[fields[i][0]][key] === 5 ? "selected" : "" %> >5</option>
+                  </select>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% } %>
+        <div class="flex justify-end gap-4 mt-6">
+          <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
+          <button type="submit" class="button button-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/logoutButton.ejs'); %>
+<%- include('partials/footer.ejs'); %>

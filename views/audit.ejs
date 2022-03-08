@@ -1,0 +1,121 @@
+<%- include('partials/header.ejs'); %>
+
+<div class="card w-[320px] sm:w-11/12">
+  <div class="w-full">
+    <h2>Auditar unidades</h2>
+    <div class="mt-8 mx-auto w-[320px] sm:w-1/2 lg:w-1/4">
+      <form action="<%= `/audit?sort=${field}&order=${order}` %>" method="post" id="auditForm">
+        <div class="form-line sm:hidden">
+          <select name="auditSortMobile" id="auditSortMobile" class="capitalize w-full">
+            <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
+            <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
+          </select>
+        </div>
+        <div class="form-line hidden w-full sm:inline-block">
+          <select name="auditSort" id="auditSort" class="capitalize w-full">
+            <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
+            <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
+            <% for (let i = 4; i < 12; i++) { %>
+              <% for (let key in fields[i][1]) { %>
+                <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + '.' + key ? 'selected' : '' %> ><%= fields[i][0] %>: <%= key %></option>
+              <% } %>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-line">
+          <select name="auditOrder" id="auditOrder" class="w-full">
+            <option value="asc" <%= order === 'asc' ? 'selected' : ''; %> >Ascendente</option>
+            <option value="desc" <%= order === 'desc' ? 'selected' : ''; %> >Descendente</option>
+          </select>
+        </div>
+        <div class="flex justify-end gap-4 mt-4">
+          <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
+          <button type="submit" class="button button-primary">Auditar</button>
+        </div> 
+      </form>
+    </div>
+    <div class="hidden h-[500px] w-full mt-16 overflow-scroll border border-primary sm:block md:h-[600px]">
+      <table class="relative text-center mx-auto w-full" id="escolas">
+        <thead class="sticky top-0 z-10">
+          <tr>
+            <th scope="col" rowspan="2">Cód.</th>
+            <th class="sticky left-0" scope="col" rowspan="2">Nome</th>
+            <th scope="col" rowspan="2">Bairro</th>
+            <th scope="col" rowspan="2">IGAI</th>
+            <th scope="col" rowspan="2">Avaliação</th>
+            <% for (let i = 4; i < 12; i++) { %>
+              <% let keys = 0; %>
+              <% for (let key in fields[i][1]) { %>
+                <% keys += 1; %>
+              <% } %>
+              <th class="capitalize" scope="col" rowspan="1" colspan="<%= keys %>">
+                <%= fields[i][0] %>
+              </th>              
+            <% } %>
+            <th class="capitalize" scope="col" rowspan="2">Reservatório</th>
+          </tr>
+          <tr>
+            <% for (let i = 4; i < 12; i++) { %>
+              <% for (let key in fields[i][1]) { %>
+              <th class="capitalize" scope="col"><%= key %></th>
+              <% } %>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% schools.forEach((school) => { %>
+          <tr class="<%= school.ativa == false ? 'hidden' : ''; %>">
+            <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
+            <td class="sticky left-0 text-left z-0"><%= school.nome %></td>
+            <td class="-z-10"><%= school.bairro %></td>
+            <td class="<%= field === "indicador" ? 'auditado' : '' %>">
+              <%= school.indicador.toLocaleString("default", {style: "decimal",
+              maximumFractionDigits: 1}) %>
+            </td>
+            <td class="<%= field === "indicador" ? 'auditado' : '' %>"><%= school.avaliacao %></td>
+            <% for (let i = 4; i < 12; i++) { %>
+              <% for (let key in fields[i][1]) { %>
+                <td class="-z-10 <%= field === fields[i][0] + '.' + key ? 'auditado' : '' %>"><%= school[fields[i][0]][key] === 0 ? 'X' : school[fields[i][0]][key] %></td>
+              <% } %>
+            <% } %>
+            <td class="<%= field === "reservatorio" ? 'auditado' : '' %>"><%= school.reservatorio %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex justify-center w-full mx-auto my-8 sm:hidden">
+      <table class="relative text-center break-words mx-auto" id="escolas">
+        <thead class="sticky top-0 z-10">
+          <tr>
+            <th scope="col" rowspan="2">Cód.</th>
+            <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
+            <th scope="col" rowspan="2">Bairro</th>
+            <th scope="col" rowspan="2">IGAI</th>
+            <th scope="col" rowspan="2">Avaliação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% schools.forEach((school) => { %>
+          <tr class="<%= school.ativa == false ? 'hidden' : ''; %>">
+            <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
+            <td class="sticky left-0 text-left z-0"><%= school.nome %></td>
+            <td class="-z-10"><%= school.bairro %></td>
+            <td class="<%= field === "indicador" ? 'auditado' : '' %>">
+              <%= school.indicador.toLocaleString("default", {style: "decimal",
+              maximumFractionDigits: 1}) %>
+            </td>
+            <td class="<%= field === "indicador" ? 'auditado' : '' %>"><%= school.avaliacao %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table> 
+    </div>
+  </div>
+</div>
+<div class="flex justify-center mt-2 pb-6">
+  <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
+</div>
+
+<%- include('partials/logoutButton.ejs'); %>
+<%- include('partials/footer.ejs'); %>
