@@ -99,4 +99,9 @@ $(function () {
       $("#auditForm").attr("action", "/audit?sort=" + sort + "&order=" + order);
     });
   }
+
+  // Trigger the Page Load animation
+  $(".button, a").on("click", function () {
+    $(".loader-trigger").removeClass("hidden");
+  })
 });
