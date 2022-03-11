@@ -6,6 +6,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const { loginCheck } = require("./controllers/auth/passport");
+const compression = require("compression");
 
 // DotEnv config
 dotenv.config();
@@ -19,6 +20,9 @@ mongoose
   .connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => console.log("Database Connected."))
   .catch((err) => console.log(err));
+
+// Compress all responses
+app.use(compression());
 
 // Set the View Engine
 app.set("view engine", "ejs");
