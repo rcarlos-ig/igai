@@ -1,1 +1,13 @@
-<button type="button" class="floating-button" onclick="window.location='/logout'">Sair</button>
+<button type="button" class="floating-button" id="logoutModalOpen">Sair</button>
+<div class="hidden logout-modal-hide">
+  <div class="logout-modal-wrapper">
+    <div class="logout-modal">
+      <h2 class="mt-4">Sair da aplicação</h2>
+      <p class="text-lg mt-4">Deseja encerrar as atividades e sair da aplicação?</p>
+      <div class="logout-modal-buttons">
+        <button class="button button-tertiary" id="logoutModalClose">Retornar</button>
+        <button class="button button-primary" onclick="window.location='/logout'">Sair</button>
+      </div>
+    </div>
+  </div>
+</div>

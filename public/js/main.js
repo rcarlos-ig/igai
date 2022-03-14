@@ -101,7 +101,16 @@ $(function () {
   }
 
   // Trigger the Page Load animation
-  $(".button, a").on("click", function () {
+  $(".button[id!='logoutModalClose'], a").on("click", function () {
     $(".loader-trigger").removeClass("hidden");
+  })
+
+  // Logout Modal
+  $("#logoutModalOpen").on("click", function () {
+    $(".logout-modal-hide").removeClass("hidden");
+  })
+
+  $("#logoutModalClose").on("click", function () {
+    $(".logout-modal-hide").addClass("hidden");
   })
 });
