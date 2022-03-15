@@ -25,7 +25,7 @@ const {
   auditSchool,
 } = require("../controllers/schoolController");
 const { dashboardView } = require("../controllers/dashboardController");
-const { protectRoute } = require("../controllers/auth/protect");
+const { protectRoute, isAdmin } = require("../controllers/auth/protect");
 
 // Set the Router
 const router = express.Router();
@@ -252,6 +252,6 @@ router.get("/audit", protectRoute, auditSchoolView);
 router.post("/audit", protectRoute, auditSchool);
 
 // Create Register Token
-router.get("/create-token", protectRoute, createToken);
+router.get("/create-token", isAdmin, createToken);
 
 module.exports = router;

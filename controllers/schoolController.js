@@ -4,23 +4,18 @@ const User = require("../models/User");
 
 // Calculate the "IGE"
 function calculateIGE(data) {
-  let indicador = new Number();
+  let indicador = Number();
 
   for (let key in data) {
-    data[key] = new Number(data[key]);
+    data[key] = Number(data[key]);
 
-    if (key !== "codigo") {
-      if (data[key] == 1) indicador += 15;
-      if (data[key] == 2) indicador += 14;
-      if (data[key] == 3) indicador += 12;
-      if (data[key] == 4) indicador += 4;
-      if (data[key] == 5) indicador += 0;
-    }
-  }
+    if (key === "codigo" || key === "indicador") return;
 
-  for (let key in data) {
-    if (key !== "codigo") {
-    }
+    if (data[key] === 1) indicador += 15;
+    if (data[key] === 2) indicador += 14;
+    if (data[key] === 3) indicador += 12;
+    if (data[key] === 4) indicador += 4;
+    if (data[key] === 5) indicador += 0;
   }
 
   indicador /= 27;
@@ -57,35 +52,29 @@ function calculateAvaliacao(indicador) {
 
 // Get all Schools
 const getSchools = async () => {
-  const schools = await School.find()
+  return School.find()
     .sort({ codigo: 1 })
     .then((result) => {
       return result;
     });
-
-  return schools;
 };
 
 // Get active Schools
 const getActiveSchools = async () => {
-  const schools = await School.find({ ativa: true })
+  return School.find({ ativa: true })
     .sort({ codigo: 1 })
     .then((result) => {
       return result;
     });
-
-  return schools;
 };
 
 // Get sorted active Schools
 async function sortSchools(sort) {
-  const schools = await School.find({ ativa: true })
+  return School.find({ ativa: true })
     .sort(sort)
     .then((result) => {
       return result;
     });
-
-  return schools;
 }
 
 // GET Request for Register School page
@@ -183,25 +172,24 @@ const schoolPost = (req, res) => {
   School.updateOne({ codigo: data.codigo }, { $set: data }).then(function () {
     // Check School
     School.findOne({ codigo: data.codigo }).then((school) => {
-      if (school) {
-        // Check User
-        User.findOne({ _id: school.atualizadoPor }).then((user) => {
-          let userName;
+      if (!school) return;
+      // Check User
+      User.findOne({ _id: school.atualizadoPor }).then((user) => {
+        let userName;
 
-          if (user) {
-            userName = user.name;
-          } else {
-            userName = "Usuário indisponível";
-          }
+        if (user) {
+          userName = user.name;
+        } else {
+          userName = "Usuário indisponível";
+        }
 
-          res.render("school", {
-            school,
-            fields: fields,
-            user: userName,
-            success: "Dados salvos com sucesso.",
-          });
+        res.render("school", {
+          school,
+          fields: fields,
+          user: userName,
+          success: "Dados salvos com sucesso.",
         });
-      }
+      });
     });
   });
 };
@@ -210,11 +198,10 @@ const schoolPost = (req, res) => {
 const editSchoolView = (req, res) => {
   // Check School
   School.findOne({ codigo: req.query.unidade }).then((school) => {
-    if (school) {
-      res.render("editSchool", {
-        school,
-      });
-    }
+    if (!school) return;
+    res.render("editSchool", {
+      school,
+    });
   });
 };
 
@@ -227,18 +214,19 @@ const editSchool = async (req, res) => {
   data.atualizadoPor = req.user._id;
 
   // Update School
-  await School.updateOne({ codigo: data.codigo }, { $set: data }).then(function () {
-    console.log("Updated");
-  });
+  await School.updateOne({ codigo: data.codigo }, { $set: data }).then(
+    function () {
+      console.log("Updated");
+    }
+  );
 
   // Check School
   await School.findOne({ codigo: data.codigo }).then((school) => {
-    if (school) {
-      res.render("editSchool", {
-        school,
-        success: "Dados atualizados com sucesso.",
-      });
-    }
+    if (!school) return;
+    res.render("editSchool", {
+      school,
+      success: "Dados atualizados com sucesso.",
+    });
   });
 };
 
@@ -260,14 +248,13 @@ const auditSchool = async (req, res) => {
   const field = req.query.sort;
   const fields = Object.entries(School.schema.tree);
 
-  let order = new Number();
+  let order = Number();
 
   if (req.query.order === "asc") {
     order = 1;
-  } else {
-    if (req.query.order === "desc") {
-      order = -1;
-    }
+  }
+  if (req.query.order === "desc") {
+    order = -1;
   }
 
   const sort = { [field]: order };

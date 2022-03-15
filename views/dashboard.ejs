@@ -8,6 +8,11 @@
         <div class="success">
           <ul>
             <li><%= success %></li>
+            <% if (locals.token) { %>
+              <li class="break-all cursor-pointer" onclick=<%= `window.location='/register/${token}'` %> >
+                Link de registro
+              </li>
+            <% } %>
           </ul>
         </div>
       <% }; %>

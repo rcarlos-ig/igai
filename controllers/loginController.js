@@ -9,20 +9,24 @@ const ejs = require("ejs");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 const path = require("path");
+const { getSchools } = require("../controllers/schoolController");
 
 // Create Register Token
 const createToken = async (req, res) => {
-  if (req.user.role === "admin") {
-    const token = await new Token({
-      userId: "6217d8c12bfa7e0528d3174e",
-      token: crypto.randomBytes(32).toString("hex"),
-    }).save();
+  const token = await new Token({
+    userId: "6217d8c12bfa7e0528d3174e",
+    token: crypto.randomBytes(32).toString("hex"),
+  }).save();
 
-    console.log("token created");
+  const schools = await getSchools();
 
-    res.render("login", { token: token.token, success: "Token criado." });
-  }
-  res.render("login", { error: "Acesso não autorizado." });
+  console.log("token created");
+  res.render("dashboard", {
+    token: token.token,
+    user: req.user,
+    schools: schools,
+    success: "Token criado.",
+  });
 };
 
 // GET request for Register page
@@ -48,40 +52,39 @@ const registerUser = (req, res) => {
   Token.findOne({
     token: req.params.token,
   }).then((token) => {
-    if (token) {
-      // Check user
-      User.findOne({ email: email }).then((user) => {
-        if (user) {
-          const emailValidation = "E-mail já cadastrado.";
-          res.render("register", {
-            name,
-            email,
-            password,
-            confirm,
-            emailValidation,
-          });
-        } else {
-          // New user
-          const newUser = new User({
-            name,
-            email,
-            password,
-            role: "basic",
-          });
-          //Password Hashing
-          bcrypt.genSalt(10, (err, salt) =>
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              newUser.password = hash;
-              newUser
-                .save() // Save nes user on database
-                .then(res.render("login", { success: "Cadastro realizado." }))
-                .catch((err) => console.log(err));
-            })
-          );
-        }
-      });
-    }
+    if (!token) return;
+    // Check user
+    User.findOne({ email: email }).then((user) => {
+      if (user) {
+        const emailValidation = "E-mail já cadastrado.";
+        res.render("register", {
+          name,
+          email,
+          password,
+          confirm,
+          emailValidation,
+        });
+      } else {
+        // New user
+        const newUser = new User({
+          name,
+          email,
+          password,
+          role: "basic",
+        });
+        //Password Hashing
+        bcrypt.genSalt(10, (err, salt) =>
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save() // Save nes user on database
+              .then(res.render("login", { success: "Cadastro realizado." }))
+              .catch((err) => console.log(err));
+          })
+        );
+      }
+    });
   });
 };
 
@@ -138,7 +141,7 @@ const requestResetPassword = (req, res) => {
           path.join(__dirname, "../", "views", "resetPasswordMail.ejs"),
           { name: user.name, link: link }
         );
-        
+
         // Send the email
         sendEmail(user.email, html);
 
