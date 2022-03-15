@@ -9,7 +9,7 @@ function calculateIGE(data) {
   for (let key in data) {
     data[key] = Number(data[key]);
 
-    if (key === "codigo" || key === "indicador") return;
+    if (key === "codigo" || key === "indicador") continue;
 
     if (data[key] === 1) indicador += 15;
     if (data[key] === 2) indicador += 14;
@@ -271,6 +271,7 @@ const auditSchool = async (req, res) => {
 
 module.exports = {
   getSchools,
+  getActiveSchools,
   registerSchool,
   registerSchoolView,
   schoolView,
