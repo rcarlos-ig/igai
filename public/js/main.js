@@ -107,10 +107,10 @@ $(function () {
 
   // Logout Modal
   $("#logoutModalOpen").on("click", function () {
-    $(".logout-modal-hide").removeClass("hidden");
+    $(".logout-modal-wrapper").fadeIn(300);
   })
 
   $("#logoutModalClose").on("click", function () {
-    $(".logout-modal-hide").addClass("hidden");
+    $(".logout-modal-wrapper").fadeOut(300);
   })
 });
