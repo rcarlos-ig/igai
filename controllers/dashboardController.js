@@ -1,5 +1,8 @@
 // School controller
-const { getSchools, getActiveSchools } = require("../controllers/schoolController");
+const {
+  getSchools,
+  getActiveSchools,
+} = require("../controllers/schoolController");
 
 //GET request for Dashboard Page
 const dashboardView = async (req, res) => {
@@ -14,6 +17,7 @@ const dashboardView = async (req, res) => {
     "Ruim",
     "Péssimo",
   ];
+
   let chartData = [0, 0, 0, 0, 0, 0];
 
   activeSchools.forEach((school) => {
@@ -42,6 +46,7 @@ const dashboardView = async (req, res) => {
   res.render("dashboard", {
     user: req.user,
     schools,
+    activeSchools,
     chartLabels,
     chartData,
   });

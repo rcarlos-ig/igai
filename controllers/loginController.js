@@ -9,7 +9,10 @@ const ejs = require("ejs");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 const path = require("path");
-const { getSchools } = require("../controllers/schoolController");
+const {
+  getSchools,
+  getActiveSchools,
+} = require("../controllers/schoolController");
 
 // Create Register Token
 const createToken = async (req, res) => {
@@ -19,12 +22,50 @@ const createToken = async (req, res) => {
   }).save();
 
   const schools = await getSchools();
+  const activeSchools = await getActiveSchools();
+
+  let chartLabels = [
+    "Não Avaliado",
+    "Ótimo",
+    "Bom",
+    "Regular",
+    "Ruim",
+    "Péssimo",
+  ];
+
+  let chartData = [0, 0, 0, 0, 0, 0];
+
+  activeSchools.forEach((school) => {
+    switch (school.avaliacao) {
+      case chartLabels[1]:
+        chartData[1] += 1;
+        break;
+      case chartLabels[2]:
+        chartData[2] += 1;
+        break;
+      case chartLabels[3]:
+        chartData[3] += 1;
+        break;
+      case chartLabels[4]:
+        chartData[4] += 1;
+        break;
+      case chartLabels[5]:
+        chartData[5] += 1;
+        break;
+      default:
+        chartData[0] += 1;
+        break;
+    }
+  });
 
   console.log("token created");
   res.render("dashboard", {
     token: token.token,
     user: req.user,
-    schools: schools,
+    schools,
+    activeSchools,
+    chartData,
+    chartLabels,
     success: "Token criado.",
   });
 };

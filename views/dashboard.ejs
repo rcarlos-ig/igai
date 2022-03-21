@@ -31,7 +31,7 @@
         <% if (hour >= 19) greeting = 'Boa noite';  %>
         <div class="flex flex-col text-center w-full pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
           <p><%= greeting %>, <span class="font-medium text-lg text-primary"><%= user.name %></span>.</p>
-          <p class="md:mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas.</p>
+          <p class="md:mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
           <div class="mt-4 place-self-center md:mt-6 lg:place-self-auto <%= user.role !== 'admin' ? 'hidden' : '' %>">
             <button type="button" class="button button-secondary" onclick="window.location='/register-school'">Cadastrar unidade</button>
           </div>    
