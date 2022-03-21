@@ -82,7 +82,8 @@ $(function () {
 
   // Set the audit button route based on the selected options
   if ($("#auditForm")) {
-    const selectSort = $("select[id^='auditSort']");
+    const selectSort = $("#auditSort");
+    const selectSortMobile = $("#auditSortMobile");
     const selectOrder = $("#auditOrder");
 
     selectSort.on("change", function () {
@@ -92,8 +93,19 @@ $(function () {
       $("#auditForm").attr("action", "/audit?sort=" + sort + "&order=" + order);
     });
 
+    selectSortMobile.on("change", function () {
+      let sort = $(this).children().filter(":selected").val();
+      let order = $("#auditOrder").children().filter(":selected").val();
+
+      $("#auditForm").attr("action", "/audit?sort=" + sort + "&order=" + order);
+    });
+
     selectOrder.on("change", function () {
-      let sort = $("#auditSort").children().filter(":selected").val();
+      let formAction = $("#auditForm").attr("action");
+      let sort = formAction.substring(
+        formAction.indexOf("=") + 1,
+        formAction.indexOf("&")
+      );
       let order = $(this).children().filter(":selected").val();
 
       $("#auditForm").attr("action", "/audit?sort=" + sort + "&order=" + order);
@@ -103,14 +115,5 @@ $(function () {
   // Trigger the Page Load animation
   $(".button[id!='logoutModalClose'], a").on("click", function () {
     $(".loader-trigger").removeClass("hidden");
-  })
-
-  // Logout Modal
-  $("#logoutModalOpen").on("click", function () {
-    $(".logout-modal-wrapper").fadeIn(300);
-  })
-
-  $("#logoutModalClose").on("click", function () {
-    $(".logout-modal-wrapper").fadeOut(300);
-  })
+  });
 });

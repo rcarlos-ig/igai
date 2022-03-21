@@ -1,4 +1,9 @@
-<button type="button" class="floating-button" id="logoutModalOpen" aria-label="Sair da aplicação.">
+<button
+  type="button"
+  class="floating-button"
+  id="logoutModalOpen"
+  aria-label="Sair da aplicação."
+>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="28"
@@ -16,24 +21,18 @@
     <line x1="21" y1="12" x2="9" y2="12"></line>
   </svg>
 </button>
-  <div class="logout-modal-wrapper hidden">
-    <div class="flex justify-center items-center w-screen h-screen">
-      <div class="logout-modal">
-        <h2 class="mt-4">Sair da aplicação</h2>
-        <p class="text-lg mt-4">
-          Deseja encerrar as atividades e sair da aplicação?
-        </p>
-        <div class="logout-modal-buttons">
-          <button class="button button-tertiary" id="logoutModalClose">
-            Retornar
-          </button>
-          <button
-            class="button button-primary"
-            onclick="window.location='/logout'"
-          >
-            Sair
-          </button>
-        </div>
-      </div>
-    </div>
+
+<dialog class="logout-modal" id="logoutModal">
+  <h2 class="mt-4">Sair da aplicação</h2>
+  <p class="text-lg mt-4">Deseja encerrar as atividades e sair da aplicação?</p>
+  <div class="logout-modal-buttons">
+    <button class="button button-tertiary" id="logoutModalClose">
+      Retornar
+    </button>
+    <button class="button button-primary" onclick="window.location='/logout'">
+      Sair
+    </button>
   </div>
+</dialog>
+
+<script src="/js/logoutModal.js"></script>
