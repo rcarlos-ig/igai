@@ -40,8 +40,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: process.env.SECRET,
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: true,
+    rolling: true,
+    cookie: { maxAge: 300000 },
   })
 );
 
