@@ -10,14 +10,30 @@
       document.documentElement.classList.replace("no-js", "js");
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Google Fonts -->
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
-      rel="stylesheet"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap"
+        rel="stylesheet"
+        type="text/css"
+      />
+    </noscript>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="/css/styles.min.css" />
-    <link rel="stylesheet" href="/css/hint.min.css" />
+    <link
+      rel="preload"
+      href="/css/hint.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript><link rel="stylesheet" href="/css/hint.min.css" /></noscript>
 
     <meta
       name="description"
@@ -35,25 +51,23 @@
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta property="og:url" content="https://" />
+    <meta property="og:url" content="http://192.168.32.123/" />
     <!-- TODO: Change social media stuff -->
 
-    <link rel="canonical" href="https://" />
+    <link rel="canonical" href="http://192.168.32.123/" />
     <!-- TODO: Change canonical link -->
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    
+
     <meta name="theme-color" content="#ffffff" />
   </head>
 
   <body>
     <header>
-      <h1>
-        SEJIN - IGAI
-      </h1>
+      <h1>SEJIN - IGAI</h1>
       <small>Indicador Gerencial de Avaliação do Imóvel</small>
     </header>
     <main>
