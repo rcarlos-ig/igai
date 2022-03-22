@@ -1,3 +1,5 @@
+https://docs.npmjs.com/about-semantic-versioning
+
 Semantic versioning
 
 First Number: Tracks major changes
