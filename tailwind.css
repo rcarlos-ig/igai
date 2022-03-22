@@ -137,13 +137,12 @@ h1 + small {
 
 /* Links */
 a {
-  @apply relative font-semibold text-primary px-3 overflow-hidden transition-colors duration-300;
-  z-index: 1;
+  @apply relative font-semibold text-primary px-3 overflow-hidden transition-colors duration-300 z-[1];
 }
 
 a:hover,
 a:active {
-  @apply text-light transition-colors duration-300;
+  @apply text-light transition-colors duration-300 no-underline;
 }
 
 a::before {
@@ -287,7 +286,7 @@ input[type="checkbox"].toggle:checked + label::after {
 }
 
 .button-secondary {
-  @apply text-primary border border-primary;
+  @apply text-primary border-solid border border-primary;
 }
 
 .button-tertiary {

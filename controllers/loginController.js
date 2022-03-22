@@ -14,6 +14,13 @@ const {
   getActiveSchools,
 } = require("../controllers/schoolController");
 
+// Logout
+const logout = (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.redirect("/login");
+};
+
 // Create Register Token
 const createToken = async (req, res) => {
   const token = await new Token({
@@ -243,6 +250,7 @@ const resetPassword = (req, res) => {
 };
 
 module.exports = {
+  logout,
   createToken,
   registerView,
   loginView,

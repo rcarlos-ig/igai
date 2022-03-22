@@ -3,11 +3,13 @@ Semantic versioning
 First Number: Tracks major changes
 Second Number: Tracks minor changes
 Third Number: Tracks patches or mere bug fixes
-Fourth Number: Tracks changes less significant than a patch
 
 
-Using the example of consumer software, such as a word processor:
-
-- Increment the major version when you significantly overhaul the user interface, or rewrite all internals. E.g.: “Toolbars use too much screen estate. The UI is now provided through touch gestures only” – such a change would break existing workflows.
-- Increment the minor version number when adding a new feature, e.g.: “added support for underlined text”.
-- Increment the patch number when you ship a bug fix, e.g.: “fixed bug where application always crashes at 00:00 PM on Tuesdays”. 
+First release                       New product       Start with 1.0.0                1.0.0
+Backward compatible bug fixes	      Patch release     Increment the third digit       1.0.1
+Backward compatible new features	  Minor release     Increment the middle digit
+                                                      and reset last digit to zero	  1.1.0
+Changes that break backward
+compatibility                       Major release	    Increment the first digit and
+                                                      reset middle and last digits
+                                                      to zero                         2.0.0

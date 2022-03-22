@@ -4,6 +4,7 @@ const { check, validationResult } = require("express-validator");
 
 // Controller Imports
 const {
+  logout,
   createToken,
   registerView,
   loginView,
@@ -109,10 +110,7 @@ router.post(
 );
 
 // Logout
-router.get("/logout", function (req, res) {
-  req.logout();
-  res.redirect("/login");
-});
+router.get("/logout", logout);
 
 // Dashboard
 router.get("/dashboard", protectRoute, dashboardView);

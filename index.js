@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 const flash = require("connect-flash");
 const passport = require("passport");
 const { loginCheck } = require("./controllers/auth/passport");
@@ -14,12 +15,23 @@ dotenv.config();
 // Initialize Express
 const app = express();
 
-// Mongo DB Connection
+// MongoDB Connection
 const database = process.env.MONGOLAB_URI;
 mongoose
   .connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => console.log("Database Connected."))
   .catch((err) => console.log(err));
+
+// MongoDB Session Store
+const store = new MongoDBStore({
+  uri: process.env.MONGOLAB_URI,
+  collection: "sessions",
+});
+
+// Catch MongoDB Session Store errors
+store.on("error", function (error) {
+  console.log(error);
+});
 
 // Compress all responses
 app.use(compression());
@@ -39,6 +51,7 @@ app.use(express.urlencoded({ extended: false }));
 // Express Session
 app.use(
   session({
+    store: store,
     secret: process.env.SECRET,
     saveUninitialized: false,
     resave: true,
