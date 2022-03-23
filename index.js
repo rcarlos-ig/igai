@@ -56,7 +56,7 @@ app.use(
     saveUninitialized: false,
     resave: true,
     rolling: true,
-    cookie: { maxAge: 300000 },
+    cookie: { maxAge: 10 * 60 * 1000 }, // Minutos * Segundos * Milisegundos
   })
 );
 
