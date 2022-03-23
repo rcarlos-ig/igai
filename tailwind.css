@@ -61,7 +61,7 @@ select:-webkit-autofill:focus {
 }
 
 html {
-  @apply bg-gray-300 text-text scroll-smooth h-full;
+  @apply bg-gray-50 text-text scroll-smooth h-full;
   font-family: "Jost", sans-serif;
 }
 
@@ -71,11 +71,14 @@ header {
 }
 
 main {
-  @apply bg-gray-50 w-full;
+  @apply w-full;
 }
 
 footer {
-  @apply flex flex-col items-center text-center px-4 py-12;
+  @apply flex flex-col items-center text-center w-full px-4 py-6 mx-auto border-t-2 border-t-gray-200 sm:w-3/4;
+}
+
+footer img {
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.024))
     drop-shadow(2.3px 2.3px 4.5px rgba(0, 0, 0, 0.035))
     drop-shadow(3.9px 3.9px 7.9px rgba(0, 0, 0, 0.043))
@@ -107,12 +110,14 @@ footer {
 /* Títulos */
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: "Poppins", sans-serif;
+  @apply text-center tracking-wide;
 }
 
 h1 {
-  @apply text-center text-light text-4xl font-bold sm:text-6xl;
+  @apply text-light text-4xl font-bold sm:text-6xl;
   filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.024))
     drop-shadow(2.3px 2.3px 4.5px rgba(0, 0, 0, 0.035))
     drop-shadow(3.9px 3.9px 7.9px rgba(0, 0, 0, 0.043))
@@ -123,16 +128,22 @@ h1 {
     drop-shadow(50px 50px 100px rgba(0, 0, 0, 0.1));
 }
 
+h2,
+h3,
+h4 {
+  @apply font-semibold;
+}
+
 h2 {
-  @apply text-2xl font-semibold text-center mt-2 mb-6 sm:text-4xl;
+  @apply text-2xl mt-2 mb-6 sm:text-4xl;
 }
 
 h3 {
-  @apply text-xl text-center font-semibold my-2 sm:text-2xl;
+  @apply text-xl my-2 sm:text-2xl;
 }
 
 h4 {
-  @apply text-lg text-center font-semibold my-2 sm:text-xl;
+  @apply text-lg my-2 sm:text-xl;
 }
 
 h1 + small {
@@ -423,6 +434,13 @@ img {
 /* Modal de saída */
 .logout-modal {
   @apply w-[50ch] bg-gray-100 py-4 px-8 rounded-md;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.024),
+    2.3px 2.3px 4.5px rgba(0, 0, 0, 0.035),
+    3.9px 3.9px 7.9px rgba(0, 0, 0, 0.043),
+    6.3px 6.3px 12.5px rgba(0, 0, 0, 0.05),
+    9.7px 9.7px 19.3px rgba(0, 0, 0, 0.057),
+    15.1px 15.1px 30.1px rgba(0, 0, 0, 0.065),
+    25px 25px 50px rgba(0, 0, 0, 0.076), 50px 50px 100px rgba(0, 0, 0, 0.1);
 }
 
 .logout-modal::backdrop {
