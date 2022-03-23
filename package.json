@@ -1,6 +1,6 @@
 {
   "name": "igai",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,11 @@
     "nodemon": "nodemon index.js",
     "css-build": "postcss ./tailwind.css -o public/css/styles.min.css",
     "css-minify": "cleancss public/css/styles.min.css -o public/css/styles.min.css",
-    "css-watch": "onchange \"./tailwind.css\" \"./views/**/*.ejs\" \"./public/**/*.js\" -- run-s css-build css-minify"
+    "css-watch": "onchange \"./tailwind.css\" \"./views/**/*.ejs\" \"./public/**/*.js\" -- run-s css-build css-minify",
+    "commit": "git commit -a && git tag -a %npm_package_version% && git push --follow-tags",
+    "patch": "npm --no-git-tag-version version patch && npm run commit",
+    "minor": "npm --no-git-tag-version version minor && npm run commit",
+    "major": "npm --no-git-tag-version version major && npm run commit"
   },
   "keywords": [
     "infraestrutura",
@@ -27,9 +31,10 @@
     "jquery",
     "javascript"
   ],
-  "author": "R.Carlos",
-  "license": "ISC",
+  "author": "Raphael Carlos sec.ti@angra.rj.gov.br",
+  "license": "CC-BY-NC-SA-4.0",
   "description": "Aplicação simples de controle do estado de conservação das unidades escolares da Rede Municipal de Angra dos Reis.",
+  "homepage": "https://github.com/rcarlos-ig/igai",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
@@ -57,6 +62,10 @@
     "tailwindcss": "^3.0.19"
   },
   "engines": {
-    "node": "16.x"
+    "node": ">=16.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rcarlos-ig/igai.git"
   }
 }
