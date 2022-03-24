@@ -48,7 +48,7 @@
         <label for="ativa">Mostrar inativas?</label>
       </div>
       <div class="flex justify-center mt-4 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:h-[500px] md:overflow-y-scroll">
-        <table class="text-center font-medium w-full select-none lg:whitespace-nowrap" id="escolas" aria-label="Tabela com as unidades da rede.">
+        <table class="text-center font-medium w-full select-none" id="escolas" aria-label="Tabela com as unidades da rede.">
           <thead class="sticky top-0 z-10">
             <tr>
               <th>Cód.</th>
@@ -67,7 +67,7 @@
               tabindex="0"
             >
               <td><%= school.codigo %></td>
-              <td class="text-left"><%= school.nome %></td>
+              <td class="text-left max-w-[50ch]"><%= school.nome %></td>
               <td><%= school.bairro %></td>
               <td>
                 <%= school.indicador.toLocaleString("default", {style:

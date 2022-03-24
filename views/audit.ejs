@@ -35,14 +35,14 @@
       </form>
     </div>
     <div class="hidden h-[500px] w-full mt-16 overflow-scroll border border-primary scroll-smooth sm:block md:h-[600px]">
-      <table class="text-center mx-auto w-full" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados.">
+      <table class="text-center mx-auto w-full whitespace-nowrap" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados.">
         <thead class="sticky top-0 z-10">
           <tr>
-            <th scope="col" rowspan="2">Cód.</th>
+            <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
             <th class="sticky left-0" scope="col" rowspan="2">Nome</th>
             <th scope="col" rowspan="2">Bairro</th>
-            <th scope="col" rowspan="2">IGAI</th>
-            <th scope="col" rowspan="2">Avaliação</th>
+            <th scope="col" rowspan="2" class="<%= field === "indicador" ? 'auditado' : '' %>">IGAI</th>
+            <th scope="col" rowspan="2" class="<%= field === "indicador" ? 'auditado' : '' %>">Avaliação</th>
             <% for (let i = 4; i < 12; i++) { %>
               <% let keys = 0; %>
               <% for (let key in fields[i][1]) { %>
@@ -57,7 +57,7 @@
           <tr>
             <% for (let i = 4; i < 12; i++) { %>
               <% for (let key in fields[i][1]) { %>
-              <th class="capitalize" scope="col"><%= key %></th>
+              <th class="capitalize <%= field === fields[i][0] + '.' + key ? 'auditado' : '' %>" scope="col"><%= key %></th>
               <% } %>
             <% } %>
           </tr>
@@ -88,11 +88,11 @@
       <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados.">
         <thead class="sticky top-0 z-10">
           <tr>
-            <th scope="col" rowspan="2">Cód.</th>
+            <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
             <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
             <th scope="col" rowspan="2">Bairro</th>
-            <th scope="col" rowspan="2">IGAI</th>
-            <th scope="col" rowspan="2">Avaliação</th>
+            <th scope="col" rowspan="2"class="<%= field === "indicador" ? 'auditado' : '' %>">IGAI</th>
+            <th scope="col" rowspan="2"class="<%= field === "indicador" ? 'auditado' : '' %>">Avaliação</th>
           </tr>
         </thead>
         <tbody>

@@ -13,8 +13,11 @@
 /* Variáveis */
 :root {
   --primary: 5 77 165;
+  --dark-primary: 0 51 105;
   --text: 16 21 25;
   --light: 240 240 240;
+  --accent: 2 182 108;
+  --dark-accent: 0 99 28;
 }
 
 /* Propriedades especiais */
@@ -162,8 +165,7 @@ a:active {
 
 a::before {
   content: "";
-  z-index: -1;
-  @apply absolute left-0 top-0 w-full h-full bg-primary rounded-sm -translate-x-full transition-transform duration-300 ease-in-out;
+  @apply absolute left-0 top-0 w-full h-full bg-primary rounded-sm z-[-1] -translate-x-full transition-transform duration-300 ease-in-out;
 }
 
 a:hover::before,
@@ -205,7 +207,7 @@ table {
 
 td,
 th {
-  @apply bg-clip-padding lg:whitespace-nowrap;
+  @apply bg-clip-padding;
 }
 
 td {
@@ -242,15 +244,19 @@ tbody tr td {
 }
 
 .zebrado {
-  @apply bg-gray-200;
+  @apply bg-primary/5;
 }
 
 .inativa td {
   @apply bg-gray-400 text-gray-300 line-through;
 }
 
+th.auditado {
+  @apply bg-darkAccent;
+}
+
 .auditado {
-  @apply font-bold bg-primary/30 !important;
+  @apply font-bold bg-accent/20;
 }
 
 /* Toggle */
@@ -297,11 +303,19 @@ input[type="checkbox"].toggle:checked + label::after {
 }
 
 .button-primary {
-  @apply text-gray-50 bg-primary;
+  @apply text-gray-50 bg-accent;
+}
+
+.button-primary:hover {
+  @apply bg-darkAccent;
 }
 
 .button-secondary {
   @apply text-primary border-solid border border-primary;
+}
+
+.button-secondary:hover {
+  @apply border-darkPrimary text-darkPrimary bg-gray-200;
 }
 
 .button-tertiary {
@@ -309,7 +323,7 @@ input[type="checkbox"].toggle:checked + label::after {
 }
 
 .button-tertiary:hover {
-  box-shadow: none !important;
+  @apply text-darkPrimary;
 }
 
 .floating-button {
@@ -341,20 +355,18 @@ input[type="checkbox"].toggle:checked + label::after {
 
 .button:hover,
 .floating-button:hover {
-  @apply filter brightness-125 transition-all duration-300;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.024),
-    2.3px 2.3px 4.5px rgba(0, 0, 0, 0.035),
-    3.9px 3.9px 7.9px rgba(0, 0, 0, 0.043),
-    6.3px 6.3px 12.5px rgba(0, 0, 0, 0.05),
-    9.7px 9.7px 19.3px rgba(0, 0, 0, 0.057),
-    15.1px 15.1px 30.1px rgba(0, 0, 0, 0.065),
-    25px 25px 50px rgba(0, 0, 0, 0.076), 50px 50px 100px rgba(0, 0, 0, 0.1);
+  @apply transition-all duration-300;
+}
+
+.floating-button:hover,
+.floating-button:hover::after,
+.floating-button:hover::before {
+  @apply bg-darkPrimary;
 }
 
 .button:active,
 .floating-button:active {
   @apply transform scale-95;
-  box-shadow: none;
 }
 
 .button:disabled,
