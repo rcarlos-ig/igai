@@ -66,8 +66,8 @@
           <% schools.forEach((school) => { %>
           <tr class="<%= school.ativa == false ? 'hidden' : ''; %>">
             <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
-            <td class="sticky left-0 text-left z-0"><%= school.nome %></td>
-            <td class="-z-10"><%= school.bairro %></td>
+            <td class="sticky left-0 text-left z-[1]"><%= school.nome %></td>
+            <td class=""><%= school.bairro %></td>
             <td class="<%= field === "indicador" ? 'auditado' : '' %>">
               <%= school.indicador.toLocaleString("default", {style: "decimal",
               maximumFractionDigits: 1}) %>
@@ -75,7 +75,35 @@
             <td class="<%= field === "indicador" ? 'auditado' : '' %>"><%= school.avaliacao %></td>
             <% for (let i = 4; i < 12; i++) { %>
               <% for (let key in fields[i][1]) { %>
-                <td class="-z-10 <%= field === fields[i][0] + '.' + key ? 'auditado' : '' %>"><%= school[fields[i][0]][key] === 0 ? 'X' : school[fields[i][0]][key] %></td>
+                <% let hint; %>
+                <% switch (school[fields[i][0]][key]) {
+                  case 1:
+                    hint = "1 - Péssimo."
+                    break;
+                  case 2:
+                    hint = "2 - Ruim."
+                    break;
+                  case 3:
+                    hint = "3 - Regular."
+                    break;
+                  case 4:
+                    hint = "4 - Bom."
+                    break;
+                  case 5:
+                    hint = "5 - Ótimo."
+                    break;                
+                  default:
+                    hint = "X - Não se aplica."
+                    break;
+                } %>
+                <td class="-z-10 <%= field === fields[i][0] + '.' + key ? 'auditado' : '' %>">
+                  <span
+                    class="cursor-help hint--top hint--info hint--rounded hint--bounce"
+                    aria-label="<%= hint %>"
+                  >
+                    <%= school[fields[i][0]][key] === 0 ? 'X' : school[fields[i][0]][key] %>
+                  </span>
+                </td>
               <% } %>
             <% } %>
             <td class="<%= field === "reservatorio" ? 'auditado' : '' %>"><%= school.reservatorio %></td>
