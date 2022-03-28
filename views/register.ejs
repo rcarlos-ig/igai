@@ -35,9 +35,9 @@
           <label for="email">E-mail<span class="required">*</span></label>
           <div>
             <% if (locals.email) { %>
-                <input type="text" name="email" id="email" placeholder="Digite seu e-mail" value="<%= email %>" autofocus />
+                <input type="email" name="email" id="email" placeholder="Digite seu e-mail" value="<%= email %>" autofocus />
               <% } else { %>
-                <input type="text" name="email" id="email" placeholder="Digite seu e-mail" />
+                <input type="email" name="email" id="email" placeholder="Digite seu e-mail" />
               <% } %>
           </div>
         </div>

@@ -1,6 +1,6 @@
 {
   "name": "igai",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
     "css-build": "postcss ./tailwind.css -o public/css/styles.min.css",
     "css-minify": "cleancss public/css/styles.min.css -o public/css/styles.min.css",
     "css-watch": "onchange \"./tailwind.css\" \"./views/**/*.ejs\" \"./public/**/*.js\" -- run-s css-build css-minify",
-    "commit": "git commit -a && git tag -a %npm_package_version% && git push --follow-tags",
+    "commit": "git add . && git commit -a && git tag -a %npm_package_version% && git push --follow-tags",
     "patch": "npm --no-git-tag-version version patch && npm run commit",
     "minor": "npm --no-git-tag-version version minor && npm run commit",
     "major": "npm --no-git-tag-version version major && npm run commit"

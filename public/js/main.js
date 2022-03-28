@@ -115,8 +115,13 @@ $(function () {
     });
   }
 
-  // Trigger the Page Load animation
+  // Toggle the Page Load animation
   $(window).on("beforeunload", function() {
     $(".loader-trigger").removeClass("hidden");
   })
+  
+  $(window).on("load", function() {
+    $(".loader-trigger").addClass("hidden");
+  })
+
 });

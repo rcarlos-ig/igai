@@ -43,11 +43,12 @@
           </canvas>
         </div>
       </div>
-      <div class="flex justify-start mt-6">
+      <div class="flex flex-col items-center gap-4 mt-6 md:flex-row md:justify-center">
         <input type="checkbox" name="ativa" id="ativa" class="toggle" />
-        <label for="ativa">Mostrar inativas?</label>
+        <label for="ativa" class="md:w-1/5">Mostrar inativas?</label>
+        <input type="text" name="busca" id="busca" class="md:w-4/5" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
       </div>
-      <div class="flex justify-center mt-4 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:h-[500px] md:overflow-y-scroll">
+      <div class="flex justify-center mt-4 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:max-h-[500px] md:overflow-y-scroll">
         <table class="text-center font-medium w-full select-none" id="escolas" aria-label="Tabela com as unidades da rede.">
           <thead class="sticky top-0 z-10">
             <tr>
@@ -85,6 +86,8 @@
     </div>
   </div>
 </div>
+
+<script src="/js/buscaEscola.js"></script>
 
 <%- include('partials/dashboardChart.ejs'); %>
 <%- include('partials/logoutButton.ejs'); %>

@@ -34,8 +34,11 @@
         </div> 
       </form>
     </div>
-    <div class="hidden h-[500px] w-full mt-16 overflow-scroll border border-primary scroll-smooth sm:block md:h-[600px]">
-      <table class="text-center mx-auto w-full whitespace-nowrap" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados.">
+    <div class="mt-16 md:mx-auto md:w-3/5">
+      <input type="text" name="busca" id="busca" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
+    </div>
+    <div class="hidden max-h-[600px] w-full mt-4 overflow-scroll border border-primary scroll-smooth sm:block">
+      <table class="text-center mx-auto w-full whitespace-nowrap" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolas">
         <thead class="sticky top-0 z-10">
           <tr>
             <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
@@ -113,7 +116,7 @@
       </table>
     </div>
     <div class="flex justify-center w-full mx-auto my-8 sm:hidden">
-      <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados.">
+      <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolas">
         <thead class="sticky top-0 z-10">
           <tr>
             <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
@@ -144,6 +147,8 @@
 <div class="flex justify-center mt-2 pb-6">
   <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
 </div>
+
+<script src="/js/buscaEscola.js"></script>
 
 <%- include('partials/logoutButton.ejs'); %>
 <%- include('partials/footer.ejs'); %>
