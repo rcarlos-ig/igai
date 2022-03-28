@@ -1,3 +1,6 @@
+// Package.json
+const package = require("./package.json");
+
 module.exports = {
   apps: [
     {
@@ -6,6 +9,7 @@ module.exports = {
       watch: ".",
       env: {
         NODE_ENV: "production",
+        npm_package_version: package.version,
       },
     },
   ],
