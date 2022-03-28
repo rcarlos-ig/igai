@@ -154,26 +154,26 @@ h1 + small {
 }
 
 /* Links */
-a {
+.reset-password {
   @apply relative font-semibold text-primary px-3 overflow-hidden transition-colors duration-300 z-[1];
 }
 
-a:hover,
-a:active {
+.reset-password:hover,
+.reset-password:active {
   @apply text-light transition-colors duration-300 no-underline;
 }
 
-a::before {
+.reset-password::before {
   content: "";
   @apply absolute left-0 top-0 w-full h-full bg-primary rounded-sm z-[-1] translate-x-[-101%] transition-transform duration-300 ease-in-out;
 }
 
-a:hover::before,
-a:active::before {
+.reset-password:hover::before,
+.reset-password:active::before {
   @apply translate-x-0 transition-transform duration-300 ease-in-out;
 }
 
-a:focus {
+.reset-password:focus {
   @apply ring-0;
 }
 

@@ -69,6 +69,9 @@ $(function () {
   });
 
   // Replace defined strings on the document body
+  replaceAllStrings("codigo", "código");
+  replaceAllStrings("ocupacao", "ocupação");
+  replaceAllStrings("avaliacao", "avaliação");
   replaceAllStrings("instalacoes", "instalações");
   replaceAllStrings("eletricas", "elétricas");
   replaceAllStrings("hidraulicas", "hidráulicas");
@@ -113,7 +116,7 @@ $(function () {
   }
 
   // Trigger the Page Load animation
-  $(".button[id!='logoutModalClose'], a").on("click", function () {
+  $(window).on("beforeunload", function() {
     $(".loader-trigger").removeClass("hidden");
-  });
+  })
 });
