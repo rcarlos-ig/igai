@@ -25,6 +25,7 @@ const {
   auditSchoolView,
   auditSchool,
 } = require("../controllers/schoolController");
+const { logging, logView } = require("../controllers/logController");
 const { dashboardView } = require("../controllers/dashboardController");
 const { protectRoute, isAdmin } = require("../controllers/auth/protect");
 
@@ -140,16 +141,29 @@ router.post(
     if (!errors.isEmpty()) {
       res.render("registerSchool", { errors: errors.array() });
     } else {
+      req.action = "create";
+      req.msg = "Registrada nova unidade.";
       next();
     }
   },
   protectRoute,
+  logging,
   registerSchool
 );
 
 // School page
 router.get("/school", protectRoute, schoolView);
-router.post("/school", protectRoute, schoolPost);
+router.post(
+  "/school",
+  protectRoute,
+  function (req, res, next) {
+    req.action = "update";
+    req.msg = "Indicadores da unidade atualizados.";
+    next();
+  },
+  logging,
+  schoolPost
+);
 
 // Reset Password
 router.get("/resetPassword", requestResetPasswordView);
@@ -238,10 +252,13 @@ router.post(
         errors: errors.array(),
       });
     } else {
+      req.action = "update";
+      req.msg = "Dados da unidade atualizados.";
       next();
     }
   },
   protectRoute,
+  logging,
   editSchool
 );
 
@@ -251,5 +268,8 @@ router.post("/audit", protectRoute, auditSchool);
 
 // Create Register Token
 router.get("/create-token", isAdmin, createToken);
+
+// Log
+router.get("/log", protectRoute, logView);
 
 module.exports = router;
