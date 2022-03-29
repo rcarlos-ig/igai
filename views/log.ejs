@@ -4,13 +4,13 @@
   <div class="w-full">
     <div>
       <h2>Registros do sistema</h2>
-      <div class="flex justify-center mt-12 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:h-[500px] md:overflow-y-scroll">
+      <div class="flex justify-center mt-4 mb-8 w-[320px] scroll-smooth md:justify-start md:border md:border-primary md:w-full md:max-h-[500px] md:overflow-y-scroll">
         <table class="text-center font-medium w-full" id="escolas" aria-label="Tabela com as unidades da rede.">
           <thead class="sticky top-0 z-10">
             <tr>
               <th>Data</th>
               <th>Usuário</th>
-              <th>Ação</th>
+              <th class="hidden md:table-cell">Ação</th>
               <th>Mensagem</th>
               <th>Dados</th>
             </tr>
@@ -18,7 +18,7 @@
           <tbody>
             <% log.forEach((item, index) => { %>
               <tr>
-                <td class="whitespace-nowrap"><%= item.createdAt.toLocaleDateString("default", { 
+                <td class="md:whitespace-nowrap"><%= item.createdAt.toLocaleDateString("default", { 
                   day:"2-digit",
                   month: "2-digit",
                   year: "2-digit",
@@ -27,7 +27,7 @@
                   second: "2-digit"
                   }) %></td>
                 <td><%= users[index] %></td>
-                <td><%= item.action %></td>
+                <td class="hidden md:table-cell"><%= item.action %></td>
                 <td><%= item.msg %></td>
                 <td class="text-left capitalize whitespace-nowrap">
                   <% Object.keys(item.data).forEach(key => { %>
