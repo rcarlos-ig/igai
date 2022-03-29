@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="card w-[320px] sm:w-11/12">
+<div class="card w-full sm:w-11/12">
   <div class="w-full">
     <h2>Auditar unidades</h2>
     <div class="mt-8 mx-auto w-[320px] sm:w-1/2 lg:w-1/4">
@@ -34,7 +34,7 @@
         </div> 
       </form>
     </div>
-    <div class="mt-16 md:mx-auto md:w-3/5">
+    <div class="mt-12 px-4 md:mx-auto md:px-0 md:w-3/5">
       <input type="text" name="busca" id="busca" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
     </div>
     <div class="hidden max-h-[600px] w-full mt-4 overflow-scroll border border-primary scroll-smooth sm:block">
@@ -115,7 +115,7 @@
         </tbody>
       </table>
     </div>
-    <div class="flex justify-center w-full mx-auto my-8 sm:hidden">
+    <div class="flex justify-center w-full mx-auto my-4 sm:hidden">
       <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolas">
         <thead class="sticky top-0 z-10">
           <tr>

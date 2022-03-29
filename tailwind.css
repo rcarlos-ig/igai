@@ -40,8 +40,8 @@ select:-webkit-autofill:focus {
 
 /* Tables Scrollbar Styling Start */
 div::-webkit-scrollbar {
-  height: 0.5em;
-  width: 0.5rem;
+  height: 0.75em;
+  width: 0.75rem;
 }
 /* Track */
 div::-webkit-scrollbar-track {
@@ -78,7 +78,7 @@ main {
 }
 
 footer {
-  @apply flex flex-col items-center text-center w-full px-4 py-6 mx-auto border-t-2 border-t-gray-200 sm:w-3/4;
+  @apply flex flex-col items-center text-center w-full px-4 py-6 mx-auto border-t-2 border-t-gray-300 md:w-11/12;
 }
 
 footer img {

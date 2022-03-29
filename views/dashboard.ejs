@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="card w-[320px] sm:w-2/3">
+<div class="card w-full sm:w-2/3">
   <div class="w-full">
     <div>
       <h2>Dashboard</h2>
@@ -23,30 +23,33 @@
           </ul>
         </div>
       <% }; %>
-      <div class="flex flex-col items-center mt-4 px-2 pb-4 border-b-2 border-gray-300 lg:flex-row lg:justify-center">
+      <div class="flex flex-col items-center pb-4 border-b-2 border-gray-300 lg:flex-row lg:justify-center">
         <% const hour = new Date().getHours(); %>
         <% let greeting = 'Boa noite'; %>
         <% if (hour >= 6) greeting = 'Bom dia';  %>
         <% if (hour >= 12) greeting = 'Boa tarde';  %>
         <% if (hour >= 19) greeting = 'Boa noite';  %>
-        <div class="flex flex-col text-center w-full pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
-          <p><%= greeting %>, <span class="font-medium text-lg text-primary"><%= user.name %></span>.</p>
-          <p class="md:mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
-          <div class="mt-4 place-self-center md:mt-6 lg:place-self-auto <%= user.role !== 'admin' ? 'hidden' : '' %>">
+        <div class="flex flex-col w-full pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
+          <p class="px-6 md:px-0"><%= greeting %>, <span class="font-medium text-lg text-primary"><%= user.name %></span>.</p>
+          <p class="px-6 md:px-0 md:mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
+          <div class="flex flex-col items-center gap-2 pt-4 px-4 md:flex-row md:justify-start md:gap-4 md:mt-6 <%= user.role !== 'admin' ? 'hidden' : '' %>">
             <button type="button" class="button button-secondary" onclick="window.location='/register-school'">Cadastrar unidade</button>
-            <button type="button" class="button button-secondary mt-2" onclick="window.location='/log'">Log de sistema</button>
+            <button type="button" class="button button-tertiary" onclick="window.location='/log'">Log de sistema</button>
           </div>    
         </div>
-        <div id="chart" class="w-full mt-4 lg:w-1/3">
+        <div id="chart" class="w-full mt-4 lg:w-1/2">
           <h3>Gráfico de Avaliações</h3>
           <canvas id="dashboardChart" aria-label="Gráfico de Avaliações">
             <p>Gráfico gerado dinâmicamente e inacessível para leitores de tela.</p>
           </canvas>
         </div>
       </div>
-      <div class="flex flex-col items-center gap-4 mt-6 md:flex-row md:justify-center">
-        <input type="checkbox" name="ativa" id="ativa" class="toggle" />
-        <label for="ativa" class="md:w-1/5">Mostrar inativas?</label>
+      <div class="flex flex-col items-center gap-4 mt-6 px-4 md:flex-row md:justify-center">
+        <div class="flex flex-row gap-4 md:w-1/5">
+          <input type="checkbox" name="ativa" id="ativa" class="toggle" />
+          <label for="ativa">Mostrar inativas?</label>
+          <button type="button" class="button button-primary md:hidden" onclick="window.location='/audit'">Auditar</button>
+        </div>
         <input type="text" name="busca" id="busca" class="md:w-4/5" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
       </div>
       <div class="flex justify-center mt-4 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:max-h-[500px] md:overflow-y-scroll">
