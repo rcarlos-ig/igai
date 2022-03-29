@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  accesses: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const User = mongoose.model("User", UserSchema);

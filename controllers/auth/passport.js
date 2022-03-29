@@ -33,6 +33,8 @@ const loginCheck = (passport) => {
             bcrypt.compare(password, user.password, (error, isMatch) => {
               if (error) throw error;
               if (isMatch) {
+                user.accesses += 1;
+                user.save();
                 return done(null, user);
               } else {
                 console.log("Wrong password");
