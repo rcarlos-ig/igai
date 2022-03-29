@@ -27,6 +27,8 @@
             name="codigo"
             id="codigo"
             value="<%= school.codigo %>"
+            min="1"
+            required
             autofocus
           />
         </div>
@@ -34,7 +36,19 @@
       <div class="form-line">
         <label for="nome">Nome<span class="required">*</span></label>
         <div>
-          <input type="text" name="nome" id="nome" value="<%= school.nome %>" />
+          <input
+            type="text"
+            name="nome"
+            id="nome"
+            minlength="3"
+            value="<%= school.nome %>"
+            required
+          />
+          <span
+            class="hidden validation-error"
+            id="nomeError"
+            aria-live="polite"
+          ></span>
         </div>
       </div>
       <div class="form-line">
@@ -44,8 +58,15 @@
             type="text"
             name="bairro"
             id="bairro"
+            minlength="3"
             value="<%= school.bairro %>"
+            required
           />
+          <span
+            class="hidden validation-error"
+            id="bairroError"
+            aria-live="polite"
+          ></span>
         </div>
       </div>
       <div class="form-line">

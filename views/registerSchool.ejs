@@ -27,9 +27,9 @@
           <label for="codigo">Código<span class="required">*</span></label>
           <div>
             <% if (locals.codigo) { %>
-              <input type="number" name="codigo" id="codigo" placeholder="Código da escola" value="<%= codigo %>" autofocus />
+              <input type="number" name="codigo" id="codigo" placeholder="Código da escola" min="1" value="<%= codigo %>" autofocus />
             <% } else { %>
-              <input type="number" name="codigo" id="codigo" placeholder="Código da escola" autofocus />
+              <input type="number" name="codigo" id="codigo" placeholder="Código da escola" min="1" autofocus />
             <% } %>
           </div>
         </div>
@@ -37,20 +37,22 @@
           <label for="nome">Nome<span class="required">*</span></label>
           <div>
             <% if (locals.nome) { %>
-              <input type="text" name="nome" id="nome" placeholder="Nome da escola" value="<%= nome %>" />
+              <input type="text" name="nome" id="nome" placeholder="Nome da escola" minlength="3" value="<%= nome %>" />
             <% } else { %>
-              <input type="text" name="nome" id="nome" placeholder="Nome da escola" />
+              <input type="text" name="nome" id="nome" placeholder="Nome da escola" minlength="3" />
             <% } %>
+            <span class="hidden validation-error" id="nomeError" aria-live="polite"></span>
           </div>
         </div>
         <div class="form-line">
           <label for="bairro">Bairro<span class="required">*</span></label>
           <div>
             <% if (locals.bairro) { %>
-              <input type="text" name="bairro" id="bairro" placeholder="Bairro da escola" value="<%= bairro %>" />
+              <input type="text" name="bairro" id="bairro" placeholder="Bairro da escola" minlength="3" value="<%= bairro %>" />
             <% } else { %>
-              <input type="text" name="bairro" id="bairro" placeholder="Bairro da escola" />
+              <input type="text" name="bairro" id="bairro" placeholder="Bairro da escola" minlength="3" />
             <% } %>
+            <span class="hidden validation-error" id="bairroError" aria-live="polite"></span>
           </div>
         </div>
         <div class="form-line">

@@ -27,19 +27,21 @@
           <% }); %>
         </ul>
       </div>
-  <% }; %>
+    <% }; %>
     <div>
       <form method="post" action="/login">
         <div class="form-line">
           <label for="email">E-mail</label>
           <div>
             <input type="email" name="email" id="email" placeholder="Digite seu e-mail" autofocus />
+            <span class="hidden validation-error" id="emailError" aria-live="polite"></span>
           </div>
         </div>
         <div class="form-line">
           <label for="password">Senha</label>
           <div>
             <input type="password" name="password" id="password" placeholder="Digite sua senha" minlength="4" />
+            <span class="hidden validation-error" id="passwordError" aria-live="polite"></span>
             <div class="flex justify-end text-sm mt-2">
               <a class="reset-password" href="/resetPassword">Esqueci minha senha</a>
             </div>

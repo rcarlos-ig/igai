@@ -60,7 +60,7 @@ div::-webkit-scrollbar-thumb:hover {
 
 /* Propriedades gerais do documento */
 *:focus {
-  @apply outline-none ring-2 ring-offset-1 ring-primary;
+  @apply outline-none ring-1 ring-offset-1 ring-primary;
 }
 
 html {
@@ -101,7 +101,7 @@ footer img {
 }
 
 .error {
-  @apply text-red-900 bg-red-100 border border-red-300 rounded-md p-4 mb-4;
+  @apply text-red-900 bg-red-100 border border-red-500 rounded-md p-4 mb-4;
 }
 
 .error > ul,
@@ -183,15 +183,7 @@ input[type="email"],
 input[type="password"],
 input[type="number"],
 select {
-  @apply text-primary bg-gray-100 border border-gray-200 rounded-md px-3 py-1 w-full;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus,
-select:focus {
-  @apply border-none ring-1 ring-primary outline-none;
+  @apply text-primary bg-gray-100 border border-gray-300 rounded-md px-3 py-1 w-full focus:bg-gray-50 focus:border-primary focus:ring-offset-0 focus:ring-opacity-0 focus:outline-none invalid:text-red-900 invalid:bg-red-100 invalid:border invalid:border-red-500 invalid:focus:text-red-900 invalid:focus:bg-red-100 invalid:focus:border invalid:focus:border-red-500;
 }
 
 .form-line {
@@ -200,6 +192,10 @@ select:focus {
 
 .required {
   @apply text-red-600 font-semibold align-middle ml-1;
+}
+
+.validation-error {
+  @apply text-sm text-red-900 font-semibold bg-red-50 border border-red-200 -mt-1 pt-2 px-3 rounded-b-md transition-all duration-300;
 }
 
 /* Tables */

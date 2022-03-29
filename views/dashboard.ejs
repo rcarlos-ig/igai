@@ -34,6 +34,7 @@
           <p class="md:mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
           <div class="mt-4 place-self-center md:mt-6 lg:place-self-auto <%= user.role !== 'admin' ? 'hidden' : '' %>">
             <button type="button" class="button button-secondary" onclick="window.location='/register-school'">Cadastrar unidade</button>
+            <button type="button" class="button button-secondary mt-2" onclick="window.location='/log'">Log de sistema</button>
           </div>    
         </div>
         <div id="chart" class="w-full mt-4 lg:w-1/3">

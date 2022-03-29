@@ -4,66 +4,148 @@
   <div class="w-full">
     <h2>Criar usuário</h2>
     <% if (locals.emailValidation) { %>
-      <div class="error">
-        <ul>
-          <li><%= emailValidation %></li>
-        </ul>
-      </div>
-    <% }; %>
-    <% if (locals.errors) { %>      
-      <div class="error <%= errors == '' ? 'hidden' : '' %>">
-        <ul>
-          <% errors.forEach(error => { %>
-            <li><%= error.msg %></li>
-          <% }); %>
-        </ul>
-      </div>
+    <div class="error">
+      <ul>
+        <li><%= emailValidation %></li>
+      </ul>
+    </div>
+    <% }; %> <% if (locals.errors) { %>
+    <div class="error <%= errors == '' ? 'hidden' : '' %>">
+      <ul>
+        <% errors.forEach(error => { %>
+        <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+    </div>
     <% }; %>
     <div>
       <form method="post" action="<%= `/register/${token.token}` %>">
         <div class="form-line">
           <label for="name">Nome<span class="required">*</span></label>
-            <div>
-              <% if (locals.name) { %>
-                <input type="text" name="name" id="name" placeholder="Digite seu nome" value="<%= name %>" autofocus />
-              <% } else { %>
-                <input type="text" name="name" id="name" placeholder="Digite seu nome" autofocus />
-              <% } %>
-            </div>
+          <div>
+            <% if (locals.name) { %>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Digite seu nome"
+              minlength="3"
+              value="<%= name %>"
+              autofocus
+            />
+            <% } else { %>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Digite seu nome"
+              minlength="3"
+              autofocus
+            />
+            <% } %>
+            <span
+              class="hidden validation-error"
+              id="nomeError"
+              aria-live="polite"
+            ></span>
+          </div>
         </div>
         <div class="form-line">
           <label for="email">E-mail<span class="required">*</span></label>
           <div>
             <% if (locals.email) { %>
-                <input type="email" name="email" id="email" placeholder="Digite seu e-mail" value="<%= email %>" autofocus />
-              <% } else { %>
-                <input type="email" name="email" id="email" placeholder="Digite seu e-mail" />
-              <% } %>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Digite seu e-mail"
+              value="<%= email %>"
+              autofocus
+            />
+            <% } else { %>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Digite seu e-mail"
+            />
+            <% } %>
+            <span
+              class="hidden validation-error"
+              id="emailError"
+              aria-live="polite"
+            ></span>
           </div>
         </div>
         <div class="form-line">
-          <label for="password" control-label">Senha<span class="required">*</span></label>
+          <label for="password">Senha<span class="required">*</span></label>
           <div>
             <% if (locals.password) { %>
-                <input type="password" name="password" id="password" placeholder="Digite sua senha" value="<%= password %>" />
-              <% } else { %>
-                <input type="password" name="password" id="password" placeholder="Digite sua senha" />
-              <% } %>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Digite sua senha"
+              minlength="4"
+              value="<%= password %>"
+            />
+            <% } else { %>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Digite sua senha"
+              minlength="4"
+            />
+            <% } %>
+            <span
+              class="hidden validation-error"
+              id="passwordError"
+              aria-live="polite"
+            ></span>
           </div>
         </div>
         <div class="form-line">
-          <label for="confirm">Confirme a senha<span class="required">*</span></label>
+          <label for="confirm"
+            >Confirme a senha<span class="required">*</span></label
+          >
           <div>
             <% if (locals.confirm) { %>
-                <input type="password" name="confirm" id="confirm" placeholder="Confirme sua senha" value="<%= confirm %>" />
-              <% } else { %>
-                <input type="password" name="confirm" id="confirm" placeholder="Confirme sua senha" />
-              <% } %>
+            <input
+              type="password"
+              name="confirm"
+              id="confirm"
+              placeholder="Confirme sua senha"
+              minlength="4"
+              value="<%= confirm %>"
+            />
+            <% } else { %>
+            <input
+              type="password"
+              name="confirm"
+              id="confirm"
+              placeholder="Confirme sua senha"
+              minlength="4"
+            />
+            <% } %>
+            <span
+              class="hidden validation-error"
+              id="confirmError"
+              aria-live="polite"
+            ></span>
           </div>
         </div>
         <div class="flex justify-end gap-4 mt-6">
-          <button type="button" class="button button-tertiary" onclick="window.location='/login'">Início</button>
-          <button type="submit" class="button button-primary">Criar usuário</button>
+          <button
+            type="button"
+            class="button button-tertiary"
+            onclick="window.location='/login'"
+          >
+            Início
+          </button>
+          <button type="submit" class="button button-primary">
+            Criar usuário
+          </button>
         </div>
       </form>
     </div>
