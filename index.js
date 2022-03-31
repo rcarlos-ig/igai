@@ -54,7 +54,7 @@ app.use(
     store: store,
     secret: process.env.SECRET,
     saveUninitialized: false,
-    resave: true,
+    resave: false,
     rolling: true,
     cookie: { maxAge: 10 * 60 * 1000 }, // Minutos * Segundos * Milisegundos
   })
@@ -71,3 +71,8 @@ app.use("/", require("./routes/routes"));
 // Server
 const PORT = process.env.PORT || 80;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
+
+// 404 error handling
+app.use((req, res, next) => {
+  res.status(404).render("404", { url: req.url });
+});
