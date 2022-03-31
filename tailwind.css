@@ -252,7 +252,7 @@ tbody tr td {
 }
 
 .zebrado {
-  @apply bg-primary/5;
+  background-color: rgb(231, 239, 248)
 }
 
 .inativa td {
