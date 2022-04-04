@@ -73,7 +73,7 @@
             <% if (school.ativa) {count += 1}; %>
             <td class="sticky left-0 text-left z-[1]"><%= count %></td>
             <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
-            <td class="sticky left-8 text-left z-[1]"><%= school.nome %></td>
+            <td class="sticky left-8 text-left z-[1] unidade"><%= school.nome %></td>
             <td><%= school.bairro %></td>
             <td class="<%= field === "indicador" ? 'auditado' : '' %>">
               <%= school.indicador.toLocaleString("default", {style: "decimal",
@@ -120,7 +120,7 @@
       </table>
     </div>
     <div class="flex justify-center w-full mx-auto my-4 sm:hidden">
-      <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolas">
+      <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolasMobile">
         <thead class="sticky top-0 z-10">
           <tr>
             <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
@@ -134,7 +134,7 @@
           <% schools.forEach((school) => { %>
           <tr class="<%= school.ativa == false ? 'hidden' : ''; %>">
             <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
-            <td class="sticky left-0 text-left z-0"><%= school.nome %></td>
+            <td class="sticky left-0 text-left z-0 unidade"><%= school.nome %></td>
             <td class="-z-10"><%= school.bairro %></td>
             <td class="<%= field === "indicador" ? 'auditado' : '' %>">
               <%= school.indicador.toLocaleString("default", {style: "decimal",

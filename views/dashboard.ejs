@@ -67,12 +67,11 @@
             <% schools.forEach((school) => { %>
             <tr
               class="<%= user.role !== 'admin' ? '' : 'cursor-pointer' %> <%= school.ativa === false ? 'hidden' : ''; %>"
-              <%= user.role !== 'admin' ? '' : `onClick=window.location='/school?unidade=${school.codigo}'` %>
-              <%= user.role !== 'admin' ? '' : `onKeyPress=window.location='/school?unidade=${school.codigo}'` %>
+              <%= user.role !== 'admin' ? '' : `onClick=window.location='/school?unidade=${school.codigo}' onKeyPress=window.location='/school?unidade=${school.codigo}'` %>
               tabindex="0"
             >
               <td><%= school.codigo %></td>
-              <td class="text-left max-w-[50ch]"><%= school.nome %></td>
+              <td class="text-left max-w-[50ch] unidade"><%= school.nome %></td>
               <td><%= school.bairro %></td>
               <td>
                 <%= school.indicador.toLocaleString("default", {style:
