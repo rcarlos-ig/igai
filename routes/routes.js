@@ -34,7 +34,7 @@ const router = express.Router();
 
 // Routes
 // Root "/"
-router.get("/", loginView);
+router.get("/", protectRoute, dashboardView);
 
 // Register user
 router.get("/register/:token", registerView);
