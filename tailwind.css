@@ -13,7 +13,7 @@
 /* Variáveis */
 :root {
   --primary: 5 77 165;
-  --dark-primary: 0 51 105;
+  --dark-primary: 3 31 72;
   --text: 32 33 49;
   --light: 240 240 240;
   --accent: 2 182 108;
@@ -252,7 +252,7 @@ tbody tr td {
 }
 
 .zebrado {
-  background-color: rgb(231, 239, 248)
+  background-color: rgb(231, 239, 248);
 }
 
 .inativa td {
@@ -404,9 +404,13 @@ input[type="checkbox"].toggle:checked + label::after {
   }
 }
 
-/* Logos */
+/* Images */
 img {
   @apply h-fit;
+}
+
+.img404 {
+  filter: var(--bg-gray-50-shadow-filter);
 }
 
 /* Page Load animation */

@@ -41,9 +41,9 @@
       <table class="text-center mx-auto w-full whitespace-nowrap" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolas">
         <thead class="sticky top-0 z-10">
           <tr>
-            <th class="sticky left-0" scope="col" rowspan="2">#</th>
+            <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
             <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
-            <th class="sticky left-8" scope="col" rowspan="2">Nome</th>
+            <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
             <th scope="col" rowspan="2">Bairro</th>
             <th scope="col" rowspan="2" class="<%= field === "indicador" ? 'auditado' : '' %>">IGAI</th>
             <th scope="col" rowspan="2" class="<%= field === "indicador" ? 'auditado' : '' %>">Avaliação</th>
@@ -71,9 +71,9 @@
           <% schools.forEach((school) => { %>
           <tr class="<%= school.ativa == false ? 'hidden' : ''; %>">
             <% if (school.ativa) {count += 1}; %>
-            <td class="sticky left-0 text-left z-[1]"><%= count %></td>
+            <td class="sticky left-0 min-w-[3rem] text-left z-[1]"><%= count %></td>
             <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
-            <td class="sticky left-8 text-left z-[1] unidade"><%= school.nome %></td>
+            <td class="sticky left-12 text-left z-[1] unidade"><%= school.nome %></td>
             <td><%= school.bairro %></td>
             <td class="<%= field === "indicador" ? 'auditado' : '' %>">
               <%= school.indicador.toLocaleString("default", {style: "decimal",
