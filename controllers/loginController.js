@@ -127,7 +127,10 @@ const registerUser = (req, res) => {
             newUser.password = hash;
             newUser
               .save() // Save nes user on database
-              .then(res.render("login", { success: "Cadastro realizado." }))
+              .then(() => {
+                token.deleteOne().then(console.log("Deleted: " + token._id));
+                res.render("login", { success: "Cadastro realizado." });
+              })
               .catch((err) => console.log(err));
           })
         );
@@ -160,7 +163,7 @@ const requestResetPasswordView = (req, res) => {
 const requestResetPassword = (req, res) => {
   const { email } = req.body;
 
-  // CHeck user
+  // Check user
   User.findOne({ email: email }).then((user) => {
     if (user) {
       // Check token
@@ -231,7 +234,10 @@ const resetPassword = (req, res) => {
               user.password = hash;
               user
                 .save()
-                .then(res.redirect("/login"))
+                .then(() => {
+                  token.deleteOne().then(console.log("Deleted: " + token._id));
+                  res.redirect("/login");
+                })
                 .catch((err) => console.log(err));
             })
           );
