@@ -323,7 +323,7 @@ input[type="checkbox"].toggle:checked + label::after {
 }
 
 .button-secondary:hover {
-  @apply border-darkPrimary text-darkPrimary bg-gray-200;
+  @apply border-darkPrimary text-darkPrimary;
 }
 
 .button-tertiary {
@@ -357,13 +357,13 @@ input[type="checkbox"].toggle:checked + label::after {
 
 .button:hover,
 .floating-button:hover {
-  @apply transition-all duration-300;
+  @apply transition-all duration-300 -translate-y-1;
 }
 
 .floating-button:hover,
 .floating-button:hover::after,
 .floating-button:hover::before {
-  @apply bg-darkPrimary;
+  @apply bg-darkPrimary translate-y-0;
 }
 
 .button:active,
