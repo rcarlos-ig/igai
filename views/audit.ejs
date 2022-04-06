@@ -34,8 +34,9 @@
         </div> 
       </form>
     </div>
-    <div class="mt-12 px-4 md:mx-auto md:px-0 md:w-3/5">
+    <div class="relative w-11/12 mt-12 mx-auto md:w-3/5">
       <input type="text" name="busca" id="busca" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
+      <button role="button" class="limpa-busca" onclick="limpaBusca()"></button>
     </div>
     <div class="hidden max-h-[600px] w-full mt-4 overflow-scroll border border-primary scroll-smooth sm:block">
       <table class="text-center mx-auto w-full whitespace-nowrap" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolas">

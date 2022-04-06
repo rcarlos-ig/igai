@@ -48,3 +48,14 @@ function buscaEscola() {
     }
   }
 }
+
+function limpaBusca() {
+  // Declare variables
+  let input;
+
+  input = document.getElementById("busca");
+
+  input.value = "";
+
+  buscaEscola();
+}
