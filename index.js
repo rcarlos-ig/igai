@@ -73,6 +73,6 @@ const PORT = process.env.PORT || 80;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 // 404 error handling
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404).render("404", { url: req.url });
 });

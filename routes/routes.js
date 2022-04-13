@@ -156,7 +156,7 @@ router.get("/school", protectRoute, schoolView);
 router.post(
   "/school",
   protectRoute,
-  function (req, res, next) {
+  function (req, _res, next) {
     req.action = "update";
     req.msg = "Indicadores da unidade atualizados.";
     next();
