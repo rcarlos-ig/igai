@@ -155,5 +155,5 @@
 
 <script src="/js/buscaEscola.js"></script>
 
-<%- include('partials/logoutButton.ejs'); %>
+<%- user.role === 'admin' ? include('partials/logoutButtonAdmin.ejs') : include('partials/logoutButtonBasic.ejs'); %>
 <%- include('partials/footer.ejs'); %>

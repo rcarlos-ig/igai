@@ -81,6 +81,7 @@ async function sortSchools(sort) {
 const registerSchoolView = (req, res) => {
   res.render("registerSchool", {
     ativa: true,
+    user: req.user,
   });
 };
 
@@ -100,6 +101,7 @@ const registerSchool = (req, res) => {
         reservatorio,
         ativa,
         error: "Unidade já cadastrada.",
+        user: req.user,
       });
     } else {
       // New school
@@ -121,6 +123,7 @@ const registerSchool = (req, res) => {
         .then(
           res.render("registerSchool", {
             success: "Escola cadastrada com sucesso.",
+            user: req.user,
           })
         )
         .catch((err) => console.log(err));
@@ -148,7 +151,8 @@ const schoolView = async (req, res) => {
         res.render("school", {
           school,
           fields: fields,
-          user: userName,
+          userName,
+          user: req.user,
         });
       });
     } else {
@@ -186,8 +190,9 @@ const schoolPost = (req, res) => {
         res.render("school", {
           school,
           fields: fields,
-          user: userName,
+          userName,
           success: "Dados salvos com sucesso.",
+          user: req.user,
         });
       });
     });
@@ -201,6 +206,7 @@ const editSchoolView = (req, res) => {
     if (!school) return;
     res.render("editSchool", {
       school,
+      user: req.user,
     });
   });
 };
@@ -226,6 +232,7 @@ const editSchool = async (req, res) => {
     res.render("editSchool", {
       school,
       success: "Dados atualizados com sucesso.",
+      user: req.user,
     });
   });
 };
@@ -240,6 +247,7 @@ const auditSchoolView = async (req, res) => {
     field: "codigo",
     order: "asc",
     fields,
+    user: req.user,
   });
 };
 
@@ -266,6 +274,7 @@ const auditSchool = async (req, res) => {
     field,
     order: req.query.order,
     fields,
+    user: req.user,
   });
 };
 

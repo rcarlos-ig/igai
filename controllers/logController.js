@@ -11,7 +11,7 @@ const getLog = async () => {
     });
 };
 
-const logging = (req, res, next) => {
+const logging = (req, _res, next) => {
   const newLog = new Log({
     user: req.user.id,
     action: req.action,
@@ -25,7 +25,7 @@ const logging = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-const logView = async (req, res, next) => {
+const logView = async (req, res) => {
   let entries = await getLog();
   let users = [];
 
@@ -36,7 +36,7 @@ const logView = async (req, res, next) => {
     users.push(name);
   }
 
-  res.render("log", { log: entries, users });
+  res.render("log", { log: entries, users, user: req.user });
 };
 
 module.exports = { logging, logView };

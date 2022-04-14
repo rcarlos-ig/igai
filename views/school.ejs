@@ -33,7 +33,7 @@
           hour: "2-digit",
           minute: "2-digit",
           }).format(school.atualizadoEm); %>
-        <p>Última atualização em <span class="font-semibold"><%= atualizadoEm %></span>, por <span class="font-semibold"><%= user %></span></p>
+        <p>Última atualização em <span class="font-semibold"><%= atualizadoEm %></span>, por <span class="font-semibold"><%= userName %></span></p>
       </div>
     </div>
     <div class="pt-2 pb-4 md:pt-4 md:pb-6">
@@ -69,5 +69,5 @@
   </div>
 </div>
 
-<%- include('partials/logoutButton.ejs'); %>
+<%- user.role === 'admin' ? include('partials/logoutButtonAdmin.ejs') : include('partials/logoutButtonBasic.ejs'); %>
 <%- include('partials/footer.ejs'); %>

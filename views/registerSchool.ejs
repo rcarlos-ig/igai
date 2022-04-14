@@ -92,5 +92,5 @@
   </div>
 </div>
 
-<%- include('partials/logoutButton.ejs'); %>
+<%- user.role === 'admin' ? include('partials/logoutButtonAdmin.ejs') : include('partials/logoutButtonBasic.ejs'); %>
 <%- include('partials/footer.ejs'); %>

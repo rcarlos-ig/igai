@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const path = require("path");
 
 // Strategy
-LocalStrategy = require("passport-local").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 
 // Load model
 const User = require(path.join(__dirname, "..", "..", "models", "User"));

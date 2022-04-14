@@ -29,13 +29,9 @@
         <% if (hour >= 6) greeting = 'Bom dia';  %>
         <% if (hour >= 12) greeting = 'Boa tarde';  %>
         <% if (hour >= 19) greeting = 'Boa noite';  %>
-        <div class="flex flex-col w-full pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
-          <p class="px-6 md:px-0"><%= greeting %>, <span class="font-medium text-lg text-primary"><%= user.name %></span>.</p>
-          <p class="px-6 md:px-0 md:mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
-          <div class="flex flex-col items-center gap-2 pt-4 px-4 md:flex-row md:justify-start md:gap-4 md:mt-6 <%= user.role !== 'admin' ? 'hidden' : '' %>">
-            <button type="button" class="button button-secondary" onclick="window.location='/register-school'">Cadastrar unidade</button>
-            <button type="button" class="button button-tertiary" onclick="window.location='/log'">Log de sistema</button>
-          </div>    
+        <div class="flex flex-col w-full text-lg pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
+          <p class="px-6 md:px-0"><%= greeting %>, <span class="font-medium text-xl text-primary"><%= user.name %></span>.</p>
+          <p class="px-6 md:px-0 md:mt-6">Há <span class="font-medium text-xl text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-xl text-primary"><%= activeSchools.length %></span> estão ativas.</p>
         </div>
         <div id="chart" class="w-full mt-4 lg:w-1/2">
           <h3>Gráfico de Avaliações</h3>
@@ -48,7 +44,6 @@
         <div class="flex flex-row gap-4 md:w-1/5">
           <input type="checkbox" name="ativa" id="ativa" class="toggle" />
           <label for="ativa">Mostrar inativas?</label>
-          <button type="button" class="button button-primary md:hidden" onclick="window.location='/audit'">Auditar</button>
         </div>
         <div class="relative w-full">
           <input type="text" name="busca" id="busca" class="md:w-4/5" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
@@ -86,9 +81,6 @@
           </tbody>
         </table>
       </div>
-      <div class="flex justify-center mt-8">
-        <button type="button" class="button button-primary" onclick="window.location='/audit'">Auditar</button>
-      </div>
     </div>
   </div>
 </div>
@@ -96,5 +88,5 @@
 <script src="/js/buscaEscola.js"></script>
 
 <%- include('partials/dashboardChart.ejs'); %>
-<%- include('partials/logoutButton.ejs'); %>
+<%- user.role === 'admin' ? include('partials/logoutButtonAdmin.ejs') : include('partials/logoutButtonBasic.ejs'); %>
 <%- include('partials/footer.ejs'); %>
