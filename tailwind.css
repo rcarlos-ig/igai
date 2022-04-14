@@ -576,6 +576,38 @@ img {
 .hamburger {
   width: 32px;
   height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger-line {
+  width: 32px;
+  height: 3px;
+  background-color: rgb(var(--light));
+  border-radius: 4px;
+  transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+.hamburger-line:nth-child(1) {
+  transform: translateY(-7px);
+}
+
+.hamburger-line:nth-child(3) {
+  transform: translateY(7px);
+}
+
+#menu-open:checked + .menu-open-button .hamburger-line:nth-child(1) {
+  transform: translateY(3px) rotate(45deg);
+}
+
+#menu-open:checked + .menu-open-button .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+#menu-open:checked + .menu-open-button .hamburger-line:nth-child(3) {
+  transform: translateY(-3px) rotate(-45deg);
 }
 
 .menu-item-1 {
