@@ -39,8 +39,9 @@
         </div>
         <div class="form-line">
           <label for="password">Senha</label>
-          <div>
+          <div class="relative">
             <input type="password" name="password" id="password" placeholder="Digite sua senha" minlength="4" />
+            <button type="button" role="button" id="senha-olho" class="senha-olho" onclick="senhaOlho()"></button>
             <span class="hidden validation-error" id="passwordError" aria-live="polite"></span>
             <div class="flex justify-end text-sm mt-2">
               <a class="reset-password" href="/resetPassword">Esqueci minha senha</a>
@@ -54,5 +55,7 @@
     </div>
   </div>
 </div>
+
+<script src="/js/senhaOlho.js"></script>
 
 <%- include('partials/footer.ejs'); %>

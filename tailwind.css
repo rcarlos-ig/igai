@@ -357,14 +357,36 @@ input[type="checkbox"].toggle:checked + label::after {
   background: url("../img/delete-hover.svg") no-repeat center;
 }
 
-.limpa-busca:active {
-  transform: scale(0.95);
+.limpa-busca:active,
+.limpa-busca:focus,
+.limpa-busca:focus-within,
+.limpa-busca:focus-visible {
+  @apply ring-offset-0 scale-95;
 }
 
-.limpa-busca:focus {
-  @apply ring-offset-0;
+.senha-olho {
+  @apply absolute top-0 right-0 w-12 h-8 box-content border border-transparent rounded-md transition-all duration-300;
+  background: url("../img/eye.svg") no-repeat center;
 }
 
+.senha-olho:hover {
+  background: url("../img/eye-hover.svg") no-repeat center;
+}
+
+.senha-olho:active,
+.senha-olho:focus,
+.senha-olho:focus-within,
+.senha-olho:focus-visible {
+  @apply ring-offset-0 scale-95;
+}
+
+.senha-olho-riscado {
+  background: url("../img/eye-off.svg") no-repeat center;
+}
+
+.senha-olho-riscado:hover {
+  background: url("../img/eye-off-hover.svg") no-repeat center;
+}
 /* Images */
 img {
   @apply h-fit;
@@ -611,6 +633,10 @@ img {
   opacity: 1;
   transform: translateY(-160%) scale(1);
   transition: all 100ms ease-in-out;
+}
+
+.menu-item[class*=hint--] {
+  @apply absolute; 
 }
 
 @media (min-width: 768px) {
