@@ -36,8 +36,11 @@
     Chart.defaults.font.family = "'Jost', sans-serif";
     Chart.defaults.font.size = 16;
     Chart.defaults.font.lineHeight = 1.25;
-    Chart.defaults.color = "rgb(16, 21, 25)";
+    Chart.defaults.color = "rgb(16, 21, 25)";  
 
+    const html = document.getElementById("html");
+    if (html.classList.contains("dark")) Chart.defaults.color = "rgb(249, 250, 251)";
+    
     const chart = new Chart(ctx, {
       type: "doughnut",
       data: {

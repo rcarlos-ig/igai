@@ -14,7 +14,7 @@
 :root {
   --primary: 5 77 165;
   --dark-primary: 3 31 72;
-  --text: 32 33 49;
+  --text: 31 33 36;
   --light: 240 240 240;
   --accent: 2 182 108;
   --dark-accent: 0 99 28;
@@ -144,7 +144,7 @@ h1 {
 h2,
 h3,
 h4 {
-  @apply font-semibold;
+  @apply font-semibold tracking-wide;
 }
 
 h2 {
@@ -165,7 +165,7 @@ h1 + small {
 
 /* Links */
 .reset-password {
-  @apply relative font-semibold text-primary px-3 overflow-hidden transition-colors duration-300 z-[1];
+  @apply relative font-semibold text-primary tracking-wider px-3 overflow-hidden transition-colors duration-300 z-[1];
 }
 
 .reset-password:hover,
@@ -205,7 +205,11 @@ select {
 }
 
 .validation-error {
-  @apply text-sm text-red-900 font-semibold bg-red-50 border border-red-200 -mt-1 pt-2 px-3 rounded-b-md transition-all duration-300;
+  @apply text-sm text-red-900 font-semibold tracking-wide bg-red-50 border border-red-200 -mt-1 pt-2 px-3 rounded-b-md transition-all duration-300;
+}
+
+.intercalado {
+  @apply bg-gray-200 rounded-md;
 }
 
 /* Tables */
@@ -216,6 +220,10 @@ table {
 td,
 th {
   @apply bg-clip-padding;
+}
+
+th {
+  @apply font-medium tracking-wider;
 }
 
 td {
@@ -293,25 +301,25 @@ input[type="checkbox"].toggle + label::after {
 }
 
 input[type="checkbox"].toggle + label:focus {
-  @apply outline-none ring-2 ring-primary;
+  @apply outline-none ring-2 ring-accent;
 }
 
 input[type="checkbox"].toggle:checked + label::before {
-  @apply bg-primary/50;
+  @apply bg-darkAccent;
 }
 
 input[type="checkbox"].toggle:checked + label::after {
-  @apply bg-primary;
+  @apply bg-accent;
   transform: translateX(1rem);
 }
 
 /* Buttons */
 .button {
-  @apply font-semibold px-4 py-2 rounded-md transition-all duration-300;
+  @apply font-semibold tracking-wider px-4 py-2 rounded-md transition-all duration-300;
 }
 
 .button-primary {
-  @apply text-gray-50 bg-accent;
+  @apply text-light bg-accent;
 }
 
 .button-primary:hover {
@@ -334,8 +342,7 @@ input[type="checkbox"].toggle:checked + label::after {
   @apply text-darkPrimary;
 }
 
-.button:hover,
-.floating-button:hover {
+.button:hover {
   @apply transition-all duration-300 -translate-y-1;
 }
 
@@ -492,7 +499,7 @@ img {
 
 .menu-open-button::before {
   content: "";
-  animation: ring-1 2s linear infinite forwards;
+  animation: ring-1 5s linear infinite forwards;
   position: fixed;
   bottom: 1rem;
   right: 2rem;
@@ -505,7 +512,7 @@ img {
 
 .menu-open-button::after {
   content: "";
-  animation: ring-2 2s linear infinite both;
+  animation: ring-2 5s linear infinite both;
   position: fixed;
   bottom: 1rem;
   right: 2rem;
@@ -580,7 +587,7 @@ img {
   width: 3rem;
   height: 3rem;
   opacity: 0;
-  transform: translateY(-550%) scale(0);
+  transform: translateY(-680%) scale(0);
   transition: all 100ms ease-in-out;
 }
 
@@ -588,7 +595,7 @@ img {
   width: 3rem;
   height: 3rem;
   opacity: 0;
-  transform: translateY(-420%) scale(0);
+  transform: translateY(-550%) scale(0);
   transition: all 100ms 100ms ease-in-out;
 }
 
@@ -596,11 +603,19 @@ img {
   width: 3rem;
   height: 3rem;
   opacity: 0;
-  transform: translateY(-290%) scale(0);
+  transform: translateY(-420%) scale(0);
   transition: all 100ms 200ms ease-in-out;
 }
 
 .menu-item-4 {
+  width: 3rem;
+  height: 3rem;
+  opacity: 0;
+  transform: translateY(-290%) scale(0);
+  transition: all 100ms 300ms ease-in-out;
+}
+
+.menu-item-5 {
   width: 3rem;
   height: 3rem;
   opacity: 0;
@@ -610,33 +625,40 @@ img {
 
 #menu-open:checked ~ .menu-item-1 {
   opacity: 1;
-  transform: translateY(-550%) scale(1);
+  transform: translateY(-680%) scale(1);
   transition: all 100ms 300ms ease-in-out;
 }
 
 #menu-open:checked ~ .menu-item-2,
 .menu-open-button:focus .menu-item-2 {
   opacity: 1;
-  transform: translateY(-420%) scale(1);
+  transform: translateY(-550%) scale(1);
   transition: all 100ms 200ms ease-in-out;
 }
 
 #menu-open:checked ~ .menu-item-3,
 .menu-open-button:focus .menu-item-3 {
   opacity: 1;
-  transform: translateY(-290%) scale(1);
+  transform: translateY(-420%) scale(1);
   transition: all 100ms 100ms ease-in-out;
 }
 
 #menu-open:checked ~ .menu-item-4,
 .menu-open-button:focus .menu-item-4 {
   opacity: 1;
+  transform: translateY(-290%) scale(1);
+  transition: all 100ms ease-in-out;
+}
+
+#menu-open:checked ~ .menu-item-5,
+.menu-open-button:focus .menu-item-5 {
+  opacity: 1;
   transform: translateY(-160%) scale(1);
   transition: all 100ms ease-in-out;
 }
 
-.menu-item[class*=hint--] {
-  @apply absolute; 
+.menu-item[class*="hint--"] {
+  @apply absolute;
 }
 
 @media (min-width: 768px) {
@@ -661,8 +683,12 @@ img {
 
 @keyframes ring-1 {
   0% {
-    transform: scale(1);
     opacity: 1;
+    transform: scale(1);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
   }
   100% {
     opacity: 0;
@@ -675,7 +701,7 @@ img {
     transform: scale(1);
     opacity: 1;
   }
-  50% {
+  80% {
     transform: scale(1);
     opacity: 1;
   }
@@ -683,4 +709,186 @@ img {
     opacity: 0;
     transform: scale(1.5);
   }
+}
+
+/* Dark Mode */
+html.dark {
+  /* Variáveis */
+  --primary: 0 127 206;
+  --background: 13 13 13;
+  --text: 249 250 251;
+  --light: 240 240 240;
+  --accent: 2 182 108;
+  --dark-accent: 0 99 28;
+  --error: 178 41 41;
+  --success: 28 116 63;
+  background-color: rgb(var(--background));
+}
+
+/* Propriedades especiais */
+/* Change Autocomplete styles in Chrome*/
+html.dark input:-webkit-autofill,
+html.dark input:-webkit-autofill:hover,
+html.dark input:-webkit-autofill:focus,
+html.dark textarea:-webkit-autofill,
+html.dark textarea:-webkit-autofill:hover,
+html.dark textarea:-webkit-autofill:focus,
+html.dark select:-webkit-autofill,
+html.dark select:-webkit-autofill:hover,
+html.dark select:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgb(var(--text));
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+html.dark ::selection {
+  @apply bg-light text-primary;
+}
+
+/* Seções */
+html.dark header {
+  background-color: rgb(5, 77, 165);
+}
+
+html.dark footer {
+  @apply border-t-gray-700;
+}
+
+html.dark footer img {
+  filter: unset;
+}
+
+html.dark .success {
+  @apply bg-green-100;
+  color: rgb(var(--success));
+  border: 1px solid rgb(var(--success));
+}
+
+html.dark .error {
+  @apply bg-red-200;
+  color: rgb(var(--error));
+  border: 1px solid rgb(var(--error));
+}
+
+/* Itens */
+/* Títulos */
+html.dark h1 {
+  filter: unset;
+}
+
+html.dark h1 + small {
+  @apply text-gray-400;
+}
+
+/* Forms */
+html.dark input[type="text"],
+html.dark input[type="email"],
+html.dark input[type="password"],
+html.dark input[type="number"],
+html.dark select {
+  @apply text-primary bg-gray-900 border border-gray-700 focus:bg-gray-700 focus:text-text focus:border-primary invalid:text-red-900 invalid:bg-red-100 invalid:border invalid:border-red-500 invalid:focus:text-red-900 invalid:focus:bg-red-100 invalid:focus:border invalid:focus:border-red-500;
+}
+
+html.dark .required {
+  color: rgb(var(--error));
+}
+
+html.dark .validation-error {
+  @apply bg-red-200;
+  color: rgb(var(--error));
+  border: 1px solid rgb(var(--error));
+}
+
+html.dark .intercalado {
+  @apply bg-gray-700;
+}
+
+/* Tables */
+html.dark td {
+  @apply bg-gray-800;
+}
+
+html.dark thead tr:first-child th:not(:first-child):not(:last-child) {
+  @apply border-x border-x-gray-600;
+}
+
+html.dark thead tr:nth-child(2n) th {
+  @apply border-gray-600;
+}
+
+html.dark tbody tr td:not(:first-child):not(:last-child) {
+  @apply border-gray-600;
+}
+
+html.dark tbody tr td:first-child,
+html.dark tbody tr td:last-child {
+  @apply border-gray-600;
+}
+
+html.dark .zebrado {
+  @apply bg-gray-700;
+}
+
+html.dark .inativa td {
+  @apply bg-gray-500;
+}
+
+html.dark th.auditado {
+  @apply bg-darkAccent;
+}
+
+html.dark .auditado {
+  @apply bg-accent/20;
+}
+
+/* Buttons */
+html.dark .button-secondary:hover {
+  @apply border-primary text-primary;
+}
+
+html.dark .button-tertiary:hover {
+  @apply text-primary;
+}
+
+html.dark .limpa-busca:hover {
+  background: url("../img/delete-dark-hover.svg") no-repeat center;
+}
+
+html.dark .senha-olho:hover {
+  background: url("../img/eye-dark-hover.svg") no-repeat center;
+}
+
+html.dark .senha-olho-riscado:hover {
+  background: url("../img/eye-off-dark-hover.svg") no-repeat center;
+}
+
+/* Images */
+html.dark .img404 {
+  filter: unset;
+}
+
+/* Page Load animation */
+html.dark .loader-wrapper {
+  @apply bg-gray-900;
+}
+
+/* Modal de saída */
+html.dark .logout-modal {
+  background-color: rgb(var(--background));
+  color: rgb(var(--text));
+  box-shadow: unset;
+}
+
+html.dark .logout-modal::backdrop {
+  @apply bg-gray-600/90 backdrop-blur-sm;
+}
+
+/* Gráfico do dashboard */
+html.dark #dashboardChart {
+  filter: unset;
+}
+
+/* Floating Menu */
+html.dark .menu-open-button,
+html.dark .menu-item {
+  box-shadow: unset;
 }

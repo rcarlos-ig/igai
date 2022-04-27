@@ -8,6 +8,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const { loginCheck } = require("./controllers/auth/passport");
 const compression = require("compression");
+const bodyParser = require("body-parser");
 
 // DotEnv config
 dotenv.config();
@@ -54,11 +55,14 @@ app.use(
     store: store,
     secret: process.env.SECRET,
     saveUninitialized: false,
-    resave: false,
+    resave: true,
     rolling: true,
     cookie: { maxAge: 10 * 60 * 1000 }, // Minutos * Segundos * Milisegundos
   })
 );
+
+// Body parser
+app.use(bodyParser.json());
 
 // Passport authentication
 loginCheck(passport);

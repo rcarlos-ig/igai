@@ -14,6 +14,7 @@ const {
   requestResetPasswordView,
   resetPassword,
   resetPasswordView,
+  setUserTheme,
 } = require("../controllers/loginController");
 const {
   registerSchool,
@@ -271,5 +272,8 @@ router.get("/create-token", isAdmin, createToken);
 
 // Log
 router.get("/log", protectRoute, logView);
+
+// User theme
+router.post("/user-theme", protectRoute, setUserTheme);
 
 module.exports = router;

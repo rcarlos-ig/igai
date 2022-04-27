@@ -84,10 +84,13 @@ const registerView = (req, res) => {
     token: req.params.token,
   }).then((token) => {
     if (token) {
-      res.render("register", { token, errors: [""] });
+      res.render("register", { token, errors: [""], user: req.user });
     } else {
       console.log("Invalid link or expired.");
-      res.render("login", { error: "Link inválido ou expirado." });
+      res.render("login", {
+        error: "Link inválido ou expirado.",
+        user: req.user,
+      });
     }
   });
 };
@@ -119,6 +122,7 @@ const registerUser = (req, res) => {
           email,
           password,
           role: "basic",
+          theme: "light",
         });
         //Password Hashing
         bcrypt.genSalt(10, (err, salt) =>
@@ -155,7 +159,7 @@ const loginUser = (req, res) => {
 };
 
 // GET Request for new password page
-const requestResetPasswordView = (req, res) => {
+const requestResetPasswordView = (_req, res) => {
   res.render("requestResetPassword", {});
 };
 
@@ -255,6 +259,21 @@ const resetPassword = (req, res) => {
   });
 };
 
+// POST request for setting the user theme
+const setUserTheme = (req, _res) => {
+  const { userID, theme } = req.body;
+
+
+  User.findById(userID).then((user) => {
+    if (user) {
+      user.theme = theme;
+      user.save();
+    } else {
+      console.log("Invalid user ID.");
+    }
+  });
+};
+
 module.exports = {
   logout,
   createToken,
@@ -266,4 +285,5 @@ module.exports = {
   requestResetPasswordView,
   resetPassword,
   resetPasswordView,
+  setUserTheme,
 };

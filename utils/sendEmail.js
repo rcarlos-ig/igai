@@ -16,9 +16,9 @@ const sendEmail = async (email, html) => {
   
 
     const info = await transporter.sendMail({
-      from: `SEJIN - IGAI ${process.env.MAIL_USER}`,
+      from: `SEJIN - IGAI ${process.env.MAIL_SENDER}`,
       to: email,
-      subject: "Resetar senha.",
+      subject: "Redefinição de senha.",
       html: html,
     });
 
