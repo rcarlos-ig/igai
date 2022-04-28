@@ -1,6 +1,9 @@
 // Dark mode toggle
+if (typeof html === undefined) {
+  const html = document.getElementById("html");
+}
+
 const darkModeToggleButton = document.querySelector("#darkModeToggle");
-const html = document.getElementById("html");
 const darkIcon = document.getElementById("dark");
 const lightIcon = document.getElementById("light");
 
@@ -30,10 +33,10 @@ function setUserTheme(theme) {
   fetch("/user-theme", {
     method: "post",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ "userID": userID, "theme": theme }),
+    body: JSON.stringify({ userID: userID, theme: theme }),
   });
 }
 

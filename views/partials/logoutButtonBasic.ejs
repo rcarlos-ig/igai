@@ -34,7 +34,7 @@
     id="darkModeToggle"
     aria-label="Modo claro/escuro"
   >
-    <span class="icon" id="dark">
+    <span class="icon <%= user.theme === 'dark' ? 'hidden' : '' %>" id="dark">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -50,7 +50,7 @@
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
       </svg>
     </span>
-    <span class="icon hidden" id="light">
+    <span class="icon <%= user.theme === 'light' ? 'hidden' : '' %>" id="light">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

@@ -14,6 +14,31 @@
       document.documentElement.classList.replace("no-js", "js");
     </script>
 
+    <!-- Theming -->
+    <% if (locals.user) { %>
+      <script>
+        const userTheme = "<%= user.theme %>";
+        document.cookie = "theme=" + userTheme;
+      </script>
+    <% } else { %>
+      <script>
+        const html = document.getElementById("html");
+        const cookies = document.cookie;
+        const cookiesArray = cookies.split(";");
+        for (let i = 0; i < cookiesArray.length; i++) {
+          const cookie = cookiesArray[i];
+          if (cookie.indexOf("theme") >= 0) {
+            const theme = cookie.substr(6);
+            if (theme === "dark") {
+              html.classList.add("dark")
+            } else {
+              html.classList.remove("dark")
+            };
+          }
+        }
+      </script>
+    <% } %>
+
     <!-- Google Fonts -->
     <link
       rel="preload"
