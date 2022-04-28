@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   role: String,
-  date: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
@@ -25,6 +25,7 @@ const UserSchema = new mongoose.Schema({
     default: 0,
   },
   theme: String,
+  lastLogin: Date,
 });
 
 const User = mongoose.model("User", UserSchema);

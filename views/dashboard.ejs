@@ -31,6 +31,24 @@
         <% if (hour >= 19) greeting = 'Boa noite';  %>
         <div class="flex flex-col w-full text-lg pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
           <p class="px-6 md:px-0"><%= greeting %>, <span class="font-medium text-xl text-primary"><%= user.name %></span>.</p>
+          <p class="px-4 md:px-0 md:mt-4">E-mail: <span class="font-medium text-primary"><%= user.email %></span></p>
+          <p>Tipo de acesso: <span class="font-medium text-primary"><%= user.role === 'admin' ? 'Completo' : 'Visualização' %></span></p>
+          <p>Nº de acessos: <span class="font-medium text-primary"><%= user.accesses %></span></p>
+          <p>Último acesso: <span class="font-medium text-primary"><%= user.lastLogin.toLocaleString("default", {
+            day:"2-digit",
+            month: "2-digit",
+            year: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            }) %></span></p>
+          <p>Tema: <span class="font-medium text-primary" id="dashThemeText"><%= user.theme === 'dark' ? 'Escuro' : 'Claro' %></span></p>
+          <p>Cadastrado em: <span class="font-medium text-primary"><%= user.createdAt.toLocaleString("default", {
+            day:"2-digit",
+            month: "2-digit",
+            year: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            }) %></span></p>
           <p class="px-6 md:px-0 md:mt-6">Há <span class="font-medium text-xl text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-xl text-primary"><%= activeSchools.length %></span> estão ativas.</p>
         </div>
         <div id="chart" class="w-full mt-4 lg:w-1/2">
