@@ -28,6 +28,10 @@ const {
 } = require("../controllers/schoolController");
 const { logging, logView } = require("../controllers/logController");
 const { dashboardView } = require("../controllers/dashboardController");
+const {
+  chartsDefaultView,
+  // getChartsData,
+} = require("../controllers/chartsController");
 const { protectRoute, isAdmin } = require("../controllers/auth/protect");
 
 // Set the Router
@@ -225,7 +229,7 @@ router.post(
   resetPassword
 );
 
-//Edit School
+// Edit School
 router.get("/edit-school", protectRoute, editSchoolView);
 router.post(
   "/edit-school",
@@ -263,7 +267,7 @@ router.post(
   editSchool
 );
 
-//Audit Schools
+// Audit Schools
 router.get("/audit", protectRoute, auditSchoolView);
 router.post("/audit", protectRoute, auditSchool);
 
@@ -275,5 +279,11 @@ router.get("/log", protectRoute, logView);
 
 // User theme
 router.post("/user-theme", protectRoute, setUserTheme);
+
+// Charts
+router.get("/charts", protectRoute, chartsDefaultView);
+
+// Charts data API
+// router.post("/charts-data", protectRoute, getChartsData);
 
 module.exports = router;

@@ -587,7 +587,7 @@ img {
   width: 3rem;
   height: 3rem;
   opacity: 0;
-  transform: translateY(-680%) scale(0);
+  transform: translateY(-810%) scale(0);
   transition: all 100ms ease-in-out;
 }
 
@@ -595,11 +595,19 @@ img {
   width: 3rem;
   height: 3rem;
   opacity: 0;
+  transform: translateY(-680%) scale(0);
+  transition: all 100ms ease-in-out;
+}
+
+.menu-item-3 {
+  width: 3rem;
+  height: 3rem;
+  opacity: 0;
   transform: translateY(-550%) scale(0);
   transition: all 100ms 100ms ease-in-out;
 }
 
-.menu-item-3 {
+.menu-item-4 {
   width: 3rem;
   height: 3rem;
   opacity: 0;
@@ -607,7 +615,7 @@ img {
   transition: all 100ms 200ms ease-in-out;
 }
 
-.menu-item-4 {
+.menu-item-5 {
   width: 3rem;
   height: 3rem;
   opacity: 0;
@@ -615,7 +623,7 @@ img {
   transition: all 100ms 300ms ease-in-out;
 }
 
-.menu-item-5 {
+.menu-item-6 {
   width: 3rem;
   height: 3rem;
   opacity: 0;
@@ -623,35 +631,43 @@ img {
   transition: all 100ms 300ms ease-in-out;
 }
 
-#menu-open:checked ~ .menu-item-1 {
+#menu-open:checked ~ .menu-item-1,
+.menu-open-button:focus .menu-item-1 {
   opacity: 1;
-  transform: translateY(-680%) scale(1);
-  transition: all 100ms 300ms ease-in-out;
+  transform: translateY(-810%) scale(1);
+  transition: all 100ms 400ms ease-in-out;
 }
 
 #menu-open:checked ~ .menu-item-2,
 .menu-open-button:focus .menu-item-2 {
   opacity: 1;
-  transform: translateY(-550%) scale(1);
-  transition: all 100ms 200ms ease-in-out;
+  transform: translateY(-680%) scale(1);
+  transition: all 100ms 300ms ease-in-out;
 }
 
 #menu-open:checked ~ .menu-item-3,
 .menu-open-button:focus .menu-item-3 {
   opacity: 1;
-  transform: translateY(-420%) scale(1);
-  transition: all 100ms 100ms ease-in-out;
+  transform: translateY(-550%) scale(1);
+  transition: all 100ms 200ms ease-in-out;
 }
 
 #menu-open:checked ~ .menu-item-4,
 .menu-open-button:focus .menu-item-4 {
   opacity: 1;
-  transform: translateY(-290%) scale(1);
-  transition: all 100ms ease-in-out;
+  transform: translateY(-420%) scale(1);
+  transition: all 100ms 100ms ease-in-out;
 }
 
 #menu-open:checked ~ .menu-item-5,
 .menu-open-button:focus .menu-item-5 {
+  opacity: 1;
+  transform: translateY(-290%) scale(1);
+  transition: all 100ms ease-in-out;
+}
+
+#menu-open:checked ~ .menu-item-6,
+.menu-open-button:focus .menu-item-6 {
   opacity: 1;
   transform: translateY(-160%) scale(1);
   transition: all 100ms ease-in-out;

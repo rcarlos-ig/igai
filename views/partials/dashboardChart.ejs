@@ -2,29 +2,25 @@
 
 <script type="text/javascript">
   window.onload = function () {
-    const ctx = document.getElementById("dashboardChart").getContext("2d");
+    const ctx = document.getElementById("dashboardChart");
 
     const labels = "<%= chartLabels %>";
     const data = "<%= chartData %>";
 
-    function total() {
-      let sum = 0;
+    function soma () {
       const values = data.split(",");
-
-      values.forEach((value) => {
-        sum += Number(value);
+      let subtotal = 0;
+      values.forEach(value => {
+        subtotal += Number(value);
       });
-
-      return sum;
-    }
-
-    const soma = total();
+      return subtotal;
+    };
 
     const percentage = (tooltipItems) => {
       let percentage = 0;
 
       tooltipItems.forEach(function (tooltipItem) {
-        percentage = Number(tooltipItem.formattedValue) / soma;
+        percentage = Number(tooltipItem.formattedValue) / soma();
       });
 
       return percentage.toLocaleString("default", {
@@ -36,11 +32,12 @@
     Chart.defaults.font.family = "'Jost', sans-serif";
     Chart.defaults.font.size = 16;
     Chart.defaults.font.lineHeight = 1.25;
-    Chart.defaults.color = "rgb(16, 21, 25)";  
+    Chart.defaults.color = "rgb(16, 21, 25)";
 
     const html = document.getElementById("html");
-    if (html.classList.contains("dark")) Chart.defaults.color = "rgb(249, 250, 251)";
-    
+    if (html.classList.contains("dark"))
+      Chart.defaults.color = "rgb(249, 250, 251)";
+
     const chart = new Chart(ctx, {
       type: "doughnut",
       data: {
@@ -50,11 +47,11 @@
             label: "Avaliações por tipo",
             data: data.split(","),
             backgroundColor: [
-              "rgba(209, 213, 219, 1)",
-              "rgba(5, 77, 165, 1)",
-              "rgba(5, 77, 165, .8)",
-              "rgba(5, 77, 165, .6)",
-              "rgba(5, 77, 165, .4)",
+              "rgb(149, 195, 252)",
+              "rgb(78, 155, 250)",
+              "rgb(8, 116, 247)",
+              "rgb(5, 82, 177)",
+              "rgb(3, 49, 106)",
               "rgba(185, 28, 28, 1)",
             ],
             hoverOffset: 20,

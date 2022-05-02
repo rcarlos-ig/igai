@@ -6,7 +6,10 @@ if (typeof html === undefined) {
 const darkModeToggleButton = document.querySelector("#darkModeToggle");
 const darkIcon = document.getElementById("dark");
 const lightIcon = document.getElementById("light");
-const dashThemeText = document.getElementById("dashThemeText");
+
+let dashThemeText = document.getElementById("dashThemeText");
+if (!dashThemeText) dashThemeText = undefined;
+
 
 if (darkModeToggleButton !== null) {
   darkModeToggleButton.addEventListener("click", function () {
@@ -14,19 +17,25 @@ if (darkModeToggleButton !== null) {
       setUserTheme("light");
       html.classList.remove("dark");
       fadeToggle(darkIcon, lightIcon);
-      dashThemeText.textContent = "Claro"
       if (typeof Chart !== undefined) {
         Chart.defaults.color = "rgb(16, 21, 25)";
-        Chart.instances["0"].update();
+        Chart.instances[0].options.scales["x"].ticks.color = Chart.defaults.color;
+        Chart.instances[0].update();
+      }
+      if (typeof dashThemeText !== undefined) {
+        dashThemeText.textContent = "Claro";
       }
     } else {
       setUserTheme("dark");
       html.classList.add("dark");
       fadeToggle(lightIcon, darkIcon);
-      dashThemeText.textContent = "Escuro"
       if (typeof Chart !== undefined) {
         Chart.defaults.color = "rgb(249, 250, 251)";
-        Chart.instances["0"].update();
+        Chart.instances[0].options.scales["x"].ticks.color = Chart.defaults.color;
+        Chart.instances[0].update();
+      }
+      if (typeof dashThemeText !== undefined) {
+        dashThemeText.textContent = "Escuro";
       }
     }
   });

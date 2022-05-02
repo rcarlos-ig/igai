@@ -123,5 +123,4 @@ $(function () {
   $(window).on("load", function() {
     $(".loader-trigger").addClass("hidden");
   })
-
 });
