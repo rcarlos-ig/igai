@@ -16,6 +16,12 @@ const {
 
 // Logout
 const logout = (req, res) => {
+  User.findById(req.user._id).then((user) => {
+    if (user) {
+      user.lastLogin = new Date;
+      user.save()
+    }
+  });
   req.logout();
   req.session.destroy();
   res.redirect("/login");

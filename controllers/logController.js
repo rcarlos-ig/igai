@@ -1,5 +1,6 @@
 // MongoDB Schemas
 const Log = require("../models/Log");
+const School = require("../models/Schools");
 const User = require("../models/User");
 
 // Get log
@@ -11,7 +12,12 @@ const getLog = async () => {
     });
 };
 
+// POST log
 const logging = (req, _res, next) => {
+  School.findOne({codigo: req.body.codigo}).then(school => {
+    req.body.nome = school.nome;
+  });
+
   const newLog = new Log({
     user: req.user.id,
     action: req.action,
@@ -25,6 +31,7 @@ const logging = (req, _res, next) => {
     .catch((err) => console.log(err));
 };
 
+// GET log
 const logView = async (req, res) => {
   let entries = await getLog();
   let users = [];

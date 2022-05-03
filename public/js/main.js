@@ -116,11 +116,9 @@ $(function () {
   }
 
   // Toggle the Page Load animation
-  $(window).on("beforeunload", function() {
-    $(".loader-trigger").removeClass("hidden");
-  })
-  
-  $(window).on("load", function() {
-    $(".loader-trigger").addClass("hidden");
-  })
+  $(window).on("unload", function () {
+    $(".loader-trigger").toggle(true);
+  });
+
+  $(".loader-trigger").toggle(false);
 });

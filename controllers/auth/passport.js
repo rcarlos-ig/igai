@@ -34,7 +34,6 @@ const loginCheck = (passport) => {
               if (error) throw error;
               if (isMatch) {
                 user.accesses += 1;
-                user.lastLogin = new Date;
                 user.save();
                 return done(null, user);
               } else {
