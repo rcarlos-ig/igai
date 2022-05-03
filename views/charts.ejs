@@ -23,6 +23,8 @@
             <%= fields[i][0] %>
           </option>
           <% } %>
+          <option value="ocupacao">Ocupação</option>
+          <option value="avaliacao">IGAI/Avaliação</option>
         </select>
       </div>
       <div class="flex justify-end gap-4 mt-4">
@@ -74,15 +76,6 @@
     if (html.classList.contains("dark"))
       Chart.defaults.color = "rgb(249, 250, 251)";
 
-    const total = (tooltipItems) => {
-      let soma = 0;
-
-      tooltipItems.forEach(item => {
-        soma += item.raw;
-      })
-      return soma;
-    };
-
     const options = {
         locale: "pt-BR",
         responsive: true,
@@ -113,7 +106,7 @@
         maintainAspectRatio: false,
       }
 
-    const chart = new Chart(ctx, {
+    let chart = new Chart(ctx, {
       type: "bar",
       data: data,
       options: options,
@@ -124,116 +117,240 @@
     });
     chart.update();
 
-    function updateChart() {
-      const labels = [
+    function updateChart() {      
+      const field = document.getElementById("fieldSelect").value;
+      
+      if (field === "ocupacao") {
+        let ocupacoes = [];
+
+        activeSchools.forEach(school => {
+          ocupacoes.push(school.ocupacao);
+        });
+
+        const labels = [...new Set(ocupacoes)];
+        
+        let datasetValues = [];                    
+
+        labels.forEach(label => {
+          datasetValues.push(0);
+        })
+
+        activeSchools.forEach(school => {
+          for (let index = 0; index < labels.length; index++) {
+            if (school.ocupacao === labels[index]) {
+              datasetValues[index] += 1;
+            }         
+          }
+        })
+
+        const datasets = [{
+          label: "Ocupações por tipo.",
+          data: datasetValues,
+          backgroundColor: colors,
+        }];
+
+        const data = {
+          labels: labels,
+          datasets: datasets,
+        };
+
+        const options = {
+          locale: "pt-BR",
+          responsive: true,
+          layout: {
+            padding: 15,
+          },
+          interaction: {
+            mode: "index",
+          },
+          plugins: {
+            legend: {
+              position: "bottom",
+            },
+          },
+          maintainAspectRatio: false,
+        }
+
+        chart.destroy();
+        chart = new Chart(ctx, {
+          type: "doughnut",
+          data: data,
+          options: options,
+        });
+        chart.update();
+
+        document.getElementById("graphTitle").textContent = field;
+      } else if (field === "avaliacao") {
+        const labels = [
+          "Não Avaliado",
+          "Ótimo",
+          "Bom",
+          "Regular",
+          "Ruim",
+          "Péssimo"
+        ];
+        
+        let datasetValues = [0, 0, 0, 0, 0, 0];
+
+        activeSchools.forEach(school => {
+          for (let index = 0; index < labels.length; index++) {
+            if (school.avaliacao === labels[index]) {
+              datasetValues[index] += 1;
+            }         
+          }
+        })
+
+        const datasets = [{
+          label: "Avaliações por tipo.",
+          data: datasetValues,
+          backgroundColor: colors,
+        }];
+
+        const data = {
+          labels: labels,
+          datasets: datasets,
+        };
+
+        const options = {
+          locale: "pt-BR",
+          responsive: true,
+          layout: {
+            padding: 15,
+          },
+          interaction: {
+            mode: "index",
+          },
+          plugins: {
+            legend: {
+              position: "bottom",
+            },
+          },
+          maintainAspectRatio: false,
+        }
+
+        chart.destroy();
+        chart = new Chart(ctx, {
+          type: "doughnut",
+          data: data,
+          options: options,
+        });
+        chart.update();
+
+        document.getElementById("graphTitle").textContent = field;
+      } else {
+        const labels = [
         "Não se aplica",
         "Nota 1",
         "Nota 2",
         "Nota 3",
         "Nota 4",
         "Nota 5",
-      ];
-      const field = document.getElementById("fieldSelect").value;
-      const datasets = [];
+        ];
+        const datasets = [];
 
-      for (const key in activeSchools[0][field]) {
-        if (Object.hasOwnProperty.call(activeSchools[0][field], key)) {
-          datasets.push({label: key, data: [0, 0, 0, 0, 0, 0]})
-        }
-      };
-
-      activeSchools.forEach(school => {        
-        datasets.forEach(data => {
-          const label = data.label;
-          switch (school[field][label]) {
-            case 1:
-              data.data[1] += 1;
-              break;
-  
-            case 2:
-              data.data[2] += 1;
-              break;
-  
-            case 3:
-              data.data[3] += 1;
-              break;
-  
-            case 4:
-              data.data[4] += 1;
-              break;
-  
-            case 5:
-              data.data[5] += 1;
-              break;
-  
-            default:
-              data.data[0] += 1;
-              break;
+        for (const key in activeSchools[0][field]) {
+          if (Object.hasOwnProperty.call(activeSchools[0][field], key)) {
+            datasets.push({label: key, data: [0, 0, 0, 0, 0, 0]})
           }
+        };
+
+        activeSchools.forEach(school => {        
+          datasets.forEach(data => {
+            const label = data.label;
+            switch (school[field][label]) {
+              case 1:
+                data.data[1] += 1;
+                break;
+    
+              case 2:
+                data.data[2] += 1;
+                break;
+    
+              case 3:
+                data.data[3] += 1;
+                break;
+    
+              case 4:
+                data.data[4] += 1;
+                break;
+    
+              case 5:
+                data.data[5] += 1;
+                break;
+    
+              default:
+                data.data[0] += 1;
+                break;
+            }
+          })
+        });
+
+        const data = {
+          labels: labels,
+          datasets: datasets,
+        };
+
+        const originalText = [
+          "codigo",
+          "ocupacao",
+          "avaliacao",
+          "instalacoes",
+          "eletricas",
+          "hidraulicas",
+          "sanitarias",
+          "impermeabilizacao",
+          "predio",
+          "reservatorio",
+          "cercaTela",
+          "iluminacao",
+          "calcada"
+        ];
+
+        const replacedText = [
+          "código",
+          "ocupação",
+          "avaliação",
+          "instalações",
+          "elétricas",
+          "hidráulicas",
+          "sanitárias",
+          "impermeabilização",
+          "prédio",
+          "reservatório",
+          "Cerca/Tela",
+          "iluminação",
+          "calçada"
+        ];
+
+        originalText.forEach((text, index) => {
+          data.datasets.forEach(dataset => {
+            if (dataset.label === text) dataset.label = replacedText[index];
+          })
         })
-      });
 
-      const data = {
-        labels: labels,
-        datasets: datasets,
-      };
-
-      const originalText = [
-        "codigo",
-        "ocupacao",
-        "avaliacao",
-        "instalacoes",
-        "eletricas",
-        "hidraulicas",
-        "sanitarias",
-        "impermeabilizacao",
-        "predio",
-        "reservatorio",
-        "cercaTela",
-        "iluminacao",
-        "calcada"
-      ];
-
-      const replacedText = [
-        "código",
-        "ocupação",
-        "avaliação",
-        "instalações",
-        "elétricas",
-        "hidráulicas",
-        "sanitárias",
-        "impermeabilização",
-        "prédio",
-        "reservatório",
-        "Cerca/Tela",
-        "iluminação",
-        "calçada"
-      ];
-
-      originalText.forEach((text, index) => {
         data.datasets.forEach(dataset => {
-          if (dataset.label === text) dataset.label = replacedText[index];
+          dataset.label = dataset.label.charAt(0).toUpperCase() + dataset.label.slice(1);
         })
-      })
+        
+        chart.destroy();
+        chart = new Chart(ctx, {
+          type: "bar",
+          data: data,
+          options: options,
+        });
+        chart.data.datasets.forEach((dataset, index) => {
+          dataset.backgroundColor = colors[index];
+        });
+        chart.update();
 
-      data.datasets.forEach(dataset => {
-        dataset.label = dataset.label.charAt(0).toUpperCase() + dataset.label.slice(1);
-      })
-      
-      chart.data = data;
-      chart.options = options;
-      chart.data.datasets.forEach((dataset, index) => {
-        dataset.backgroundColor = colors[index];
-      });
-      chart.update();
+        document.getElementById("graphTitle").textContent = field;
 
-      document.getElementById("graphTitle").textContent = field;
-
-      originalText.forEach((text, index) => {        
-        if (document.getElementById("graphTitle").textContent === text) {
-          document.getElementById("graphTitle").textContent = replacedText[index];
-        }        
-      })
+        originalText.forEach((text, index) => {        
+          if (document.getElementById("graphTitle").textContent === text) {
+            document.getElementById("graphTitle").textContent = replacedText[index];
+          }        
+        })
+      }
     }
   </script>
 <% } %>
