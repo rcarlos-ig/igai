@@ -27,7 +27,7 @@ function calculateIGE(data) {
 function calculateAvaliacao(indicador) {
   let avaliacao = "Não Avaliado";
 
-  if (indicador > 0) {
+  if (indicador >= 0) {
     avaliacao = "Ótimo";
 
     if (indicador > 3) {

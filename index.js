@@ -57,7 +57,10 @@ app.use(
     saveUninitialized: false,
     resave: true,
     rolling: true,
-    cookie: { maxAge: 10 * 60 * 1000 }, // Minutos * Segundos * Milisegundos
+    cookie: { 
+      maxAge: 10 * 60 * 1000,
+      sameSite: "strict",
+    }, // Minutos * Segundos * Milisegundos
   })
 );
 

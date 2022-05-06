@@ -15,6 +15,9 @@
           <select name="auditSort" id="auditSort" class="capitalize w-full" aria-label="Selecione um campo para ordenação.">
             <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
             <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
+            <option value="bairro" <%= field === 'bairro' ? 'selected' : ''; %> >Bairro</option>
+            <option value="ocupacao" <%= field === 'ocupacao' ? 'selected' : ''; %> >Ocupação</option>
+            <option value="reservatorio" <%= field === 'reservatorio' ? 'selected' : ''; %> >Reservatório</option>
             <% for (let i = 4; i < 12; i++) { %>
               <% for (let key in fields[i][1]) { %>
                 <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + '.' + key ? 'selected' : '' %> ><%= fields[i][0] %>: <%= key %></option>
@@ -45,7 +48,7 @@
             <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
             <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
             <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
-            <th scope="col" rowspan="2">Bairro</th>
+            <th scope="col" rowspan="2" class="<%= field === "bairro" ? 'auditado' : '' %>">Bairro</th>
             <th scope="col" rowspan="2" class="<%= field === "indicador" ? 'auditado' : '' %>">IGAI</th>
             <th scope="col" rowspan="2" class="<%= field === "indicador" ? 'auditado' : '' %>">Avaliação</th>
             <% for (let i = 4; i < 12; i++) { %>
@@ -57,7 +60,8 @@
                 <%= fields[i][0] %>
               </th>              
             <% } %>
-            <th class="capitalize" scope="col" rowspan="2">Reservatório</th>
+            <th class="capitalize <%= field === "ocupacao" ? 'auditado' : '' %>" scope="col" rowspan="2">Ocupação</th>
+            <th class="capitalize <%= field === "reservatorio" ? 'auditado' : '' %>" scope="col" rowspan="2">Reservatório</th>
           </tr>
           <tr>
             <% for (let i = 4; i < 12; i++) { %>
@@ -75,7 +79,7 @@
             <td class="sticky left-0 min-w-[3rem] text-left z-[1]"><%= count %></td>
             <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
             <td class="sticky left-12 text-left z-[1] unidade"><%= school.nome %></td>
-            <td><%= school.bairro %></td>
+            <td class="<%= field === "bairro" ? 'auditado' : '' %>"><%= school.bairro %></td>
             <td class="<%= field === "indicador" ? 'auditado' : '' %>">
               <%= school.indicador.toLocaleString("default", {style: "decimal",
               maximumFractionDigits: 1}) %>
@@ -114,6 +118,7 @@
                 </td>
               <% } %>
             <% } %>
+            <td class="<%= field === "ocupacao" ? 'auditado' : '' %>"><%= school.ocupacao %></td>
             <td class="<%= field === "reservatorio" ? 'auditado' : '' %>"><%= school.reservatorio %></td>
           </tr>
           <% }) %>
