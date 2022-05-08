@@ -4,38 +4,36 @@
   <div class="w-full">
     <h2>Auditar unidades</h2>
     <div class="mt-8 mx-auto w-[320px] sm:w-1/2 lg:w-1/4">
-      <form action="<%= `/audit?sort=${field}&order=${order}` %>" method="post" id="auditForm">
-        <div class="form-line sm:hidden">
-          <select name="auditSortMobile" id="auditSortMobile" class="capitalize w-full" aria-label="Selecione um campo para ordenação.">
-            <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
-            <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
-          </select>
-        </div>
-        <div class="form-line hidden w-full sm:inline-block">
-          <select name="auditSort" id="auditSort" class="capitalize w-full" aria-label="Selecione um campo para ordenação.">
-            <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
-            <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
-            <option value="bairro" <%= field === 'bairro' ? 'selected' : ''; %> >Bairro</option>
-            <option value="ocupacao" <%= field === 'ocupacao' ? 'selected' : ''; %> >Ocupação</option>
-            <option value="reservatorio" <%= field === 'reservatorio' ? 'selected' : ''; %> >Reservatório</option>
-            <% for (let i = 4; i < 12; i++) { %>
-              <% for (let key in fields[i][1]) { %>
-                <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + '.' + key ? 'selected' : '' %> ><%= fields[i][0] %>: <%= key %></option>
-              <% } %>
+      <div class="form-line sm:hidden">
+        <select name="auditSortMobile" id="auditSortMobile" class="capitalize w-full" aria-label="Selecione um campo para ordenação." onchange="mobileAuditField()">
+          <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
+          <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
+        </select>
+      </div>
+      <div class="form-line hidden w-full sm:inline-block">
+        <select name="auditSort" id="auditSort" class="capitalize w-full" aria-label="Selecione um campo para ordenação.">
+          <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
+          <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
+          <option value="bairro" <%= field === 'bairro' ? 'selected' : ''; %> >Bairro</option>
+          <option value="ocupacao" <%= field === 'ocupacao' ? 'selected' : ''; %> >Ocupação</option>
+          <option value="reservatorio" <%= field === 'reservatorio' ? 'selected' : ''; %> >Reservatório</option>
+          <% for (let i = 4; i < 12; i++) { %>
+            <% for (let key in fields[i][1]) { %>
+              <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + '.' + key ? 'selected' : '' %> ><%= fields[i][0] %>: <%= key %></option>
             <% } %>
-          </select>
-        </div>
-        <div class="form-line">
-          <select name="auditOrder" id="auditOrder" class="w-full" aria-label="Selecione o tipo de ordenação.">
-            <option value="asc" <%= order === 'asc' ? 'selected' : ''; %> >Crescente</option>
-            <option value="desc" <%= order === 'desc' ? 'selected' : ''; %> >Decrescente</option>
-          </select>
-        </div>
-        <div class="flex justify-end gap-4 mt-4">
-          <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
-          <button type="submit" class="button button-primary">Auditar</button>
-        </div> 
-      </form>
+          <% } %>
+        </select>
+      </div>
+      <div class="form-line">
+        <select name="auditOrder" id="auditOrder" class="w-full" aria-label="Selecione o tipo de ordenação.">
+          <option value="asc" <%= order === 'asc' ? 'selected' : ''; %> >Crescente</option>
+          <option value="desc" <%= order === 'desc' ? 'selected' : ''; %> >Decrescente</option>
+        </select>
+      </div>
+      <div class="flex justify-end gap-4 mt-4">
+        <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
+        <button type="button" class="button button-primary" onclick="atualizaAudit()">Auditar</button>
+      </div>
     </div>
     <div class="relative w-11/12 mt-12 mx-auto md:w-3/5">
       <input type="text" name="busca" id="busca" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
@@ -160,5 +158,6 @@
 
 <script src="/js/buscaEscola.js"></script>
 
+<%- include('partials/atualizaAudit.ejs'); %> 
 <%- user.role === 'admin' ? include('partials/logoutButtonAdmin.ejs') : include('partials/logoutButtonBasic.ejs'); %>
 <%- include('partials/footer.ejs'); %>

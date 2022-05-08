@@ -1,0 +1,226 @@
+<% let colspans = []; %>
+<% let colTexts = []; %>
+<% for (let i = 4; i < 12; i++) { %>
+  <% let keys = 0; %>
+  <% let colTextsSubArray = []; %>
+  <% for (let key in fields[i][1]) { %>
+    <% colTextsSubArray.push(key); %>
+    <% keys += 1; %>
+  <% } %>
+  <% colspans.push(keys); %>
+  <% colTexts.push(colTextsSubArray); %>
+<% } %>
+
+<script>
+  // Zebra pattern for the tables
+  function zebraPattern() {
+    const tableRows = document.querySelectorAll("tbody>tr");
+
+    tableRows.forEach((row, index) => {
+      if (index % 2 !== 0) {
+        for (let i = 0; i < row.children.length; i++) {
+          row.children[i].classList.add("zebrado")
+        }
+      }
+    });
+  }
+
+  const fields = <%- JSON.stringify(fields) %>;
+  const colspans = <%- JSON.stringify(colspans) %>;
+  const colTexts = <%- JSON.stringify(colTexts) %>;
+  
+  let schools = <%- JSON.stringify(schools) %>;
+
+  function mobileAuditField () {
+    const mobileField = document.getElementById("auditSortMobile");
+    const field = document.getElementById("auditSort");
+
+    field.value = mobileField.value;
+  }
+
+  function atualizaAudit () {
+    const selectedField = document.getElementById("auditSort").value;
+    const sort = document.getElementById("auditOrder").value;
+
+    let field;
+
+    if (selectedField.indexOf(".") >= 0) {
+      const mainField = selectedField.substr(0, selectedField.indexOf("."));
+      field = selectedField.substr(selectedField.indexOf(".") + 1);
+
+      if (sort === "asc") {
+        schools.sort((a, b) => {
+          return a[mainField][field] - b[mainField][field];
+        });
+      } else {
+        schools.sort((a, b) => {
+          return b[mainField][field] - a[mainField][field];
+        });
+      };
+    } else {
+      field = selectedField;
+
+      if (typeof schools[0][field] === "string") {
+        if (sort === "asc") {
+          schools.sort((a, b) => {
+            a = a[field].toLowerCase();
+            b = b[field].toLowerCase();
+
+            if (a < b) {
+              return -1;
+            }
+
+            if (a > b) {
+              return 1;
+            }
+
+            return 0;
+          });
+        } else {
+          schools.sort((a, b) => {
+            a = a[field].toLowerCase();
+            b = b[field].toLowerCase();
+
+            if (a > b) {
+              return -1;
+            }
+
+            if (a < b) {
+              return 1;
+            }
+
+            return 0;
+          });
+        };
+      } else {
+        if (sort === "asc") {
+          schools.sort((a, b) => {
+            return a[field] - b[field];
+          });
+        } else {
+          schools.sort((a, b) => {
+            return b[field] - a[field];
+          });
+        };
+      }
+    }
+
+    const table = document.getElementById("escolas");
+    const mobileTable = document.getElementById("escolasMobile");
+    
+    let thead = table.querySelector("thead");
+    let content = `<thead class="sticky top-0 z-10">
+                    <tr>
+                      <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
+                      <th scope="col" rowspan="2" class="${field === "codigo" ? 'auditado' : ''}">Cód.</th>
+                      <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
+                      <th scope="col" rowspan="2" class="${field === "bairro" ? 'auditado' : ''}">Bairro</th>
+                      <th scope="col" rowspan="2" class="${field === "indicador" ? 'auditado' : ''}">IGAI</th>
+                      <th scope="col" rowspan="2" class="${field === "indicador" ? 'auditado' : ''}">Avaliação</th>`;    
+    for (let i = 4; i < 12; i++) {
+      content+= `<th class="capitalize" scope="col" rowspan="1" colspan="${colspans[i - 4]}">
+                  ${fields[i][0]}
+                </th>`
+    };
+    content += `<th class="capitalize ${field === "ocupacao" ? 'auditado' : ''}" scope="col" rowspan="2">Ocupação</th>
+                <th class="capitalize ${field === "reservatorio" ? 'auditado' : ''}" scope="col" rowspan="2">Reservatório</th>
+                </tr>
+                <tr>`;
+    for (let i = 4; i < 12; i++) {
+      for (let j = 0; j < colTexts[i - 4].length; j++) {
+        content += `<th class="capitalize ${field === colTexts[i - 4][j] ? 'auditado' : ''}" scope="col">${colTexts[i - 4][j]}</th>`
+      }    
+    };
+    content += `</tr>
+               </thead>`;
+    thead.innerHTML = content;
+    
+    let mobileThead = mobileTable.querySelector("thead");
+    content = `<thead class="sticky top-0 z-10">
+                <tr>
+                  <th scope="col" rowspan="2" class="${field === "codigo" ? 'auditado' : ''}">Cód.</th>
+                  <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
+                  <th scope="col" rowspan="2">Bairro</th>
+                  <th scope="col" rowspan="2"class="${field === "indicador" ? 'auditado' : ''}">IGAI</th>
+                  <th scope="col" rowspan="2"class="${field === "indicador" ? 'auditado' : ''}">Avaliação</th>
+                </tr>
+              </thead>`
+    mobileThead.innerHTML = content;
+
+    let tbody = table.querySelector("tbody");
+    content = `<tbody>`;
+    let count = 0;
+    schools.forEach((school) => {
+      count += 1;
+      content += `<tr>
+                    <td class="sticky left-0 min-w-[3rem] text-left z-[1]">${count}</td>
+                    <td class="${field === "codigo" ? 'auditado' : ''}">${school.codigo}</td>
+                    <td class="sticky left-12 text-left z-[1] unidade">${school.nome}</td>
+                    <td class="${field === "bairro" ? 'auditado' : ''}">${school.bairro}</td>
+                    <td class="${field === "indicador" ? 'auditado' : ''}">
+                      ${school.indicador.toLocaleString("default", {style: "decimal",
+                      maximumFractionDigits: 1})}
+                    </td>
+                    <td class="${field === "indicador" ? 'auditado' : ''}">${school.avaliacao}</td>`;
+      for (let i = 4; i < 12; i++) {
+        for (let j = 0; j < colTexts[i - 4].length; j++) {
+          let hint;
+          switch (school[fields[i][0]][colTexts[i - 4][j]]) {
+            case 1:
+              hint = "1 - Péssimo."
+              break;
+            case 2:
+              hint = "2 - Ruim."
+              break;
+            case 3:
+              hint = "3 - Regular."
+              break;
+            case 4:
+              hint = "4 - Bom."
+              break;
+            case 5:
+              hint = "5 - Ótimo."
+              break;                
+            default:
+              hint = "X - Não se aplica."
+              break;
+          }
+          content+= `<td class="-z-10 ${field === colTexts[i - 4][j] ? 'auditado' : ''}">
+                        <span
+                          class="cursor-help hint--top hint--info hint--rounded hint--bounce"
+                          aria-label="${hint}"
+                        >
+                          ${school[fields[i][0]][colTexts[i - 4][j]] === 0 ? 'X' : school[fields[i][0]][colTexts[i - 4][j]]}
+                        </span>
+                      </td>`
+        };
+       };
+      content += `<td class="${field === "ocupacao" ? 'auditado' : ''}">${school.ocupacao}</td>
+                  <td class="${field === "reservatorio" ? 'auditado' : ''}">${school.reservatorio}</td>
+                </tr>`
+    });
+    content += `</tbody>`
+    tbody.innerHTML = content;
+
+    let mobileTbody = mobileTable.querySelector("tbody");
+    content = `<tbody>`;
+    schools.forEach((school) => {
+      content += `<tr>
+                    <td class="${field === "codigo" ? 'auditado' : ''}">${school.codigo}</td>
+                    <td class="sticky left-0 text-left z-0 unidade">${school.nome}</td>
+                    <td class="-z-10">${school.bairro}</td>
+                    <td class="${field === "indicador" ? 'auditado' : ''}">
+                      ${school.indicador.toLocaleString("default", {style: "decimal",
+                      maximumFractionDigits: 1})}
+                    </td>
+                    <td class="${field === "indicador" ? 'auditado' : ''}">${school.avaliacao}</td>
+                  </tr>`;
+    });
+    content+= `</tbody>`;
+    mobileTbody.innerHTML = content;
+    content = "";
+
+
+    zebraPattern();
+  }
+</script>

@@ -36,6 +36,17 @@ function replaceAllStrings(str, newString) {
   }
 }
 
+// Zebra pattern for the tables
+function zebraPattern() {
+  const escolas = $("tbody > tr").not(".hidden");
+
+  escolas.each(function (index) {
+    if (index % 2 !== 0) {
+      $(this).children("td").addClass("zebrado");
+    }
+  });
+}
+
 // jQuery functions on Page Load
 $(function () {
   // Hide and show "inactive" schools on the Dashboard page
@@ -59,14 +70,7 @@ $(function () {
     });
   }
 
-  // Zebra pattern for the tables
-  const escolas = $("#escolas > tbody > tr").not(".hidden");
-
-  escolas.each(function (index) {
-    if (index % 2 !== 0) {
-      $(this).children("td").addClass("zebrado");
-    }
-  });
+  zebraPattern();
 
   // Replace defined strings on the document body
   replaceAllStrings("codigo", "código");
@@ -82,38 +86,6 @@ $(function () {
   replaceAllStrings("cercaTela", "Cerca/Tela");
   replaceAllStrings("iluminacao", "iluminação");
   replaceAllStrings("calcada", "calçada");
-
-  // Set the audit button route based on the selected options
-  if ($("#auditForm")) {
-    const selectSort = $("#auditSort");
-    const selectSortMobile = $("#auditSortMobile");
-    const selectOrder = $("#auditOrder");
-
-    selectSort.on("change", function () {
-      let sort = $(this).children().filter(":selected").val();
-      let order = $("#auditOrder").children().filter(":selected").val();
-
-      $("#auditForm").attr("action", "/audit?sort=" + sort + "&order=" + order);
-    });
-
-    selectSortMobile.on("change", function () {
-      let sort = $(this).children().filter(":selected").val();
-      let order = $("#auditOrder").children().filter(":selected").val();
-
-      $("#auditForm").attr("action", "/audit?sort=" + sort + "&order=" + order);
-    });
-
-    selectOrder.on("change", function () {
-      let formAction = $("#auditForm").attr("action");
-      let sort = formAction.substring(
-        formAction.indexOf("=") + 1,
-        formAction.indexOf("&")
-      );
-      let order = $(this).children().filter(":selected").val();
-
-      $("#auditForm").attr("action", "/audit?sort=" + sort + "&order=" + order);
-    });
-  }
 
   // Toggle the Page Load animation
   $(window).on("unload", function () {

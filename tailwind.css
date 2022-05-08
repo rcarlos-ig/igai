@@ -160,7 +160,7 @@ h4 {
 }
 
 h1 + small {
-  @apply text-sm text-gray-300 md:text-base lg:text-lg;
+  @apply text-sm text-center text-gray-300 md:text-base lg:text-lg;
 }
 
 /* Links */
