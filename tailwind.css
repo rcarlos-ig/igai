@@ -12,6 +12,7 @@
 
 /* Variáveis */
 :root {
+  animation: none !important;
   --primary: 5 77 165;
   --dark-primary: 3 31 72;
   --text: 31 33 36;

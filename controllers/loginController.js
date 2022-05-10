@@ -170,7 +170,7 @@ const requestResetPasswordView = (_req, res) => {
 };
 
 // POST Request for new password page
-const requestResetPassword = (req, res) => {
+const requestResetPassword = async (req, res) => {
   const { email } = req.body;
 
   // Check user
@@ -190,12 +190,10 @@ const requestResetPassword = (req, res) => {
           token: crypto.randomBytes(32).toString("hex"),
         }).save();
 
-        console.log("token created", token);
+        console.log("token created");
 
         // Redefine password page link
         const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
-
-        console.log(link);
 
         // Redefine password mail body
         const html = await ejs.renderFile(
@@ -204,7 +202,9 @@ const requestResetPassword = (req, res) => {
         );
 
         // Send the email
-        sendEmail(user.email, html);
+        const result = await sendEmail(user.email, html);
+
+        console.log(result);
 
         res.render("login", { success: "E-mail enviado com sucesso." });
       });

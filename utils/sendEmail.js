@@ -3,26 +3,22 @@ const nodemailer = require("nodemailer");
 
 // Send the email
 const sendEmail = async (email, html) => {
-  
-    const transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASSWORD,
-      }
-    })
-  
+  const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  });
 
-    const info = await transporter.sendMail({
-      from: `SEJIN - IGAI ${process.env.MAIL_SENDER}`,
-      to: email,
-      subject: "Redefinição de senha.",
-      html: html,
-    });
-
-    console.log(info);
+  return transporter.sendMail({
+    from: `SEJIN - IGAI ${process.env.MAIL_USER}`,
+    to: email,
+    subject: "Redefinição de senha.",
+    html: html,
+  });
 };
 
 module.exports = sendEmail;

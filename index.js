@@ -41,7 +41,7 @@ app.use(compression());
 app.set("view engine", "ejs");
 
 // Set the static folder
-app.use(express.static("public"));
+app.use(express.static("public", { dotfiles: "allow" }));
 
 // Use 'connect-flash' for flash messages
 app.use(flash());
@@ -57,7 +57,7 @@ app.use(
     saveUninitialized: false,
     resave: true,
     rolling: true,
-    cookie: { 
+    cookie: {
       maxAge: 10 * 60 * 1000,
       sameSite: "strict",
     }, // Minutos * Segundos * Milisegundos
