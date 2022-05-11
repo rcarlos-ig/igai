@@ -162,40 +162,19 @@ const schoolView = async (req, res) => {
 };
 
 // POST Request for the School page
-const schoolPost = (req, res) => {
-  const fields = Object.entries(School.schema.tree);
-
+const schoolPost = (req, _res, next) => {
   let data = req.body;
 
-  data.indicador = calculateIGE(data);
-  data.avaliacao = calculateAvaliacao(data.indicador);
-  data.atualizadoEm = new Date();
-  data.atualizadoPor = req.user._id;
+  School.findOne({ codigo: data.codigo }).then((school) => {
+    data.indicador = calculateIGE(data);
+    data.avaliacao = calculateAvaliacao(data.indicador);
+    data.atualizadoEm = new Date();
+    data.atualizadoPor = req.user._id;
+    data.indicador2 = school.indicador;
+    data.avaliacao2 = school.avaliacao;
 
-  // Update School
-  School.updateOne({ codigo: data.codigo }, { $set: data }).then(function () {
-    // Check School
-    School.findOne({ codigo: data.codigo }).then((school) => {
-      if (!school) return;
-      // Check User
-      User.findOne({ _id: school.atualizadoPor }).then((user) => {
-        let userName;
-
-        if (user) {
-          userName = user.name;
-        } else {
-          userName = "Usuário indisponível";
-        }
-
-        res.render("school", {
-          school,
-          fields: fields,
-          userName,
-          success: "Dados salvos com sucesso.",
-          user: req.user,
-        });
-      });
-    });
+    // Update School
+    School.updateOne({ codigo: data.codigo }, { $set: data }).then(next());
   });
 };
 

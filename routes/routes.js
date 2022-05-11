@@ -167,7 +167,8 @@ router.post(
     next();
   },
   logging,
-  schoolPost
+  schoolPost,
+  dashboardView
 );
 
 // Reset Password

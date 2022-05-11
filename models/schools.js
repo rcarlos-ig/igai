@@ -57,6 +57,8 @@ const SchoolSchema = new mongoose.Schema({
   atualizadoPor: String,
   indicador: Number,
   avaliacao: String,
+  indicador2: Number,
+  avaliacao2: String,
 });
 
 const School = mongoose.model("School", SchoolSchema);

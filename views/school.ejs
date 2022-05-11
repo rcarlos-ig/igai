@@ -25,7 +25,17 @@
       <div class="border-b-2 border-gray-300 pt-2 pb-4 md:pt-4 md:pb-6">
         <h3>Avaliação:</h3>
         <p>Indicador: <span class="font-semibold"><%= school.indicador.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) %></span></p>
-        <p>Avaliação: <span class="font-semibold"><%= school.avaliacao %></span></p>
+        <p>Avaliação: <span class="font-semibold"><%= school.avaliacao %></span>
+        <% if (school.avaliacao2) { %>
+          <% if (school.indicador > school.indicador2) { %>
+            <%- `<span class="text-lg font-semibold text-green-600">&uArr;</span>` %>
+          <% } %>
+          <% if (school.indicador < school.indicador2) { %>
+            <%- `<span class="text-lg font-semibold text-red-600">&dArr;</span>` %>
+          <% } %>
+          </p>
+          <p>Histórico: <span class="font-semibold"><%= school.indicador2.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) %></span> - <span class="font-semibold"><%= school.avaliacao2 %></span></p>
+        <% } %>
         <% const atualizadoEm = new Intl.DateTimeFormat("default", { 
           day:"2-digit",
           month: "2-digit",

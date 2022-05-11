@@ -14,10 +14,6 @@ const getLog = async () => {
 
 // POST log
 const logging = (req, _res, next) => {
-  School.findOne({codigo: req.body.codigo}).then(school => {
-    req.body.nome = school.nome;
-  });
-
   const newLog = new Log({
     user: req.user.id,
     action: req.action,
