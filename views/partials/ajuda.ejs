@@ -57,8 +57,13 @@
   </div>
 
   <script>
+    const helpModalController = document.getElementById("help-modal-controller-label");
     const helpModalCloseButton = document.getElementById("help-modal-close");
     const modalContent1Radio = document.getElementById("modal-content-1");
+
+    helpModalController.addEventListener("click", () => {
+      window.scrollTo(0, 0);
+    });
 
     helpModalCloseButton.addEventListener("click", () => {
       modalContent1Radio.checked = true;

@@ -19,7 +19,7 @@ if (darkModeToggleButton !== null) {
       fadeToggle(darkIcon, lightIcon);
       if (typeof Chart !== undefined) {
         Chart.defaults.color = "rgb(16, 21, 25)";
-        Chart.instances[0].options.scales["x"].ticks.color = Chart.defaults.color;
+        Chart.defaults.plugins.legend.labels.color = Chart.defaults.color;
         Chart.instances[0].update();
       }
       if (typeof dashThemeText !== undefined) {
@@ -31,7 +31,7 @@ if (darkModeToggleButton !== null) {
       fadeToggle(lightIcon, darkIcon);
       if (typeof Chart !== undefined) {
         Chart.defaults.color = "rgb(249, 250, 251)";
-        Chart.instances[0].options.scales["x"].ticks.color = Chart.defaults.color;
+        Chart.defaults.plugins.legend.labels.color = Chart.defaults.color;
         Chart.instances[0].update();
       }
       if (typeof dashThemeText !== undefined) {
