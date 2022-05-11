@@ -398,6 +398,7 @@ input[type="checkbox"].toggle:checked + label::after {
 /* Images */
 img {
   @apply h-fit;
+  /* background-color: #d1d5db */
 }
 
 .img404 {
@@ -725,6 +726,124 @@ img {
   100% {
     opacity: 0;
     transform: scale(1.5);
+  }
+}
+
+/* Modal de ajuda */
+/* modal open|close controller */
+#help-modal-controller {
+  @apply absolute left-[-999em] opacity-0;
+}
+
+.help-modal-open:checked ~ .help-modal-wrap {
+  @apply block;
+}
+
+.help-modal-open:checked ~ .help-modal-wrap:before,
+.help-modal-overlay {
+  @apply block;
+}
+
+.help-modal-close {
+  @apply absolute top-0 right-0 text-[2rem] font-bold px-3 cursor-pointer z-[100];
+}
+
+/* modal */
+.help-modal-wrap {
+  @apply hidden;
+}
+
+.help-modal-wrap:before {
+  @apply hidden fixed top-0 left-0 right-0 bottom-0 z-[101];
+  content: "";
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.help-modal-overlay {
+  @apply hidden fixed top-0 left-0 right-0 bottom-0 z-[102];
+}
+
+.help-modal-body {
+  @apply absolute top-1/2 left-1/2 w-3/4 bg-gray-50 py-4 rounded-md overflow-hidden z-[103] -translate-x-1/2 -translate-y-1/2 md:w-1/2;
+}
+
+.help-modal-body h2 {
+  @apply mt-14 mb-2;
+}
+
+.help-modal-content {
+  @apply relative py-8 px-2 overflow-hidden;
+}
+
+.help-modal-slide {
+  @apply absolute w-full transition-all duration-300 ease-in;
+}
+
+.modal-content-2 {
+  @apply left-full;
+}
+
+.modal-content-3 {
+  @apply left-[200%];
+}
+
+#modal-content-1:checked ~ .content-1 {
+  @apply relative left-0 overflow-auto;
+}
+
+#modal-content-1:checked ~ .content-2 {
+  @apply left-full;
+}
+
+#modal-content-1:checked ~ .content-3 {
+  @apply left-[200%];
+}
+
+#modal-content-2:checked ~ .content-1 {
+  @apply -left-full;
+}
+
+#modal-content-2:checked ~ .content-2 {
+  @apply relative left-0 overflow-auto;
+}
+
+#modal-content-2:checked ~ .content-3 {
+  @apply left-full;
+}
+
+#modal-content-3:checked ~ .content-1 {
+  @apply -left-[200%];
+}
+
+#modal-content-3:checked ~ .content-2 {
+  @apply -left-full;
+}
+
+#modal-content-3:checked ~ .content-3 {
+  @apply relative left-0 overflow-auto;
+}
+
+.help-modal-nav {
+  @apply absolute top-8 w-full;
+}
+
+.help-modal-nav label {
+  @apply flex justify-center content-center absolute w-12 h-12 bg-gray-200 text-5xl rounded-md cursor-pointer;
+}
+
+.help-modal-nav label.prev-slide {
+  @apply left-4;
+  content: "";
+}
+
+.help-modal-nav label.next-slide {
+  @apply right-4;
+  content: "";
+}
+
+@media only screen and (max-width: 767px) {
+  .help-modal-body {
+    @apply w-11/12;
   }
 }
 

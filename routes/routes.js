@@ -283,7 +283,4 @@ router.post("/user-theme", protectRoute, setUserTheme);
 // Charts
 router.get("/charts", protectRoute, chartsDefaultView);
 
-// Charts data API
-// router.post("/charts-data", protectRoute, getChartsData);
-
 module.exports = router;
