@@ -2,14 +2,14 @@
     <footer>
       <div class="flex justify-center items-center gap-4 w-full sm:gap-8">
         <span class="cursor-help hint--top hint--info hint--medium hint--rounded hint--bounce" aria-label="Prefeitura Municipal de Angra dos Reis.">
-          <img src="/img/brasao.webp" alt="Brasão da Prefeitura Municipal de Angra dos Reis." class="w-[53px] h-[65px] sm:w-[82px] sm:h-[100px]" loading="lazy">
+          <img src="/img/brasao.webp" alt="Brasão da Prefeitura Municipal de Angra dos Reis." class="w-[53px] h-[65px] sm:w-[82px] sm:h-[100px]">
         </span>
         <span class="cursor-help hint--top hint--info hint--medium hint--rounded hint--bounce" aria-label="Secretaria Municipal de Educação.">
-          <img src="/img/SEC_logo.webp" alt="Logomarca da Secretaria Municipal de Educação." class="w-[100px] h-[47px] sm:w-[150px] sm:h-[70px]" loading="lazy">
+          <img src="/img/SEC_logo.webp" alt="Logomarca da Secretaria Municipal de Educação." class="w-[100px] h-[47px] sm:w-[150px] sm:h-[70px]">
         </span>
       </div>
       <div class="flex flex-col items-center mt-4 text-primary font-medium">
-        <label for="help-modal-controller" id="help-modal-controller-label" class="font-semibold cursor-help select-none my-2 hover:text-darkPrimary">O que é o IGAIE?</label>
+        <span for="help-modal-controller" id="helpModalController" class="font-semibold cursor-help select-none my-2 hover:text-darkPrimary">O que é o IGAIE?</span>
         <p>
           Desenvolvido por <span class="font-semibold cursor-help select-none hover:text-darkPrimary hint--top hint--info hint--rounded hint--bounce" aria-label="sec.ti@angra.rj.gov.br">Raphael Carlos</span>
         </p>
@@ -17,20 +17,15 @@
           v<%= process.env.npm_package_version %> &#8212 &copy; <%= new Date().getFullYear() %>
         </p>
         <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR" class="hint--top hint--info hint--medium hint--rounded hint--bounce" aria-label="Creative Commons License, CC-BY-NC-SA 4.0 International." target="_blank">
-          <img class="mt-2 cursor-pointer" alt="Creative Commons License, CC-BY-NC-SA 4.0 International." src="/img/license.webp" />
+          <img class="mt-2 cursor-pointer" alt="Creative Commons License, CC-BY-NC-SA 4.0 International." src="/img/license.webp" width="80" height="15">
         </a>
       </div>
     </footer>
-    <%- include('ajuda.ejs'); %>
-    <%- include('loader.ejs'); %>
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script type="module" src="/js/main.js"></script>
     <script type="module" src="/js/formValidation.js"></script>
-    <% if (locals.user) { %>
-      <script>
-        const userID = "<%= user._id %>";
-      </script>
-    <% } %>
     <script src="/js/darkModeToggle.js"></script>
+    <%- include('ajuda.ejs'); %>
+    <%- include('loader.ejs'); %>
   </body>
 </html>

@@ -1,73 +1,117 @@
-<div class="help-modal">
-  <input type="checkbox" id="help-modal-controller" class="help-modal-open" hidden>
-  <div class="help-modal-wrap">
-    <label for="help-modal-controller" class="help-modal-overlay"></label>
-    <div class="help-modal-body">
-
-      <label for="help-modal-controller" class="help-modal-close" id="help-modal-close">&times;</label>
-
-      <input type="radio" name="content-nav" id="modal-content-1" class="modal-radio" checked hidden/>
-      <input type="radio" name="content-nav" id="modal-content-2" class="modal-radio" hidden/>
-      <input type="radio" name="content-nav" id="modal-content-3" class="modal-radio" hidden/>
-
-      <div class="help-modal-slide content-1">
-        <div class="help-modal-content">
-          <h2 class="text-primary">O que é o IGAIE</h2>
-          <img class="mb-2 img404 md:w-3/4 md:mx-auto md:my-4" src="/img/help-1.svg" alt="Imagem ilustrativa de um gráfico.">
-          <p class="text-lg p-4">
-            É um indicador para <span class="font-semibold text-primary">avaliação de cada um dos componentes</span> das instalações escolares.
-          </p>
-
-          <div class="help-modal-nav">
-            <label for="modal-content-2" class="next-slide">&#8250;</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="help-modal-slide content-2">
-        <div class="help-modal-content">
-          <h2 class="text-primary">Qual é o seu objetivo?</h2>
-          <img class="mb-2 img404 md:w-3/4 md:mx-auto md:my-4" src="/img/help-2.svg" alt="Imagem ilustrativa de uma equipe trabalhando.">
-          <p class="text-lg p-4">
-            Apresentar visão global do <span class="font-semibold text-primary">desempenho dos serviços de manutenção e intervenções</span> executadas nas unidades de ensino municipais de Angra dos Reis, abordando os procedimentos adotados para a execução destes serviços, objetivando a integração e a motivação entre os atores envolvidos no processo.
-          </p>
-
-          <div class="help-modal-nav">
-            <label for="modal-content-1" class="prev-slide">&#8249;</label>
-            <label for="modal-content-3" class="next-slide">&#8250;</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="help-modal-slide content-3">
-        <div class="help-modal-content">
-          <h2 class="text-primary">E sua metodologia?</h2>
-          <img class="mb-2 img404 md:w-3/4 md:mx-auto md:my-4" src="/img/help-3.svg" alt="Imagem ilustrativa de um gráfico.">
-          <p class="text-lg p-4">
-            O IGAIE é calculado utilizando os <span class="font-semibold text-primary">conceitos de péssimo a ótimo (1 a 5)</span> com a utilização de pesos, onde o maior peso é atribuído à pior nota, obtendo-se uma média de todos os componentes; <span class="font-semibold text-primary">quanto maior o IGAIE, pior a estimativa física</span> da unidade de ensino.
-          </p>
-
-          <div class="help-modal-nav">
-            <label for="modal-content-2" class="prev-slide">&#8249;</label>
-          </div>
-        </div>
-      </div>
-
-    </div>
+<dialog class="help-modal" id="helpModal">
+  <div class="flex justify-end">
+    <span class="help-modal-close" id="helpModalClose">&times;</span>
   </div>
+  <div class="help-modal-nav">
+    <span class="prev-slide disabled" id="prevSlide">&#8249;</span>
+    <span class="next-slide" id="nextSlide">&#8250;</span>
+  </div>
+  <div class="help-modal-content" id="helpModalContent1">
+    <h2 class="text-primary">O que é o IGAIE</h2>
+    <img
+      class="mb-6 img-filter mx-auto w-[320px] md:w-4/5 md:mb-8"
+      src="/img/help-1.svg"
+      alt="Imagem ilustrativa de um gráfico."
+    />
+    <p class="text-lg md:text-2xl">
+      É um indicador para
+      <span class="font-semibold text-primary"
+        >avaliação de cada um dos componentes</span
+      >
+      das instalações escolares.
+    </p>
+  </div>
+  <div class="help-modal-content hidden" id="helpModalContent2">
+    <h2 class="text-primary">Qual é o seu objetivo?</h2>
+    <img
+      class="mb-6 img-filter mx-auto w-[320px] md:w-4/5 md:mb-8"
+      src="/img/help-2.svg"
+      alt="Imagem ilustrativa de uma equipe trabalhando."
+    />
+    <p class="text-lg md:text-2xl">
+      Apresentar visão global do
+      <span class="font-semibold text-primary"
+        >desempenho dos serviços de manutenção e intervenções</span
+      >
+      executadas nas unidades de ensino municipais de Angra dos Reis, abordando
+      os procedimentos adotados para a execução destes serviços, objetivando a
+      integração e a motivação entre os atores envolvidos no processo.
+    </p>
+  </div>
+  <div class="help-modal-content hidden" id="helpModalContent3">
+    <h2 class="text-primary">E sua metodologia?</h2>
+    <img
+      class="mb-6 img-filter mx-auto w-[320px] md:w-4/5 md:mb-8"
+      src="/img/help-3.svg"
+      alt="Imagem ilustrativa de um gráfico."
+    />
+    <p class="text-lg md:text-2xl">
+      O IGAIE é calculado utilizando os
+      <span class="font-semibold text-primary"
+        >conceitos de péssimo a ótimo (1 a 5)</span
+      >
+      com a utilização de pesos, onde o maior peso é atribuído à pior nota,
+      obtendo-se uma média de todos os componentes;
+      <span class="font-semibold text-primary"
+        >quanto maior o IGAIE, pior a estimativa física</span
+      >
+      da unidade de ensino.
+    </p>
+  </div>
+</dialog>
 
-  <script>
-    const helpModalController = document.getElementById("help-modal-controller-label");
-    const helpModalCloseButton = document.getElementById("help-modal-close");
-    const modalContent1Radio = document.getElementById("modal-content-1");
+<script>
+  const helpModalController = document.getElementById("helpModalController");
+  const helpModalClose = document.getElementById("helpModalClose");
+  const helpModal = document.getElementById("helpModal");
+  const content1 = document.getElementById("helpModalContent1");
+  const content2 = document.getElementById("helpModalContent2");
+  const content3 = document.getElementById("helpModalContent3");
+  const prevSlideButton = document.getElementById("prevSlide");
+  const nextSlideButton = document.getElementById("nextSlide");
 
-    helpModalController.addEventListener("click", () => {
-      window.scrollTo(0, 0);
-    });
+  helpModalController.addEventListener("click", () => {
+    helpModal.showModal();
+  });
+  helpModalClose.addEventListener("click", () => {
+    helpModal.close();
+  });
 
-    helpModalCloseButton.addEventListener("click", () => {
-      modalContent1Radio.checked = true;
-    });
-  </script>
+  let activeSlide = 1;
 
-</div>
+  nextSlideButton.addEventListener("click", () => {
+    switch (activeSlide) {
+      case 1:
+        content1.style.display = "none";
+        content2.style.display = "block";
+        prevSlideButton.classList.remove("disabled");
+        activeSlide = 2;
+        break;
+
+      case 2:
+        content2.style.display = "none";
+        content3.style.display = "block";
+        nextSlideButton.classList.add("disabled");
+        activeSlide = 3;
+        break;
+    }
+  });
+
+  prevSlideButton.addEventListener("click", () => {
+    switch (activeSlide) {
+      case 2:
+        content2.style.display = "none";
+        content1.style.display = "block";
+        prevSlideButton.classList.add("disabled");
+        activeSlide = 1;
+        break;
+
+      case 3:
+        content3.style.display = "none";
+        content2.style.display = "block";
+        nextSlideButton.classList.remove("disabled");
+        activeSlide = 2;
+        break;
+    }
+  });
+</script>

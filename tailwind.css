@@ -401,7 +401,7 @@ img {
   /* background-color: #d1d5db */
 }
 
-.img404 {
+.img-filter {
   filter: var(--bg-gray-50-shadow-filter);
 }
 
@@ -731,120 +731,37 @@ img {
 
 /* Modal de ajuda */
 /* modal open|close controller */
-#help-modal-controller {
-  @apply absolute left-[-999em] opacity-0;
+.help-modal {
+  @apply w-11/12 bg-gray-100 p-0 rounded-md md:w-3/4 xl:w-1/2;
+  box-shadow: var(--bg-gray-50-shadow-box);
 }
 
-.help-modal-open:checked ~ .help-modal-wrap {
-  @apply block;
-}
-
-.help-modal-open:checked ~ .help-modal-wrap:before,
-.help-modal-overlay {
-  @apply block;
+.help-modal::backdrop {
+  @apply bg-gray-600/90 backdrop-blur-sm;
 }
 
 .help-modal-close {
-  @apply absolute top-0 right-0 text-[2rem] font-bold px-3 cursor-pointer z-[100];
-}
-
-/* modal */
-.help-modal-wrap {
-  @apply hidden;
-}
-
-.help-modal-wrap:before {
-  @apply hidden fixed top-0 left-0 right-0 bottom-0 z-[101];
-  content: "";
-  background: rgba(0, 0, 0, 0.7);
-}
-
-.help-modal-overlay {
-  @apply hidden fixed top-0 left-0 right-0 bottom-0 z-[102];
-}
-
-.help-modal-body {
-  @apply absolute top-1/2 left-1/2 w-3/4 bg-gray-50 py-4 rounded-md overflow-hidden z-[103] -translate-x-1/2 -translate-y-1/2 md:w-1/2;
-}
-
-.help-modal-body h2 {
-  @apply mt-14 mb-2;
-}
-
-.help-modal-content {
-  @apply relative py-8 px-2 overflow-hidden;
-}
-
-.help-modal-slide {
-  @apply absolute w-full transition-all duration-300 ease-in;
-}
-
-.modal-content-2 {
-  @apply left-full;
-}
-
-.modal-content-3 {
-  @apply left-[200%];
-}
-
-#modal-content-1:checked ~ .content-1 {
-  @apply relative left-0 overflow-auto;
-}
-
-#modal-content-1:checked ~ .content-2 {
-  @apply left-full;
-}
-
-#modal-content-1:checked ~ .content-3 {
-  @apply left-[200%];
-}
-
-#modal-content-2:checked ~ .content-1 {
-  @apply -left-full;
-}
-
-#modal-content-2:checked ~ .content-2 {
-  @apply relative left-0 overflow-auto;
-}
-
-#modal-content-2:checked ~ .content-3 {
-  @apply left-full;
-}
-
-#modal-content-3:checked ~ .content-1 {
-  @apply -left-[200%];
-}
-
-#modal-content-3:checked ~ .content-2 {
-  @apply -left-full;
-}
-
-#modal-content-3:checked ~ .content-3 {
-  @apply relative left-0 overflow-auto;
+  @apply text-[2rem] leading-none px-2 cursor-pointer md:text-5xl md:px-4;
 }
 
 .help-modal-nav {
-  @apply absolute top-8 w-full;
+  @apply flex justify-between my-2 px-4 md:px-8;
 }
 
-.help-modal-nav label {
-  @apply flex justify-center content-center absolute w-12 h-12 bg-gray-200 text-5xl rounded-md cursor-pointer;
+[class*="-slide"] {
+  @apply bg-accent text-light text-[2rem] leading-none pb-1 px-3 rounded-md cursor-pointer md:text-5xl md:pb-2 md:px-5;
 }
 
-.help-modal-nav label.prev-slide {
-  @apply left-4;
-  content: "";
+.help-modal-nav > .disabled {
+  @apply bg-gray-300 text-gray-400 cursor-not-allowed;
 }
 
-.help-modal-nav label.next-slide {
-  @apply right-4;
-  content: "";
+.help-modal-content {
+  @apply w-full pb-8 px-4 md:pb-12 md:px-8;
 }
 
-@media only screen and (max-width: 767px) {
-  .help-modal-body {
-    @apply w-11/12;
-  }
+.help-modal-buttons {
+  @apply flex justify-end items-center gap-4 mt-8 pb-4;
 }
 
 /* Dark Mode */
@@ -998,7 +915,7 @@ html.dark .senha-olho-riscado:hover {
 }
 
 /* Images */
-html.dark .img404 {
+html.dark .img-filter {
   filter: unset;
 }
 
