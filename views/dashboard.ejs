@@ -1,104 +1,102 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="card w-full sm:w-2/3">
+<div class="card w-full md:w-3/4">
   <div class="w-full">
-    <div>
-      <h2>Dashboard</h2>
-      <% if (locals.success) { %>
-        <div class="success">
-          <ul>
-            <li><%= success %></li>
-            <% if (locals.token) { %>
-              <li class="break-all cursor-pointer" onclick=<%= `window.location='/register/${token}'` %> onkeypress=<%= `window.location='/register/${token}'` %> >
-                Link de registro
-              </li>
-            <% } %>
-          </ul>
-        </div>
-      <% }; %>
-      <% if (locals.error) { %>
-        <div class="error">
-          <ul>
-            <li><%= error %></li>
-          </ul>
-        </div>
-      <% }; %>
-      <div class="flex flex-col items-center pb-4 border-b-2 border-gray-300 lg:flex-row lg:justify-center">
-        <% const hour = new Date().getHours(); %>
-        <% let greeting = 'Boa noite'; %>
-        <% if (hour >= 6) greeting = 'Bom dia';  %>
-        <% if (hour >= 12) greeting = 'Boa tarde';  %>
-        <% if (hour >= 19) greeting = 'Boa noite';  %>
-        <div class="flex flex-col w-full text-lg pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
-          <p class="px-6 md:px-0"><%= greeting %>, <span class="font-medium text-xl text-primary"><%= user.name %></span>.</p>
-          <p class="px-8 mt-2 md:px-0 md:mt-4">E-mail: <span class="font-medium text-primary"><%= user.email %></span></p>
-          <p class="px-8 md:px-0">Tipo de acesso: <span class="font-medium text-primary"><%= user.role === 'admin' ? 'Completo' : 'Visualização' %></span></p>
-          <p class="px-8 md:px-0">Nº de acessos: <span class="font-medium text-primary"><%= user.accesses %></span></p>
-          <p class="px-8 md:px-0">Último acesso: <span class="font-medium text-primary"><%= user.lastLogin.toLocaleString("default", {
-            day:"2-digit",
-            month: "2-digit",
-            year: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            }) %></span></p>
-          <p class="px-8 md:px-0">Tema: <span class="font-medium text-primary" id="dashThemeText"><%= user.theme === 'dark' ? 'Escuro' : 'Claro' %></span></p>
-          <p class="px-8 md:px-0">Cadastrado em: <span class="font-medium text-primary"><%= user.createdAt.toLocaleString("default", {
-            day:"2-digit",
-            month: "2-digit",
-            year: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            }) %></span></p>
-          <p class="px-6 mt-6 md:px-0">Há <span class="font-medium text-xl text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-xl text-primary"><%= activeSchools.length %></span> estão ativas.</p>
-        </div>
-        <div id="chart" class="w-full mt-4 lg:w-1/2">
-          <h3>Gráfico de Avaliações</h3>
-          <canvas id="dashboardChart" aria-label="Gráfico de Avaliações">
-            <p>Gráfico gerado dinâmicamente e inacessível para leitores de tela.</p>
-          </canvas>
-        </div>
+    <h2>Dashboard</h2>
+    <% if (locals.success) { %>
+      <div class="success">
+        <ul>
+          <li><%= success %></li>
+          <% if (locals.token) { %>
+            <li class="break-all cursor-pointer" onclick=<%= `window.location='/register/${token}'` %> onkeypress=<%= `window.location='/register/${token}'` %> >
+              Link de registro
+            </li>
+          <% } %>
+        </ul>
       </div>
-      <div class="flex flex-col items-center gap-4 mt-6 px-4 md:flex-row md:justify-center">
-        <div class="flex flex-row gap-4 md:w-1/5">
-          <input type="checkbox" name="ativa" id="ativa" class="toggle" />
-          <label for="ativa">Mostrar inativas?</label>
-        </div>
-        <div class="relative w-full">
-          <input type="text" name="busca" id="busca" class="md:w-4/5" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
-          <button role="button" class="limpa-busca" onclick="limpaBusca()"></button>
-        </div>
+    <% }; %>
+    <% if (locals.error) { %>
+      <div class="error">
+        <ul>
+          <li><%= error %></li>
+        </ul>
       </div>
-      <div class="flex justify-center mt-4 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:max-h-[500px] md:overflow-y-scroll">
-        <table class="text-center font-medium w-full select-none" id="escolas" aria-label="Tabela com as unidades da rede.">
-          <thead class="sticky top-0 z-10">
-            <tr>
-              <th>Cód.</th>
-              <th>Nome</th>
-              <th>Bairro</th>
-              <th>IGAI</th>
-              <th>Avaliação</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% schools.forEach((school) => { %>
-            <tr
-              class="<%= user.role !== 'admin' ? '' : 'cursor-pointer' %> <%= school.ativa === false ? 'hidden' : ''; %>"
-              <%= user.role !== 'admin' ? '' : `onClick=window.location='/school?unidade=${school.codigo}' onKeyPress=window.location='/school?unidade=${school.codigo}'` %>
-              tabindex="0"
-            >
-              <td><%= school.codigo %></td>
-              <td class="text-left max-w-[50ch] unidade"><%= school.nome %></td>
-              <td><%= school.bairro %></td>
-              <td>
-                <%= school.indicador.toLocaleString("default", {style:
-                "decimal", maximumFractionDigits: 1}) %>
-              </td>
-              <td><%= school.avaliacao %></td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
+    <% }; %>
+    <div class="flex flex-col items-center pb-4 border-b-2 border-gray-300 lg:flex-row lg:justify-center">
+      <% const hour = new Date().getHours(); %>
+      <% let greeting = 'Boa noite'; %>
+      <% if (hour >= 6) greeting = 'Bom dia';  %>
+      <% if (hour >= 12) greeting = 'Boa tarde';  %>
+      <% if (hour >= 19) greeting = 'Boa noite';  %>
+      <div class="flex flex-col w-full pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
+        <p class="px-6"><%= greeting %>, <span class="font-medium text-lg text-primary"><%= user.name %></span>.</p>
+        <p class="px-8 mt-2 md:mt-4">E-mail: <span class="font-medium text-primary"><%= user.email %></span></p>
+        <p class="px-8">Tipo de acesso: <span class="font-medium text-primary"><%= user.role === 'admin' ? 'Completo' : 'Visualização' %></span></p>
+        <p class="px-8">Nº de acessos: <span class="font-medium text-primary"><%= user.accesses %></span></p>
+        <p class="px-8">Último acesso: <span class="font-medium text-primary"><%= user.lastLogin.toLocaleString("default", {
+          day:"2-digit",
+          month: "2-digit",
+          year: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          }) %></span></p>
+        <p class="px-8">Tema: <span class="font-medium text-primary" id="dashThemeText"><%= user.theme === 'dark' ? 'Escuro' : 'Claro' %></span></p>
+        <p class="px-8">Cadastrado em: <span class="font-medium text-primary"><%= user.createdAt.toLocaleString("default", {
+          day:"2-digit",
+          month: "2-digit",
+          year: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          }) %></span></p>
+        <p class="px-6 mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
       </div>
+      <div id="chart" class="w-full mt-4 lg:w-1/2">
+        <h3>Gráfico de Avaliações</h3>
+        <canvas class="aspect-square" id="dashboardChart" aria-label="Gráfico de Avaliações">
+          <p>Gráfico gerado dinâmicamente e inacessível para leitores de tela.</p>
+        </canvas>
+      </div>
+    </div>
+    <div class="flex flex-col items-center gap-4 mt-6 px-4 md:flex-row md:justify-center">
+      <div class="flex flex-row gap-4 md:w-1/5">
+        <input type="checkbox" name="ativa" id="ativa" class="toggle" />
+        <label for="ativa">Mostrar inativas?</label>
+      </div>
+      <div class="relative w-full">
+        <input type="text" name="busca" id="busca" class="md:w-4/5" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
+        <button role="button" class="limpa-busca" onclick="limpaBusca()"></button>
+      </div>
+    </div>
+    <div class="flex justify-center mt-4 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:max-h-[500px] md:overflow-y-scroll">
+      <table class="text-center font-medium w-full select-none" id="escolas" aria-label="Tabela com as unidades da rede.">
+        <thead class="sticky top-0 z-10">
+          <tr>
+            <th>Cód.</th>
+            <th>Nome</th>
+            <th>Bairro</th>
+            <th>IGAI</th>
+            <th>Avaliação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% schools.forEach((school) => { %>
+          <tr
+            class="<%= user.role !== 'admin' ? '' : 'cursor-pointer' %> <%= school.ativa === false ? 'hidden' : ''; %>"
+            <%= user.role !== 'admin' ? '' : `onClick=window.location='/school?unidade=${school.codigo}' onKeyPress=window.location='/school?unidade=${school.codigo}'` %>
+            tabindex="0"
+          >
+            <td><%= school.codigo %></td>
+            <td class="text-left max-w-[50ch] unidade"><%= school.nome %></td>
+            <td><%= school.bairro %></td>
+            <td>
+              <%= school.indicador.toLocaleString("default", {style:
+              "decimal", maximumFractionDigits: 1}) %>
+            </td>
+            <td><%= school.avaliacao %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
