@@ -115,8 +115,8 @@
                       <th scope="col" rowspan="2" class="${field === "codigo" ? 'auditado' : ''}">Cód.</th>
                       <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
                       <th scope="col" rowspan="2" class="${field === "bairro" ? 'auditado' : ''}">Bairro</th>
-                      <th scope="col" rowspan="2" class="${field === "indicador" ? 'auditado' : ''}">IGAI</th>
-                      <th scope="col" rowspan="2" class="${field === "indicador" ? 'auditado' : ''}">Avaliação</th>`;    
+                      <th class="sticky left-48 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2">IGAI</th>
+                      <th class="sticky left-64 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2">Avaliação</th>`;    
     for (let i = 4; i < 12; i++) {
       content+= `<th class="capitalize" scope="col" rowspan="1" colspan="${colspans[i - 4]}">
                   ${fields[i][0]}
@@ -155,13 +155,13 @@
       content += `<tr>
                     <td class="sticky left-0 min-w-[3rem] text-left z-[1]">${count}</td>
                     <td class="${field === "codigo" ? 'auditado' : ''}">${school.codigo}</td>
-                    <td class="sticky left-12 text-left z-[1] unidade">${school.nome}</td>
-                    <td class="${field === "bairro" ? 'auditado' : ''}">${school.bairro}</td>
-                    <td class="${field === "indicador" ? 'auditado' : ''}">
+                    <td class="sticky left-12 text-left z-[1] unidade whitespace-normal">${school.nome}</td>
+                    <td class="whitespace-normal ${field === "bairro" ? 'auditado' : ''}">${school.bairro}</td>
+                    <td class="sticky left-48 z-[1] ${field === "indicador" ? 'auditado' : ''}">
                       ${school.indicador.toLocaleString("default", {style: "decimal",
                       maximumFractionDigits: 1})}
                     </td>
-                    <td class="${field === "indicador" ? 'auditado' : ''}">${school.avaliacao}</td>`;
+                    <td class="sticky left-64 z-[1] ${field === "indicador" ? 'auditado' : ''}">${school.avaliacao}</td>`;
       for (let i = 4; i < 12; i++) {
         for (let j = 0; j < colTexts[i - 4].length; j++) {
           let hint;

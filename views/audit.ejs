@@ -3,31 +3,31 @@
 <div class="card w-full sm:w-11/12">
   <div class="w-full">
     <h2>Auditar unidades</h2>
-    <div class="mt-8 mx-auto w-[320px] sm:w-1/2 lg:w-1/4">
+    <div class="mt-8 mx-auto w-[320px] md:w-1/2 lg:w-1/4">
       <div class="form-line sm:hidden">
         <select name="auditSortMobile" id="auditSortMobile" class="capitalize w-full" aria-label="Selecione um campo para ordenação." onchange="mobileAuditField()">
-          <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
-          <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
+          <option value="codigo">Código</option>
+          <option value="indicador">IGAI/Avaliação</option>
         </select>
       </div>
       <div class="form-line hidden w-full sm:inline-block">
         <select name="auditSort" id="auditSort" class="capitalize w-full" aria-label="Selecione um campo para ordenação.">
-          <option value="codigo" <%= field === 'codigo' ? 'selected' : ''; %> >Código</option>
-          <option value="indicador" <%= field === 'indicador' ? 'selected' : ''; %> >IGAI/Avaliação</option>
-          <option value="bairro" <%= field === 'bairro' ? 'selected' : ''; %> >Bairro</option>
-          <option value="ocupacao" <%= field === 'ocupacao' ? 'selected' : ''; %> >Ocupação</option>
-          <option value="reservatorio" <%= field === 'reservatorio' ? 'selected' : ''; %> >Reservatório</option>
+          <option value="codigo">Código</option>
+          <option value="indicador">IGAI/Avaliação</option>
+          <option value="bairro">Bairro</option>
+          <option value="ocupacao">Ocupação</option>
+          <option value="reservatorio">Reservatório</option>
           <% for (let i = 4; i < 12; i++) { %>
             <% for (let key in fields[i][1]) { %>
-              <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + '.' + key ? 'selected' : '' %> ><%= fields[i][0] %>: <%= key %></option>
+              <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>"><%= fields[i][0] %>: <%= key %></option>
             <% } %>
           <% } %>
         </select>
       </div>
       <div class="form-line">
         <select name="auditOrder" id="auditOrder" class="w-full" aria-label="Selecione o tipo de ordenação.">
-          <option value="asc" <%= order === 'asc' ? 'selected' : ''; %> >Crescente</option>
-          <option value="desc" <%= order === 'desc' ? 'selected' : ''; %> >Decrescente</option>
+          <option value="asc">Crescente</option>
+          <option value="desc">Decrescente</option>
         </select>
       </div>
       <div class="flex justify-end gap-4 mt-4">
@@ -39,16 +39,16 @@
       <input type="text" name="busca" id="busca" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
       <button role="button" class="limpa-busca" onclick="limpaBusca()"></button>
     </div>
-    <div class="hidden max-h-[600px] w-full mt-4 overflow-scroll border border-primary scroll-smooth sm:block">
+    <div class="hidden max-h-[600px] w-full mt-4 overflow-scroll border border-primary scroll-smooth md:block">
       <table class="text-center mx-auto w-full whitespace-nowrap" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolas">
         <thead class="sticky top-0 z-10">
           <tr>
             <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
-            <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
+            <th class="auditado" scope="col" rowspan="2">Cód.</th>
             <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
-            <th scope="col" rowspan="2" class="<%= field === "bairro" ? 'auditado' : '' %>">Bairro</th>
-            <th scope="col" rowspan="2" class="<%= field === "indicador" ? 'auditado' : '' %>">IGAI</th>
-            <th scope="col" rowspan="2" class="<%= field === "indicador" ? 'auditado' : '' %>">Avaliação</th>
+            <th scope="col" rowspan="2">Bairro</th>
+            <th class="sticky left-[12.25rem]" scope="col" rowspan="2">IGAI</th>
+            <th  class="sticky left-64" scope="col" rowspan="2">Avaliação</th>
             <% for (let i = 4; i < 12; i++) { %>
               <% let keys = 0; %>
               <% for (let key in fields[i][1]) { %>
@@ -58,13 +58,13 @@
                 <%= fields[i][0] %>
               </th>              
             <% } %>
-            <th class="capitalize <%= field === "ocupacao" ? 'auditado' : '' %>" scope="col" rowspan="2">Ocupação</th>
-            <th class="capitalize <%= field === "reservatorio" ? 'auditado' : '' %>" scope="col" rowspan="2">Reservatório</th>
+            <th class="capitalize" scope="col" rowspan="2">Ocupação</th>
+            <th class="capitalize" scope="col" rowspan="2">Reservatório</th>
           </tr>
           <tr>
             <% for (let i = 4; i < 12; i++) { %>
               <% for (let key in fields[i][1]) { %>
-              <th class="capitalize <%= field === fields[i][0] + '.' + key ? 'auditado' : '' %>" scope="col"><%= key %></th>
+              <th class="capitalize" scope="col"><%= key %></th>
               <% } %>
             <% } %>
           </tr>
@@ -72,17 +72,17 @@
         <tbody>
           <% let count = 0; %>
           <% schools.forEach((school) => { %>
-          <tr class="<%= school.ativa == false ? 'hidden' : ''; %>">
+          <tr>
             <% if (school.ativa) {count += 1}; %>
             <td class="sticky left-0 min-w-[3rem] text-left z-[1]"><%= count %></td>
-            <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
-            <td class="sticky left-12 text-left z-[1] unidade"><%= school.nome %></td>
-            <td class="<%= field === "bairro" ? 'auditado' : '' %>"><%= school.bairro %></td>
-            <td class="<%= field === "indicador" ? 'auditado' : '' %>">
+            <td class="auditado"><%= school.codigo %></td>
+            <td class="sticky left-12 text-left z-[1] unidade whitespace-normal"><%= school.nome %></td>
+            <td class="whitespace-normal"><%= school.bairro %></td>
+            <td class="sticky left-48 z-[1]">
               <%= school.indicador.toLocaleString("default", {style: "decimal",
               maximumFractionDigits: 1}) %>
             </td>
-            <td class="<%= field === "indicador" ? 'auditado' : '' %>"><%= school.avaliacao %></td>
+            <td class="sticky left-64 z-[1]"><%= school.avaliacao %></td>
             <% for (let i = 4; i < 12; i++) { %>
               <% for (let key in fields[i][1]) { %>
                 <% let hint; %>
@@ -106,7 +106,7 @@
                     hint = "X - Não se aplica."
                     break;
                 } %>
-                <td class="-z-10 <%= field === fields[i][0] + '.' + key ? 'auditado' : '' %>">
+                <td class="-z-10">
                   <span
                     class="cursor-help hint--top hint--info hint--rounded hint--bounce"
                     aria-label="<%= hint %>"
@@ -116,35 +116,35 @@
                 </td>
               <% } %>
             <% } %>
-            <td class="<%= field === "ocupacao" ? 'auditado' : '' %>"><%= school.ocupacao %></td>
-            <td class="<%= field === "reservatorio" ? 'auditado' : '' %>"><%= school.reservatorio %></td>
+            <td><%= school.ocupacao %></td>
+            <td><%= school.reservatorio %></td>
           </tr>
           <% }) %>
         </tbody>
       </table>
     </div>
-    <div class="flex justify-center w-full mx-auto my-4 sm:hidden">
+    <div class="flex justify-center w-full mx-auto my-4 md:hidden">
       <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolasMobile">
         <thead class="sticky top-0 z-10">
           <tr>
-            <th scope="col" rowspan="2" class="<%= field === "codigo" ? 'auditado' : '' %>">Cód.</th>
+            <th class="auditado" scope="col" rowspan="2">Cód.</th>
             <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
             <th scope="col" rowspan="2">Bairro</th>
-            <th scope="col" rowspan="2"class="<%= field === "indicador" ? 'auditado' : '' %>">IGAI</th>
-            <th scope="col" rowspan="2"class="<%= field === "indicador" ? 'auditado' : '' %>">Avaliação</th>
+            <th scope="col" rowspan="2">IGAI</th>
+            <th scope="col" rowspan="2">Avaliação</th>
           </tr>
         </thead>
         <tbody>
           <% schools.forEach((school) => { %>
           <tr class="<%= school.ativa == false ? 'hidden' : ''; %>">
-            <td class="<%= field === "codigo" ? 'auditado' : '' %>"><%= school.codigo %></td>
+            <td class="auditado"><%= school.codigo %></td>
             <td class="sticky left-0 text-left z-0 unidade"><%= school.nome %></td>
             <td class="-z-10"><%= school.bairro %></td>
-            <td class="<%= field === "indicador" ? 'auditado' : '' %>">
+            <td>
               <%= school.indicador.toLocaleString("default", {style: "decimal",
               maximumFractionDigits: 1}) %>
             </td>
-            <td class="<%= field === "indicador" ? 'auditado' : '' %>"><%= school.avaliacao %></td>
+            <td><%= school.avaliacao %></td>
           </tr>
           <% }) %>
         </tbody>

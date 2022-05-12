@@ -223,8 +223,6 @@ const auditSchoolView = async (req, res) => {
 
   res.render("audit", {
     schools,
-    field: "codigo",
-    order: "asc",
     fields,
     user: req.user,
   });

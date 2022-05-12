@@ -273,7 +273,7 @@ th.auditado {
 }
 
 .auditado {
-  @apply font-bold bg-accent/20;
+  @apply font-bold bg-[#C7ECDF];
 }
 
 /* Toggle */
