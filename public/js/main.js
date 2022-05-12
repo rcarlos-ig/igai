@@ -47,6 +47,11 @@ function zebraPattern() {
   });
 }
 
+// Toggle the Page Load animation
+$(window).on("load", function () {
+  $(".loader-trigger").hide();
+});
+
 // jQuery functions on Page Load
 $(function () {
   // Hide and show "inactive" schools on the Dashboard page
@@ -86,11 +91,4 @@ $(function () {
   replaceAllStrings("cercaTela", "Cerca/Tela");
   replaceAllStrings("iluminacao", "iluminação");
   replaceAllStrings("calcada", "calçada");
-
-  // Toggle the Page Load animation
-  $(window).on("unload", function () {
-    $(".loader-trigger").toggle(true);
-  });
-
-  $(".loader-trigger").toggle(false);
 });
