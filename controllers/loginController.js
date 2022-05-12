@@ -21,10 +21,10 @@ const logout = (req, res) => {
       user.lastLogin = new Date;
       user.save()
     }
+    req.logout();
+    req.session.destroy();
+    res.redirect("/login");
   });
-  req.logout();
-  req.session.destroy();
-  res.redirect("/login");
 };
 
 // Create Register Token
