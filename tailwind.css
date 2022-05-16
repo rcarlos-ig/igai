@@ -139,7 +139,6 @@ h4 {
 
 h1 {
   @apply text-light text-4xl font-bold sm:text-6xl;
-  filter: var(--bg-primary-shadow-filter);
 }
 
 h2,

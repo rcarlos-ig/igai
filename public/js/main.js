@@ -48,8 +48,8 @@ function zebraPattern() {
 }
 
 // Toggle the Page Load animation
-$(window).on("load", function () {
-  $(".loader-trigger").hide();
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelector(".loader-trigger").style.display = "none";
 });
 
 // jQuery functions on Page Load
