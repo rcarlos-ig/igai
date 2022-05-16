@@ -27,10 +27,10 @@
         <p>Indicador: <span class="font-semibold"><%= school.indicador.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) %></span></p>
         <p>Avaliação: <span class="font-semibold"><%= school.avaliacao %></span>
         <% if (school.avaliacao2) { %>
-          <% if (school.indicador > school.indicador2) { %>
+          <% if (school.indicador < school.indicador2) { %>
             <%- `<span class="text-lg font-semibold text-green-600">&uArr;</span>` %>
           <% } %>
-          <% if (school.indicador < school.indicador2) { %>
+          <% if (school.indicador > school.indicador2) { %>
             <%- `<span class="text-lg font-semibold text-red-600">&dArr;</span>` %>
           <% } %>
           </p>

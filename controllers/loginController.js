@@ -267,10 +267,10 @@ const resetPassword = (req, res) => {
 
 // POST request for setting the user theme
 const setUserTheme = (req, _res) => {
-  const { userID, theme } = req.body;
+  const { theme } = req.body;
 
 
-  User.findById(userID).then((user) => {
+  User.findById(req.user._id).then((user) => {
     if (user) {
       user.theme = theme;
       user.save();

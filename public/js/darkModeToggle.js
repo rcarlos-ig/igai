@@ -48,7 +48,7 @@ function setUserTheme(theme) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ userID: userID, theme: theme }),
+    body: JSON.stringify({ theme }),
   });
 }
 

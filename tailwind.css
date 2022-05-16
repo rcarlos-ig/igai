@@ -5,7 +5,7 @@
 
 /* Desabilita animações para acessibilidade */
 @media screen and (prefers-reduced-motion: reduce) {
-  .animate {
+  * {
     animation: none !important;
   }
 }
@@ -778,6 +778,11 @@ html.dark {
   background-color: rgb(var(--background));
 }
 
+html.dark * {
+  box-shadow: unset;
+  filter: unset;
+}
+
 /* Propriedades especiais */
 /* Change Autocomplete styles in Chrome*/
 html.dark input:-webkit-autofill,
@@ -806,10 +811,6 @@ html.dark footer {
   @apply border-t-gray-700;
 }
 
-html.dark footer img {
-  filter: unset;
-}
-
 html.dark .success {
   @apply bg-green-100;
   color: rgb(var(--success));
@@ -824,10 +825,6 @@ html.dark .error {
 
 /* Itens */
 /* Títulos */
-html.dark h1 {
-  filter: unset;
-}
-
 html.dark h1 + small {
   @apply text-gray-400;
 }
@@ -914,34 +911,19 @@ html.dark .senha-olho-riscado:hover {
   background: url("../img/eye-off-dark-hover.svg") no-repeat center;
 }
 
-/* Images */
-html.dark .img-filter {
-  filter: unset;
-}
-
 /* Page Load animation */
 html.dark .loader-wrapper {
   @apply bg-gray-900;
 }
 
-/* Modal de saída */
-html.dark .logout-modal {
+/* Modal de saída e de ajuda */
+html.dark .logout-modal,
+html.dark .help-modal {
   background-color: rgb(var(--background));
   color: rgb(var(--text));
-  box-shadow: unset;
 }
 
-html.dark .logout-modal::backdrop {
+html.dark .logout-modal::backdrop,
+html.dark .help-modal::backdrop {
   @apply bg-gray-600/90 backdrop-blur-sm;
-}
-
-/* Gráfico do dashboard */
-html.dark #dashboardChart {
-  filter: unset;
-}
-
-/* Floating Menu */
-html.dark .menu-open-button,
-html.dark .menu-item {
-  box-shadow: unset;
 }
