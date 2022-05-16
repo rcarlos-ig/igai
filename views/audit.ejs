@@ -44,22 +44,21 @@
         <thead class="sticky top-0 z-10">
           <tr>
             <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
-            <th class="auditado" scope="col" rowspan="2">Cód.</th>
             <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
-            <th scope="col" rowspan="2">Bairro</th>
-            <th class="sticky left-[12.25rem]" scope="col" rowspan="2">IGAI</th>
+            <th scope="col" rowspan="2" id="bairro">Bairro</th>
+            <th class="sticky left-[12.25rem]" scope="col" rowspan="2" id="indicador">IGAI</th>
             <th  class="sticky left-64" scope="col" rowspan="2">Avaliação</th>
             <% for (let i = 4; i < 12; i++) { %>
               <% let keys = 0; %>
               <% for (let key in fields[i][1]) { %>
                 <% keys += 1; %>
               <% } %>
-              <th class="capitalize" scope="col" rowspan="1" colspan="<%= keys %>">
+              <th class="capitalize" scope="col" rowspan="1" colspan="<%= keys %>" id="<%= fields[i][0] %>">
                 <%= fields[i][0] %>
               </th>              
             <% } %>
-            <th class="capitalize" scope="col" rowspan="2">Ocupação</th>
-            <th class="capitalize" scope="col" rowspan="2">Reservatório</th>
+            <th class="capitalize" scope="col" rowspan="2" id="ocupacao">Ocupação</th>
+            <th class="capitalize" scope="col" rowspan="2" id="reservatorio">Reservatório</th>
           </tr>
           <tr>
             <% for (let i = 4; i < 12; i++) { %>
@@ -73,9 +72,8 @@
           <% let count = 0; %>
           <% schools.forEach((school) => { %>
           <tr>
-            <% if (school.ativa) {count += 1}; %>
+            <% count += 1; %>
             <td class="sticky left-0 min-w-[3rem] text-left z-[1]"><%= count %></td>
-            <td class="auditado"><%= school.codigo %></td>
             <td class="sticky left-12 text-left z-[1] unidade whitespace-normal"><%= school.nome %></td>
             <td class="whitespace-normal"><%= school.bairro %></td>
             <td class="sticky left-48 z-[1]">
@@ -127,7 +125,7 @@
       <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolasMobile">
         <thead class="sticky top-0 z-10">
           <tr>
-            <th class="auditado" scope="col" rowspan="2">Cód.</th>
+            <th scope="col" rowspan="2">#</th>
             <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
             <th scope="col" rowspan="2">Bairro</th>
             <th scope="col" rowspan="2">IGAI</th>
@@ -135,9 +133,11 @@
           </tr>
         </thead>
         <tbody>
+          <% count = 0; %>
           <% schools.forEach((school) => { %>
-          <tr class="<%= school.ativa == false ? 'hidden' : ''; %>">
-            <td class="auditado"><%= school.codigo %></td>
+          <tr>
+            <% count += 1; %>
+            <td><%= count %></td>
             <td class="sticky left-0 text-left z-0 unidade"><%= school.nome %></td>
             <td class="-z-10"><%= school.bairro %></td>
             <td>

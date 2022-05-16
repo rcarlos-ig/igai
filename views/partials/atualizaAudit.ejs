@@ -12,19 +12,6 @@
 <% } %>
 
 <script>
-  // Zebra pattern for the tables
-  function zebraPattern() {
-    const tableRows = document.querySelectorAll("tbody>tr");
-
-    tableRows.forEach((row, index) => {
-      if (index % 2 !== 0) {
-        for (let i = 0; i < row.children.length; i++) {
-          row.children[i].classList.add("zebrado")
-        }
-      }
-    });
-  }
-
   const fields = <%- JSON.stringify(fields) %>;
   const colspans = <%- JSON.stringify(colspans) %>;
   const colTexts = <%- JSON.stringify(colTexts) %>;
@@ -42,10 +29,10 @@
     const selectedField = document.getElementById("auditSort").value;
     const sort = document.getElementById("auditOrder").value;
 
-    let field;
+    let field, mainField;
 
     if (selectedField.indexOf(".") >= 0) {
-      const mainField = selectedField.substr(0, selectedField.indexOf("."));
+      mainField = selectedField.substr(0, selectedField.indexOf("."));
       field = selectedField.substr(selectedField.indexOf(".") + 1);
 
       if (sort === "asc") {
@@ -112,18 +99,17 @@
     let content = `<thead class="sticky top-0 z-10">
                     <tr>
                       <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
-                      <th scope="col" rowspan="2" class="${field === "codigo" ? 'auditado' : ''}">Cód.</th>
                       <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
-                      <th scope="col" rowspan="2" class="${field === "bairro" ? 'auditado' : ''}">Bairro</th>
-                      <th class="sticky left-48 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2">IGAI</th>
+                      <th scope="col" rowspan="2" class="${field === "bairro" ? 'auditado' : ''}" id="bairro">Bairro</th>
+                      <th class="sticky left-48 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2" id="indicador">IGAI</th>
                       <th class="sticky left-64 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2">Avaliação</th>`;    
     for (let i = 4; i < 12; i++) {
-      content+= `<th class="capitalize" scope="col" rowspan="1" colspan="${colspans[i - 4]}">
+      content+= `<th class="capitalize" scope="col" rowspan="1" colspan="${colspans[i - 4]}" id="${fields[i][0]}">
                   ${fields[i][0]}
                 </th>`
     };
-    content += `<th class="capitalize ${field === "ocupacao" ? 'auditado' : ''}" scope="col" rowspan="2">Ocupação</th>
-                <th class="capitalize ${field === "reservatorio" ? 'auditado' : ''}" scope="col" rowspan="2">Reservatório</th>
+    content += `<th class="capitalize ${field === "ocupacao" ? 'auditado' : ''}" scope="col" rowspan="2" id="ocupacao">Ocupação</th>
+                <th class="capitalize ${field === "reservatorio" ? 'auditado' : ''}" scope="col" rowspan="2" id="reservatorio">Reservatório</th>
                 </tr>
                 <tr>`;
     for (let i = 4; i < 12; i++) {
@@ -134,18 +120,6 @@
     content += `</tr>
                </thead>`;
     thead.innerHTML = content;
-    
-    let mobileThead = mobileTable.querySelector("thead");
-    content = `<thead class="sticky top-0 z-10">
-                <tr>
-                  <th scope="col" rowspan="2" class="${field === "codigo" ? 'auditado' : ''}">Cód.</th>
-                  <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
-                  <th scope="col" rowspan="2">Bairro</th>
-                  <th scope="col" rowspan="2"class="${field === "indicador" ? 'auditado' : ''}">IGAI</th>
-                  <th scope="col" rowspan="2"class="${field === "indicador" ? 'auditado' : ''}">Avaliação</th>
-                </tr>
-              </thead>`
-    mobileThead.innerHTML = content;
 
     let tbody = table.querySelector("tbody");
     content = `<tbody>`;
@@ -154,7 +128,6 @@
       count += 1;
       content += `<tr>
                     <td class="sticky left-0 min-w-[3rem] text-left z-[1]">${count}</td>
-                    <td class="${field === "codigo" ? 'auditado' : ''}">${school.codigo}</td>
                     <td class="sticky left-12 text-left z-[1] unidade whitespace-normal">${school.nome}</td>
                     <td class="whitespace-normal ${field === "bairro" ? 'auditado' : ''}">${school.bairro}</td>
                     <td class="sticky left-48 z-[1] ${field === "indicador" ? 'auditado' : ''}">
@@ -202,11 +175,25 @@
     content += `</tbody>`
     tbody.innerHTML = content;
 
+    let mobileThead = mobileTable.querySelector("thead");
+    content = `<thead class="sticky top-0 z-10">
+                <tr>
+                  <th scope="col" rowspan="2">#</th>
+                  <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
+                  <th scope="col" rowspan="2">Bairro</th>
+                  <th scope="col" rowspan="2"class="${field === "indicador" ? 'auditado' : ''}">IGAI</th>
+                  <th scope="col" rowspan="2"class="${field === "indicador" ? 'auditado' : ''}">Avaliação</th>
+                </tr>
+              </thead>`
+    mobileThead.innerHTML = content;
+
     let mobileTbody = mobileTable.querySelector("tbody");
     content = `<tbody>`;
+    count = 0;
     schools.forEach((school) => {
+      count += 1;
       content += `<tr>
-                    <td class="${field === "codigo" ? 'auditado' : ''}">${school.codigo}</td>
+                    <td>${count}</td>
                     <td class="sticky left-0 text-left z-0 unidade">${school.nome}</td>
                     <td class="-z-10">${school.bairro}</td>
                     <td class="${field === "indicador" ? 'auditado' : ''}">
@@ -220,7 +207,36 @@
     mobileTbody.innerHTML = content;
     content = "";
 
-
+    // Zebra pattern for the tables
     zebraPattern();
+
+    // Replace defined strings on the document body
+    replaceAllStrings("codigo", "código");
+    replaceAllStrings("ocupacao", "ocupação");
+    replaceAllStrings("avaliacao", "avaliação");
+    replaceAllStrings("instalacoes", "instalações");
+    replaceAllStrings("eletricas", "elétricas");
+    replaceAllStrings("hidraulicas", "hidráulicas");
+    replaceAllStrings("sanitarias", "sanitárias");
+    replaceAllStrings("impermeabilizacao", "impermeabilização");
+    replaceAllStrings("predio", "prédio");
+    replaceAllStrings("reservatorio", "reservatório");
+    replaceAllStrings("cercaTela", "Cerca/Tela");
+    replaceAllStrings("iluminacao", "iluminação");
+    replaceAllStrings("calcada", "calçada");
+
+    if (selectedField.indexOf(".") >= 0) {
+      document.querySelector("#" + mainField).scrollIntoView({
+        behavior: 'smooth',
+        block: "nearest",
+        inline: "center"
+      });
+    } else {
+      document.querySelector("#" + field).scrollIntoView({
+        behavior: 'smooth',
+        block: "nearest",
+        inline: "center"
+      });
+    }
   }
 </script>
