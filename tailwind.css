@@ -115,11 +115,11 @@ dialog[open] {
 }
 
 dialog[open]::backdrop {
-  animation: show 0.25s ease normal;
+  animation: show 0.5s ease normal;
 }
 
 dialog.hide {
-  animation: hide .25s ease normal;
+  animation: hide .5s ease normal;
 }
 
 dialog.hide::backdrop {
