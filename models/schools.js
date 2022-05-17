@@ -48,7 +48,14 @@ const SchoolSchema = new mongoose.Schema({
     calcada: Number,
     muro: Number,
   },
-  reservatorio: String,
+  reservatorio: {
+    tipo: String,
+    capacidade: Number,
+  },
+  cisterna: {
+    possui: Boolean,
+    capacidade: Number,
+  },
   ocupacao: String,
   atualizadoEm: {
     type: Date,
@@ -56,8 +63,8 @@ const SchoolSchema = new mongoose.Schema({
   },
   atualizadoPor: String,
   indicador: Number,
-  avaliacao: String,
   indicador2: Number,
+  avaliacao: String,
   avaliacao2: String,
 });
 

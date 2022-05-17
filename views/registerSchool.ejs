@@ -65,16 +65,6 @@
             <% } %>
           </div>
         </div>
-        <div class="form-line">
-          <label for="reservatorio">Reservatório</label>
-          <div>
-            <% if (locals.reservatorio) { %>
-              <input type="text" name="reservatorio" id="reservatorio" placeholder="Tipo de reservatório da escola" value="<%= reservatorio %>" />
-            <% } else { %>
-              <input type="text" name="reservatorio" id="reservatorio" placeholder="Tipo de reservatório da escola" />
-            <% } %>
-          </div>
-        </div>
         <div class="form-line">          
           <% if (locals.ativa) { %>
             <input type="checkbox" name="ativa" id="ativa" class="toggle" <%= ativa == true ? 'checked' : ''; %> />

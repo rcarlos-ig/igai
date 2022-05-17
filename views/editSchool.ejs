@@ -81,19 +81,46 @@
         </div>
       </div>
       <div class="form-line">
-        <label for="reservatorio">Reservatório</label>
-        <div>
+        <label for="reservatorio.tipo">Reservatório</label>
+        <div class="flex flex-wrap gap-2">
           <input
             type="text"
-            name="reservatorio"
-            id="reservatorio"
-            value="<%= school.reservatorio %>"
+            name="reservatorio.tipo"
+            id="reservatorio.tipo"
+            value="<%= school.reservatorio.tipo %>"
+            placeholder="Tipo de reservatorio."
+          />
+          <input
+            type="number"
+            name="reservatorio.capacidade"
+            id="reservatorio.capacidade"
+            value="<%= school.reservatorio.capacidade %>"
+            min="0"
+            placeholder="Capacidade do reservatório (litros)."
+          />
+        </div>
+      </div>
+      <div class="form-line">
+        <label for="cisterna.capacidade">Cisterna</label>
+        <div class="flex flex-wrap gap-2">
+          <div class="mt-1 mb-2">
+            <input type="checkbox" name="cisterna.possui" id="cisterna.possui" class="toggle" <%=
+            school.cisterna.possui == true ? 'checked' : ''; %> />
+            <label for="cisterna.possui">Possui cisterna?</label>
+          </div>
+          <input
+            type="number"
+            name="cisterna.capacidade"
+            id="cisterna.capacidade"
+            value="<%= school.cisterna.capacidade %>"
+            min="0"
+            placeholder="Capacidade da cisterna (litros)."
           />
         </div>
       </div>
       <div class="form-line">
         <label for="ativa">Escola ativa?</label>
-        <div class="mt-8 mb-4">
+        <div class="mt-1 mb-4">
           <input type="checkbox" name="ativa" id="ativa" class="toggle" <%=
           school.ativa == true ? 'checked' : ''; %> />
           <label for="ativa">Unidade ativa?</label>

@@ -16,8 +16,8 @@
           <option value="indicador">IGAI/Avaliação</option>
           <option value="bairro">Bairro</option>
           <option value="ocupacao">Ocupação</option>
-          <option value="reservatorio">Reservatório</option>
-          <% for (let i = 4; i < 12; i++) { %>
+          <option value="indicador2">Histórico</option>
+          <% for (let i = 4; i < 14; i++) { %>
             <% for (let key in fields[i][1]) { %>
               <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>"><%= fields[i][0] %>: <%= key %></option>
             <% } %>
@@ -48,7 +48,7 @@
             <th scope="col" rowspan="2" id="bairro">Bairro</th>
             <th class="sticky left-[12.25rem]" scope="col" rowspan="2" id="indicador">IGAI</th>
             <th  class="sticky left-64" scope="col" rowspan="2">Avaliação</th>
-            <% for (let i = 4; i < 12; i++) { %>
+            <% for (let i = 4; i < 14; i++) { %>
               <% let keys = 0; %>
               <% for (let key in fields[i][1]) { %>
                 <% keys += 1; %>
@@ -58,10 +58,10 @@
               </th>              
             <% } %>
             <th class="capitalize" scope="col" rowspan="2" id="ocupacao">Ocupação</th>
-            <th class="capitalize" scope="col" rowspan="2" id="reservatorio">Reservatório</th>
+            <th class="capitalize" scope="col" rowspan="2" id="indicador2">Histórico</th>
           </tr>
           <tr>
-            <% for (let i = 4; i < 12; i++) { %>
+            <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
               <th class="capitalize" scope="col"><%= key %></th>
               <% } %>
@@ -81,41 +81,47 @@
               maximumFractionDigits: 1}) %>
             </td>
             <td class="sticky left-64 z-[1]"><%= school.avaliacao %></td>
-            <% for (let i = 4; i < 12; i++) { %>
+            <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
-                <% let hint; %>
-                <% switch (school[fields[i][0]][key]) {
-                  case 1:
-                    hint = "1 - Péssimo."
-                    break;
-                  case 2:
-                    hint = "2 - Ruim."
-                    break;
-                  case 3:
-                    hint = "3 - Regular."
-                    break;
-                  case 4:
-                    hint = "4 - Bom."
-                    break;
-                  case 5:
-                    hint = "5 - Ótimo."
-                    break;                
-                  default:
-                    hint = "X - Não se aplica."
-                    break;
-                } %>
-                <td class="-z-10">
-                  <span
-                    class="cursor-help hint--top hint--info hint--rounded hint--bounce"
-                    aria-label="<%= hint %>"
-                  >
-                    <%= school[fields[i][0]][key] === 0 ? 'X' : school[fields[i][0]][key] %>
-                  </span>
-                </td>
+                <% if (i < 12) { %>
+                  <% let hint; %>
+                  <% switch (school[fields[i][0]][key]) {
+                    case 0:
+                      hint = "X - Não se aplica."
+                      break;
+                    case 1:
+                      hint = "1 - Péssimo."
+                      break;
+                    case 2:
+                      hint = "2 - Ruim."
+                      break;
+                    case 3:
+                      hint = "3 - Regular."
+                      break;
+                    case 4:
+                      hint = "4 - Bom."
+                      break;
+                    case 5:
+                      hint = "5 - Ótimo."
+                      break;
+                  } %>
+                  <td class="-z-10">
+                    <span
+                      class="cursor-help hint--top hint--info hint--rounded hint--bounce"
+                      aria-label="<%= hint %>"
+                    >
+                      <%= school[fields[i][0]][key] === 0 ? 'X' : school[fields[i][0]][key] %>
+                    </span>
+                  </td>
+                <% } else { %>
+                  <td class="-z-10">
+                    <%= school[fields[i][0]][key] %>
+                  </td>
+                <% } %>
               <% } %>
             <% } %>
             <td><%= school.ocupacao %></td>
-            <td><%= school.reservatorio %></td>
+            <td><%= typeof school.indicador2 !== "undefined" ? school.indicador2.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) : "" %> - <%= typeof school.avaliacao2 !== "undefined" ? school.avaliacao2 : "" %></td>
           </tr>
           <% }) %>
         </tbody>

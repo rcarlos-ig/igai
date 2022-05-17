@@ -11,12 +11,24 @@
       </div>
     <% }; %>
     <div class="px-6">
-      <h3>Dados:</h3>
       <div class="border-b-2 border-gray-300 pb-4 md:pb-6">
         <p>Escola: <span class="font-semibold"><%= school.nome %></span></p>
         <p>Bairro: <span class="font-semibold"><%= school.bairro %></span></p>
         <p>Ocupação: <span class="font-semibold"><%= school.ocupacao %></span></p>
-        <p>Reservatório: <span class="font-semibold"><%= school.reservatorio %></span></p>
+        <% if (school.reservatorio) { %>
+          <p>Reservatório: 
+            <span class="font-semibold">
+              <%= school.reservatorio.tipo %> - <%= school.reservatorio.capacidade %>
+            </span>
+          </p>
+        <% } %>
+        <% if (school.cisterna) { %>
+          <p>Cisterna: 
+            <span class="font-semibold">
+              <%= school.cisterna.possui %> - <%= school.cisterna.capacidade %>
+            </span>
+          </p>
+        <% } %>
         <p>Ativa: <span class="font-semibold"><%= school.ativa === true ? 'Sim' : 'Não' %></span></p>
         <div class="mt-2">
           <button type="button" class="button button-secondary" onclick="window.location='<%= `/edit-school?unidade=${school.codigo}` %>'">Editar</button>

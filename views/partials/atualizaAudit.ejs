@@ -1,6 +1,6 @@
 <% let colspans = []; %>
 <% let colTexts = []; %>
-<% for (let i = 4; i < 12; i++) { %>
+<% for (let i = 4; i < 14; i++) { %>
   <% let keys = 0; %>
   <% let colTextsSubArray = []; %>
   <% for (let key in fields[i][1]) { %>
@@ -103,16 +103,16 @@
                       <th scope="col" rowspan="2" class="${field === "bairro" ? 'auditado' : ''}" id="bairro">Bairro</th>
                       <th class="sticky left-48 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2" id="indicador">IGAI</th>
                       <th class="sticky left-64 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2">Avaliação</th>`;    
-    for (let i = 4; i < 12; i++) {
+    for (let i = 4; i < 14; i++) {
       content+= `<th class="capitalize" scope="col" rowspan="1" colspan="${colspans[i - 4]}" id="${fields[i][0]}">
                   ${fields[i][0]}
                 </th>`
     };
     content += `<th class="capitalize ${field === "ocupacao" ? 'auditado' : ''}" scope="col" rowspan="2" id="ocupacao">Ocupação</th>
-                <th class="capitalize ${field === "reservatorio" ? 'auditado' : ''}" scope="col" rowspan="2" id="reservatorio">Reservatório</th>
+                <th class="capitalize ${field === "indicador2" ? 'auditado' : ''}" scope="col" rowspan="2" id="indicador2">Histórico</th>
                 </tr>
                 <tr>`;
-    for (let i = 4; i < 12; i++) {
+    for (let i = 4; i < 14; i++) {
       for (let j = 0; j < colTexts[i - 4].length; j++) {
         content += `<th class="capitalize ${field === colTexts[i - 4][j] ? 'auditado' : ''}" scope="col">${colTexts[i - 4][j]}</th>`
       }    
@@ -135,41 +135,54 @@
                       maximumFractionDigits: 1})}
                     </td>
                     <td class="sticky left-64 z-[1] ${field === "indicador" ? 'auditado' : ''}">${school.avaliacao}</td>`;
-      for (let i = 4; i < 12; i++) {
+      for (let i = 4; i < 14; i++) {
         for (let j = 0; j < colTexts[i - 4].length; j++) {
-          let hint;
-          switch (school[fields[i][0]][colTexts[i - 4][j]]) {
-            case 1:
-              hint = "1 - Péssimo."
-              break;
-            case 2:
-              hint = "2 - Ruim."
-              break;
-            case 3:
-              hint = "3 - Regular."
-              break;
-            case 4:
-              hint = "4 - Bom."
-              break;
-            case 5:
-              hint = "5 - Ótimo."
-              break;                
-            default:
-              hint = "X - Não se aplica."
-              break;
-          }
-          content+= `<td class="-z-10 ${field === colTexts[i - 4][j] ? 'auditado' : ''}">
-                        <span
-                          class="cursor-help hint--top hint--info hint--rounded hint--bounce"
-                          aria-label="${hint}"
-                        >
-                          ${school[fields[i][0]][colTexts[i - 4][j]] === 0 ? 'X' : school[fields[i][0]][colTexts[i - 4][j]]}
-                        </span>
+          if (i < 12) {
+            let hint;
+            switch (school[fields[i][0]][colTexts[i - 4][j]]) {
+              case 0:
+                hint = "X - Não se aplica."
+                break;
+              case 1:
+                hint = "1 - Péssimo."
+                break;
+              case 2:
+                hint = "2 - Ruim."
+                break;
+              case 3:
+                hint = "3 - Regular."
+                break;
+              case 4:
+                hint = "4 - Bom."
+                break;
+              case 5:
+                hint = "5 - Ótimo."
+                break;
+            }
+            content+= `<td class="-z-10 ${field === colTexts[i - 4][j] ? 'auditado' : ''}">
+                          <span
+                            class="cursor-help hint--top hint--info hint--rounded hint--bounce"
+                            aria-label="${hint}"
+                          >
+                            ${school[fields[i][0]][colTexts[i - 4][j]] === 0 ? 'X' : school[fields[i][0]][colTexts[i - 4][j]]}
+                          </span>
+                        </td>`
+          } else {
+            let data = "";
+            if (school[fields[i][0]] !== undefined) {
+              data = school[fields[i][0]][colTexts[i - 4][j]];
+            }
+            content+= `<td class="-z-10 ${field === colTexts[i - 4][j] ? 'auditado' : ''}">
+                        ${data}
                       </td>`
+          }
         };
        };
+      let indicador2 = typeof school.indicador2 !== "undefined" ? school.indicador2.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) : "";
+      let avaliacao2 = typeof school.avaliacao2 !== "undefined" ? school.avaliacao2 : "";
+      let historico = indicador2 + " - " + avaliacao2;
       content += `<td class="${field === "ocupacao" ? 'auditado' : ''}">${school.ocupacao}</td>
-                  <td class="${field === "reservatorio" ? 'auditado' : ''}">${school.reservatorio}</td>
+                  <td class="${field === "indicador2" ? 'auditado' : ''}">${historico}</td>
                 </tr>`
     });
     content += `</tbody>`
