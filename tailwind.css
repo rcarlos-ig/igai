@@ -110,6 +110,37 @@ footer img {
   filter: var(--bg-gray-50-shadow-filter);
 }
 
+dialog[open] {
+  animation: show .5s ease normal;
+}
+
+dialog[open]::backdrop {
+  animation: show 0.25s ease normal;
+}
+
+dialog.hide {
+  animation: hide .25s ease normal;
+}
+
+dialog.hide::backdrop {
+  animation: hide 0.5s ease normal;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  to {
+    opacity: 0;
+  }
+}
+
 .card {
   @apply flex justify-center mx-auto py-8;
 }

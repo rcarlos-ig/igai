@@ -74,7 +74,12 @@
     helpModal.showModal();
   });
   helpModalClose.addEventListener("click", () => {
-    helpModal.close();
+    helpModal.classList.add("hide");
+    helpModal.addEventListener("animationend", function () {
+      helpModal.classList.remove("hide");
+      helpModal.close();
+      helpModal.removeEventListener("animationend", arguments.callee, false);
+    }, false)
   });
 
   let activeSlide = 1;

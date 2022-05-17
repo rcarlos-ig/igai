@@ -9,5 +9,10 @@ openLogoutModal.addEventListener("click", () => {
 });
 
 closeLogoutModal.addEventListener("click", () => {
-  logoutModal.close();
+  logoutModal.classList.add("hide");
+  logoutModal.addEventListener("animationend", function () {
+    logoutModal.classList.remove("hide");
+    logoutModal.close();
+    logoutModal.removeEventListener("animationend", arguments.callee, false);
+  }, false)
 });
