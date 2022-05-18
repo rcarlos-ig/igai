@@ -16,15 +16,21 @@ const {
 
 // Logout
 const logout = (req, res) => {
-  User.findById(req.user._id).then((user) => {
-    if (user) {
-      user.lastLogin = new Date;
-      user.save()
-    }
+  if (req.user) {
+    User.findById(req.user._id).then((user) => {
+      if (user) {
+        user.lastLogin = new Date();
+        user.save();
+      }
+      req.logout();
+      req.session.destroy();
+      res.redirect("/login");
+    });
+  } else {
     req.logout();
     req.session.destroy();
     res.redirect("/login");
-  });
+  }
 };
 
 // Create Register Token
@@ -268,7 +274,6 @@ const resetPassword = (req, res) => {
 // POST request for setting the user theme
 const setUserTheme = (req, _res) => {
   const { theme } = req.body;
-
 
   User.findById(req.user._id).then((user) => {
     if (user) {
