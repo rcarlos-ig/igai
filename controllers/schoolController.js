@@ -195,6 +195,7 @@ const editSchool = async (req, res) => {
   const data = req.body;
 
   data.ativa = data.ativa === "on" ? true : false;
+  data["cisterna.possui"] = data["cisterna.possui"] === "on" ? true : false;
   data.atualizadoEm = new Date();
   data.atualizadoPor = req.user._id;
 

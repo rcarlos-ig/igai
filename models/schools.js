@@ -50,12 +50,19 @@ const SchoolSchema = new mongoose.Schema({
   },
   reservatorio: {
     tipo: String,
-    capacidade: Number,
+    capacidade: {
+      type: Number,
+      default: 0,
+    },
   },
   cisterna: {
     possui: Boolean,
-    capacidade: Number,
+    capacidade: {
+      type: Number,
+      default: 0,
+    },
   },
+  bomba: String,
   ocupacao: String,
   atualizadoEm: {
     type: Date,

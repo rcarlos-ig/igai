@@ -94,7 +94,7 @@
             type="number"
             name="reservatorio.capacidade"
             id="reservatorio.capacidade"
-            value="<%= school.reservatorio.capacidade %>"
+            value="<%= school.reservatorio.capacidade === 0 ? '' : school.reservatorio.capacidade %>"
             min="0"
             placeholder="Capacidade do reservatório (litros)."
           />
@@ -112,9 +112,16 @@
             type="number"
             name="cisterna.capacidade"
             id="cisterna.capacidade"
-            value="<%= school.cisterna.capacidade %>"
+            value="<%= school.cisterna.capacidade === 0 ? '' : school.cisterna.capacidade %>"
             min="0"
             placeholder="Capacidade da cisterna (litros)."
+          />
+          <input
+            type="text"
+            name="bomba"
+            id="bomba"
+            value="<%= school.bomba %>"
+            placeholder="Tipo de bomba da cisterna."
           />
         </div>
       </div>

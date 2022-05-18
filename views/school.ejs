@@ -15,20 +15,21 @@
         <p>Escola: <span class="font-semibold"><%= school.nome %></span></p>
         <p>Bairro: <span class="font-semibold"><%= school.bairro %></span></p>
         <p>Ocupação: <span class="font-semibold"><%= school.ocupacao %></span></p>
-        <% if (school.reservatorio) { %>
-          <p>Reservatório: 
-            <span class="font-semibold">
-              <%= school.reservatorio.tipo %> - <%= school.reservatorio.capacidade %>
-            </span>
-          </p>
-        <% } %>
+        <p>Reservatório: 
+          <span class="font-semibold">
+          <% if (school.reservatorio.capacidade) { %>
+            <%= school.reservatorio.tipo + " - " + school.reservatorio.capacidade.toLocaleString("default") + " litros" %>
+          <% } %>
+          </span>
+        </p>
         <% if (school.cisterna) { %>
           <p>Cisterna: 
             <span class="font-semibold">
-              <%= school.cisterna.possui %> - <%= school.cisterna.capacidade %>
+              <%= school.cisterna.possui === true ? school.cisterna.capacidade.toLocaleString("default") + " litros" : "Não dispõe." %>
             </span>
           </p>
         <% } %>
+        <p>Bomba da cisterna: <span class="font-semibold"><%= school.bomba %></span></p>
         <p>Ativa: <span class="font-semibold"><%= school.ativa === true ? 'Sim' : 'Não' %></span></p>
         <div class="mt-2">
           <button type="button" class="button button-secondary" onclick="window.location='<%= `/edit-school?unidade=${school.codigo}` %>'">Editar</button>
@@ -40,10 +41,10 @@
         <p>Avaliação: <span class="font-semibold"><%= school.avaliacao %></span>
         <% if (school.avaliacao2) { %>
           <% if (school.indicador < school.indicador2) { %>
-            <%- `<span class="text-lg font-semibold text-green-600">&uArr;</span>` %>
+            <%- `<span class="text-xl font-semibold text-green-600">&uArr;</span>` %>
           <% } %>
           <% if (school.indicador > school.indicador2) { %>
-            <%- `<span class="text-lg font-semibold text-red-600">&dArr;</span>` %>
+            <%- `<span class="text-xl font-semibold text-red-600">&dArr;</span>` %>
           <% } %>
           </p>
           <p>Histórico: <span class="font-semibold"><%= school.indicador2.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) %></span> - <span class="font-semibold"><%= school.avaliacao2 %></span></p>
