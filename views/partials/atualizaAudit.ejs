@@ -99,10 +99,10 @@
     let content = `<thead class="sticky top-0 z-10">
                     <tr>
                       <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
-                      <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
+                      <th class="sticky left-12 min-w-[10rem]" scope="col" rowspan="2">Nome</th>
                       <th scope="col" rowspan="2" class="${field === "bairro" ? 'auditado' : ''}" id="bairro">Bairro</th>
-                      <th class="sticky left-48 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2" id="indicador">IGAI</th>
-                      <th class="sticky left-64 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2">Avaliação</th>`;    
+                      <th class="sticky left-52 min-w-[5rem] ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2" id="indicador">IGAI</th>
+                      <th class="sticky left-72 ${field === "indicador" ? 'auditado' : ''}" scope="col" rowspan="2">Avaliação</th>`;    
     for (let i = 4; i < 14; i++) {
       content+= `<th class="capitalize" scope="col" rowspan="1" colspan="${colspans[i - 4]}" id="${fields[i][0]}">
                   ${fields[i][0]}
@@ -127,14 +127,14 @@
     schools.forEach((school) => {
       count += 1;
       content += `<tr>
-                    <td class="sticky left-0 min-w-[3rem] text-left z-[1]">${count}</td>
+                    <td class="sticky left-0 text-center z-[1]">${count}</td>
                     <td class="sticky left-12 text-left z-[1] unidade whitespace-normal">${school.nome}</td>
                     <td class="whitespace-normal ${field === "bairro" ? 'auditado' : ''}">${school.bairro}</td>
-                    <td class="sticky left-48 z-[1] ${field === "indicador" ? 'auditado' : ''}">
+                    <td class="sticky left-52 z-[1] ${field === "indicador" ? 'auditado' : ''}">
                       ${school.indicador.toLocaleString("default", {style: "decimal",
                       maximumFractionDigits: 1})}
                     </td>
-                    <td class="sticky left-64 z-[1] ${field === "indicador" ? 'auditado' : ''}">${school.avaliacao}</td>`;
+                    <td class="sticky left-72 z-[1] ${field === "indicador" ? 'auditado' : ''}">${school.avaliacao}</td>`;
       for (let i = 4; i < 14; i++) {
         for (let j = 0; j < colTexts[i - 4].length; j++) {
           if (i < 12) {
@@ -242,13 +242,13 @@
       document.querySelector("#" + mainField).scrollIntoView({
         behavior: "smooth",
         block: "nearest",
-        inline: "center"
+        inline: "end"
       });
     } else {
       document.querySelector("#" + field).scrollIntoView({
         behavior: "smooth",
         block: "nearest",
-        inline: "center"
+        inline: "end"
       });
     }
   }

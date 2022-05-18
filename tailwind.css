@@ -245,49 +245,28 @@ select {
 
 /* Tables */
 table {
-  @apply table-auto border-collapse text-xs md:text-base;
-}
-
-td,
-th {
-  @apply bg-clip-padding;
+  @apply table-auto border-separate text-xs md:text-base;
+  border-spacing: 0;
 }
 
 th {
   @apply font-medium tracking-wider;
+  @apply border-r border-b border-gray-300;
+  @apply bg-primary text-light p-4 lg:py-3 lg:px-4;
 }
 
 td {
   @apply bg-gray-100;
+  @apply border-r border-b border-gray-300;
+  @apply p-1 md:py-2 md:px-3;
 }
 
-thead tr:first-child th:not(:first-child):not(:last-child) {
-  @apply border-x border-x-gray-300;
+thead tr:first-child th:last-child {
+  @apply border-r-0;
 }
 
-thead tr:nth-child(2n) th {
-  @apply border-t border-x border-gray-300;
-}
-
-tbody tr td:not(:first-child):not(:last-child) {
-  @apply border border-gray-300;
-}
-
-tbody tr td:first-child,
 tbody tr td:last-child {
-  @apply border-y border-gray-300;
-}
-
-tbody tr:first-child td {
-  @apply border-t-0 !important;
-}
-
-thead tr th {
-  @apply bg-primary text-light p-4 lg:py-3 lg:px-4;
-}
-
-tbody tr td {
-  @apply p-1 sm:py-2 sm:px-3;
+  @apply border-r-0;
 }
 
 .zebrado {
@@ -917,7 +896,7 @@ html.dark th.auditado {
 }
 
 html.dark .auditado {
-  @apply bg-accent/20;
+  @apply bg-[#0A2E20];
 }
 
 /* Buttons */

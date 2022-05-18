@@ -44,10 +44,10 @@
         <thead class="sticky top-0 z-10">
           <tr>
             <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
-            <th class="sticky left-12" scope="col" rowspan="2">Nome</th>
+            <th class="sticky left-12 min-w-[10rem]" scope="col" rowspan="2">Nome</th>
             <th scope="col" rowspan="2" id="bairro">Bairro</th>
-            <th class="sticky left-[12.25rem]" scope="col" rowspan="2" id="indicador">IGAI</th>
-            <th  class="sticky left-64" scope="col" rowspan="2">Avaliação</th>
+            <th class="sticky left-52 min-w-[5rem]" scope="col" rowspan="2" id="indicador">IGAI</th>
+            <th class="sticky left-72" scope="col" rowspan="2">Avaliação</th>
             <% for (let i = 4; i < 14; i++) { %>
               <% let keys = 0; %>
               <% for (let key in fields[i][1]) { %>
@@ -73,14 +73,14 @@
           <% schools.forEach((school) => { %>
           <tr>
             <% count += 1; %>
-            <td class="sticky left-0 min-w-[3rem] text-left z-[1]"><%= count %></td>
+            <td class="sticky left-0 text-center z-[1]"><%= count %></td>
             <td class="sticky left-12 text-left z-[1] unidade whitespace-normal"><%= school.nome %></td>
             <td class="whitespace-normal"><%= school.bairro %></td>
-            <td class="sticky left-48 z-[1]">
+            <td class="sticky left-52 z-[1]">
               <%= school.indicador.toLocaleString("default", {style: "decimal",
               maximumFractionDigits: 1}) %>
             </td>
-            <td class="sticky left-64 z-[1]"><%= school.avaliacao %></td>
+            <td class="sticky left-72 z-[1]"><%= school.avaliacao %></td>
             <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
                 <% if (i < 12) { %>
