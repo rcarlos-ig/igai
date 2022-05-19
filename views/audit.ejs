@@ -144,8 +144,8 @@
             <th scope="col" rowspan="2">#</th>
             <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
             <th scope="col" rowspan="2">Bairro</th>
-            <th scope="col" rowspan="2">IGAI</th>
-            <th scope="col" rowspan="2">Avaliação</th>
+            <th scope="col" rowspan="2" class="<%= field === "indicador" ? "auditado" : "" %>">IGAI</th>
+            <th scope="col" rowspan="2" class="<%= field === "indicador" ? "auditado" : "" %>">Avaliação</th>
           </tr>
         </thead>
         <tbody>
@@ -156,11 +156,11 @@
             <td><%= count %></td>
             <td class="sticky left-0 text-left z-0 unidade"><%= school.nome %></td>
             <td class="-z-10"><%= school.bairro %></td>
-            <td>
+            <td class="<%= field === "indicador" ? "auditado" : "" %>">
               <%= school.indicador.toLocaleString("default", {style: "decimal",
               maximumFractionDigits: 1}) %>
             </td>
-            <td><%= school.avaliacao %></td>
+            <td class="<%= field === "indicador" ? "auditado" : "" %>"><%= school.avaliacao %></td>
           </tr>
           <% }) %>
         </tbody>
@@ -184,7 +184,7 @@
 
   window.onload = function () {
     if (field.indexOf(".") >= 0) {
-      let subField = field.substr(field.indexOf(".") + 1);
+      const subField = field.substr(field.indexOf(".") + 1);
       document.querySelector("#" + subField).scrollIntoView({
         behavior: "smooth",
         block: "center",
