@@ -4,36 +4,38 @@
   <div class="w-full">
     <h2>Auditar unidades</h2>
     <div class="mt-8 mx-auto w-[320px] md:w-1/2 lg:w-1/4">
-      <div class="form-line sm:hidden">
-        <select name="auditSortMobile" id="auditSortMobile" class="capitalize w-full" aria-label="Selecione um campo para ordenação." onchange="mobileAuditField()">
-          <option value="codigo">Código</option>
-          <option value="indicador">IGAI/Avaliação</option>
-        </select>
-      </div>
-      <div class="form-line hidden w-full sm:inline-block">
-        <select name="auditSort" id="auditSort" class="capitalize w-full" aria-label="Selecione um campo para ordenação.">
-          <option value="codigo">Código</option>
-          <option value="indicador">IGAI/Avaliação</option>
-          <option value="bairro">Bairro</option>
-          <option value="ocupacao">Ocupação</option>
-          <option value="indicador2">Histórico</option>
-          <% for (let i = 4; i < 14; i++) { %>
-            <% for (let key in fields[i][1]) { %>
-              <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>"><%= fields[i][0] %>: <%= key %></option>
+      <form action="/audit" method="post">
+        <div class="form-line sm:hidden">
+          <select name="auditSortMobile" id="auditSortMobile" class="capitalize w-full" aria-label="Selecione um campo para ordenação." onchange="mobileAuditField()">
+            <option value="codigo">Código</option>
+            <option value="indicador">IGAI/Avaliação</option>
+          </select>
+        </div>
+        <div class="form-line hidden w-full sm:inline-block">
+          <select name="auditSort" id="auditSort" class="capitalize w-full" aria-label="Selecione um campo para ordenação.">
+            <option value="codigo" <%= field === "codigo" ? "selected" : "" %> >Código</option>
+            <option value="indicador" <%= field === "indicador" ? "selected" : "" %> >IGAI/Avaliação</option>
+            <option value="bairro" <%= field === "bairro" ? "selected" : "" %> >Bairro</option>
+            <option value="ocupacao" <%= field === "ocupacao" ? "selected" : "" %> >Ocupação</option>
+            <option value="indicador2" <%= field === "indicador2" ? "selected" : "" %> >Histórico</option>
+            <% for (let i = 4; i < 14; i++) { %>
+              <% for (let key in fields[i][1]) { %>
+                <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + "." + key ? "selected" : "" %> ><%= fields[i][0] %>: <%= key %></option>
+              <% } %>
             <% } %>
-          <% } %>
-        </select>
-      </div>
-      <div class="form-line">
-        <select name="auditOrder" id="auditOrder" class="w-full" aria-label="Selecione o tipo de ordenação.">
-          <option value="asc">Crescente</option>
-          <option value="desc">Decrescente</option>
-        </select>
-      </div>
-      <div class="flex justify-end gap-4 mt-4">
-        <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
-        <button type="button" class="button button-primary" onclick="atualizaAudit()">Auditar</button>
-      </div>
+          </select>
+        </div>
+        <div class="form-line">
+          <select name="auditOrder" id="auditOrder" class="w-full" aria-label="Selecione o tipo de ordenação.">
+            <option value="asc" <%= order === "asc" ? "selected" : "" %> >Crescente</option>
+            <option value="desc" <%= order === "desc" ? "selected" : "" %> >Decrescente</option>
+          </select>
+        </div>
+        <div class="flex justify-end gap-4 mt-4">
+          <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
+          <button type="submit" class="button button-primary">Auditar</button>
+        </div>
+      </form>
     </div>
     <div class="relative w-11/12 mt-12 mx-auto md:w-3/5">
       <input type="text" name="busca" id="busca" placeholder="Pesquise por unidade..." onkeyup="buscaEscola()" autofocus />
@@ -45,9 +47,9 @@
           <tr>
             <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
             <th class="sticky left-12 min-w-[10rem]" scope="col" rowspan="2">Nome</th>
-            <th scope="col" rowspan="2" id="bairro">Bairro</th>
-            <th class="sticky left-52 min-w-[5rem]" scope="col" rowspan="2" id="indicador">IGAI</th>
-            <th class="sticky left-72" scope="col" rowspan="2">Avaliação</th>
+            <th scope="col" rowspan="2" id="bairro" class="<%= field === "bairro" ? "auditado" : "" %>">Bairro</th>
+            <th class="sticky left-52 min-w-[5rem] <%= field === "indicador" ? "auditado" : "" %>" scope="col" rowspan="2" id="indicador">IGAI</th>
+            <th class="sticky left-72 <%= field === "indicador" ? "auditado" : "" %>" scope="col" rowspan="2">Avaliação</th>
             <% for (let i = 4; i < 14; i++) { %>
               <% let keys = 0; %>
               <% for (let key in fields[i][1]) { %>
@@ -57,13 +59,13 @@
                 <%= fields[i][0] %>
               </th>              
             <% } %>
-            <th class="capitalize" scope="col" rowspan="2" id="ocupacao">Ocupação</th>
-            <th class="capitalize" scope="col" rowspan="2" id="indicador2">Histórico</th>
+            <th class="capitalize <%= field === "ocupacao" ? "auditado" : "" %>" scope="col" rowspan="2" id="ocupacao">Ocupação</th>
+            <th class="capitalize <%= field === "indicador2" ? "auditado" : "" %>" scope="col" rowspan="2" id="indicador2">Histórico</th>
           </tr>
           <tr>
             <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
-              <th class="capitalize" scope="col"><%= key %></th>
+              <th class="capitalize <%= field === fields[i][0] + "." + key ? "auditado" : "" %>" scope="col" id="<%= key %>"><%= key %></th>
               <% } %>
             <% } %>
           </tr>
@@ -105,7 +107,7 @@
                       hint = "5 - Ótimo."
                       break;
                   } %>
-                  <td class="-z-10">
+                  <td class="-z-10 <%= field === fields[i][0] + "." + key ? "auditado" : "" %>">
                     <span
                       class="cursor-help hint--top hint--info hint--rounded hint--bounce"
                       aria-label="<%= hint %>"
@@ -114,8 +116,16 @@
                     </span>
                   </td>
                 <% } else { %>
-                  <td class="-z-10">
-                    <%= school[fields[i][0]][key] %>
+                  <td class="-z-10 <%= field === fields[i][0] + "." + key ? "auditado" : "" %>">
+                    <% if (school[fields[i][0]][key] === true) { %>
+                      Sim
+                    <% } else if (school[fields[i][0]][key] === false) { %>
+                      Não
+                    <% } else if (typeof school[fields[i][0]][key] === "number") { %>
+                      <%= school[fields[i][0]][key].toLocaleString("default") %>
+                    <% } else { %>
+                      <%= school[fields[i][0]][key] %>
+                    <% } %>
                   </td>
                 <% } %>
               <% } %>
@@ -162,8 +172,34 @@
   <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
 </div>
 
+<script>
+  const mobileSelect = document.getElementById("auditSortMobile");
+  const select = document.getElementById("auditSort");
+
+  function mobileAuditField () {
+    select.value = mobileSelect.value;
+  }
+
+  const field = "<%= locals.field %>";
+
+  window.onload = function () {
+    if (field.indexOf(".") >= 0) {
+      let subField = field.substr(field.indexOf(".") + 1);
+      document.querySelector("#" + subField).scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "end"
+      });
+    } else {
+      document.querySelector("#" + field).scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "end"
+      });
+    }
+  };
+</script>
 <script src="/js/buscaEscola.js"></script>
 
-<%- include('partials/atualizaAudit.ejs'); %> 
 <%- user.role === 'admin' ? include('partials/floatingMenuAdmin.ejs') : include('partials/floatingMenuBasic.ejs'); %>
 <%- include('partials/footer.ejs'); %>

@@ -196,6 +196,8 @@ const editSchool = async (req, res) => {
 
   data.ativa = data.ativa === "on" ? true : false;
   data["cisterna.possui"] = data["cisterna.possui"] === "on" ? true : false;
+  data["cisterna.capacidade"] = data["cisterna.capacidade"] === "" ? 0 : data["cisterna.capacidade"];
+  data["reservatorio.capacidade"] = data["reservatorio.capacidade"] === "" ? 0 : data["reservatorio.capacidade"];
   data.atualizadoEm = new Date();
   data.atualizadoPor = req.user._id;
 
@@ -221,9 +223,13 @@ const editSchool = async (req, res) => {
 const auditSchoolView = async (req, res) => {
   const schools = await getActiveSchools();
   const fields = Object.entries(School.schema.tree);
+  const field = "codigo";
+  const order = "asc";
 
   res.render("audit", {
     schools,
+    field,
+    order,
     fields,
     user: req.user,
   });
@@ -231,26 +237,22 @@ const auditSchoolView = async (req, res) => {
 
 // POST request for the Audit page
 const auditSchool = async (req, res) => {
-  const field = req.query.sort;
+  const field = req.body.auditSort;
+  const order = req.body.auditOrder;
   const fields = Object.entries(School.schema.tree);
 
-  let order = Number();
+  let sortOrder = 1;
+  
+  if (order === "desc") sortOrder = -1;
 
-  if (req.query.order === "asc") {
-    order = 1;
-  }
-  if (req.query.order === "desc") {
-    order = -1;
-  }
-
-  const sort = { [field]: order };
+  const sort = { [field]: sortOrder };
 
   const schools = await sortSchools(sort);
 
   res.render("audit", {
     schools,
     field,
-    order: req.query.order,
+    order,
     fields,
     user: req.user,
   });
