@@ -7,8 +7,8 @@
       <form action="/audit" method="post">
         <div class="form-line sm:hidden">
           <select name="auditSortMobile" id="auditSortMobile" class="capitalize w-full" aria-label="Selecione um campo para ordenação." onchange="mobileAuditField()">
-            <option value="codigo">Código</option>
-            <option value="indicador">IGAI/Avaliação</option>
+            <option value="codigo" <%= field === "codigo" ? "selected" : "" %> >Código</option>
+            <option value="indicador" <%= field === "indicador" ? "selected" : "" %> >IGAI/Avaliação</option>
           </select>
         </div>
         <div class="form-line hidden w-full sm:inline-block">
@@ -77,12 +77,12 @@
             <% count += 1; %>
             <td class="sticky left-0 text-center z-[1]"><%= count %></td>
             <td class="sticky left-12 text-left z-[1] unidade whitespace-normal"><%= school.nome %></td>
-            <td class="whitespace-normal"><%= school.bairro %></td>
-            <td class="sticky left-52 z-[1]">
+            <td class="whitespace-normal <%= field === "bairro" ? "auditado" : "" %>"><%= school.bairro %></td>
+            <td class="sticky left-52 z-[1] <%= field === "indicador" ? "auditado" : "" %>">
               <%= school.indicador.toLocaleString("default", {style: "decimal",
               maximumFractionDigits: 1}) %>
             </td>
-            <td class="sticky left-72 z-[1]"><%= school.avaliacao %></td>
+            <td class="sticky left-72 z-[1] <%= field === "indicador" ? "auditado" : "" %>"><%= school.avaliacao %></td>
             <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
                 <% if (i < 12) { %>
@@ -130,8 +130,8 @@
                 <% } %>
               <% } %>
             <% } %>
-            <td><%= school.ocupacao %></td>
-            <td><%= typeof school.indicador2 !== "undefined" ? school.indicador2.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) : "" %> - <%= typeof school.avaliacao2 !== "undefined" ? school.avaliacao2 : "" %></td>
+            <td class="<%= field === "ocupacao" ? "auditado" : "" %>"><%= school.ocupacao %></td>
+            <td class="<%= field === "indicador2" ? "auditado" : "" %>"><%= typeof school.indicador2 !== "undefined" ? school.indicador2.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) : "" %> - <%= typeof school.avaliacao2 !== "undefined" ? school.avaliacao2 : "" %></td>
           </tr>
           <% }) %>
         </tbody>
@@ -141,11 +141,11 @@
       <table class="text-center break-words mx-auto" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolasMobile">
         <thead class="sticky top-0 z-10">
           <tr>
-            <th scope="col" rowspan="2">#</th>
-            <th class="sticky left-0" scope="col" rowspan="2">Escola</th>
-            <th scope="col" rowspan="2">Bairro</th>
-            <th scope="col" rowspan="2" class="<%= field === "indicador" ? "auditado" : "" %>">IGAI</th>
-            <th scope="col" rowspan="2" class="<%= field === "indicador" ? "auditado" : "" %>">Avaliação</th>
+            <th scope="col">#</th>
+            <th class="sticky left-0" scope="col">Escola</th>
+            <th scope="col">Bairro</th>
+            <th scope="col" class="<%= field === "indicador" ? "auditado" : "" %>">IGAI</th>
+            <th scope="col" class="<%= field === "indicador" ? "auditado" : "" %>">Avaliação</th>
           </tr>
         </thead>
         <tbody>
