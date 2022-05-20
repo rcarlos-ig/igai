@@ -175,7 +175,7 @@ h1 {
 h2,
 h3,
 h4 {
-  @apply font-semibold tracking-wide;
+  @apply font-semibold;
 }
 
 h2 {
@@ -245,7 +245,7 @@ select {
 
 /* Tables */
 table {
-  @apply table-auto border-separate text-xs md:text-base;
+  @apply table-auto border-separate tracking-wide text-xs md:text-base;
   border-spacing: 0;
 }
 
@@ -862,25 +862,17 @@ html.dark .intercalado {
 }
 
 /* Tables */
+html.dark th {
+  @apply border-gray-300;
+}
+
 html.dark td {
   @apply bg-gray-800;
-}
-
-html.dark thead tr:first-child th:not(:first-child):not(:last-child) {
-  @apply border-x border-x-gray-600;
-}
-
-html.dark thead tr:nth-child(2n) th {
   @apply border-gray-600;
 }
 
-html.dark tbody tr td:not(:first-child):not(:last-child) {
-  @apply border-gray-600;
-}
-
-html.dark tbody tr td:first-child,
-html.dark tbody tr td:last-child {
-  @apply border-gray-600;
+html.dark tbody tr:last-child td {
+  @apply border-b-0;
 }
 
 html.dark .zebrado {

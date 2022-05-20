@@ -38,13 +38,17 @@ function replaceAllStrings(str, newString) {
 
 // Zebra pattern for the tables
 function zebraPattern() {
-  const escolas = $("tbody > tr").not(".hidden");
+  const visibleRows = document.querySelectorAll("tbody > tr:not(.hidden)");
+  
+  for (let i = 0; i < visibleRows.length; i++) {
+    if (i % 2 === 0) {
+      const rowCells = visibleRows[i].children;
 
-  escolas.each(function (index) {
-    if (index % 2 !== 0) {
-      $(this).children("td").addClass("zebrado");
+      for (const cell of rowCells) {
+        cell.classList.add("zebrado");
+      }
     }
-  });
+  }
 }
 
 // Toggle the Page Load animation
