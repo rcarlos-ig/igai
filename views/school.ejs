@@ -65,11 +65,11 @@
         <input type="hidden" name="codigo" value="<%= school.codigo %>">
         <% for (let i = 4; i < 12; i++) { %>
           <div class="py-2 capitalize w-full <%= i % 2 === 0 ? '' : 'intercalado' %> md:py-4">
-            <h4 class="mt-1 md:mb-4"><%= fields[i][0] %></h4>
+            <h4 class="mt-1 md:mb-4 replace"><%= fields[i][0] %></h4>
             <div class="mt-1 pt-2">
               <% for (let key in fields[i][1]) { %>
                 <div class="flex items-center form-line px-4 sm:text-base">
-                  <label for="<%= fields[i][0] %>.<%= key %>" class="w-full"><%= key %>:</label>
+                  <label for="<%= fields[i][0] %>.<%= key %>" class="w-full replace"><%= key %>:</label>
                   <select name="<%= fields[i][0] %>.<%= key %>" <%= school.ativa === true ? '' : 'disabled' %> aria-label="<%= key %>">
                     <option value="0" <%= school[fields[i][0]][key] === null ? "selected" : "" %> >X</option>
                     <option value="1" <%= school[fields[i][0]][key] === 1 ? "selected" : "" %> >1</option>

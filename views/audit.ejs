@@ -20,7 +20,7 @@
             <option value="indicador2" <%= field === "indicador2" ? "selected" : "" %> >Histórico</option>
             <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
-                <option class="capitalize" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + "." + key ? "selected" : "" %> ><%= fields[i][0] %>: <%= key %></option>
+                <option class="capitalize replace" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + "." + key ? "selected" : "" %> ><%= fields[i][0] %>: <%= key %></option>
               <% } %>
             <% } %>
           </select>
@@ -55,7 +55,7 @@
               <% for (let key in fields[i][1]) { %>
                 <% keys += 1; %>
               <% } %>
-              <th class="capitalize" scope="col" rowspan="1" colspan="<%= keys %>">
+              <th class="capitalize replace" scope="col" rowspan="1" colspan="<%= keys %>">
                 <%= fields[i][0] %>
               </th>              
             <% } %>
@@ -65,7 +65,7 @@
           <tr>
             <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
-              <th class="capitalize <%= field === fields[i][0] + "." + key ? "auditado" : "" %>" scope="col" id="<%= key %>"><%= key %></th>
+              <th class="capitalize replace <%= field === fields[i][0] + "." + key ? "auditado" : "" %>" scope="col" id="<%= key %>"><%= key %></th>
               <% } %>
             <% } %>
           </tr>
@@ -182,22 +182,24 @@
 
   const field = "<%= locals.field %>";
 
-  window.onload = function () {
-    if (field.indexOf(".") >= 0) {
-      const subField = field.substr(field.indexOf(".") + 1);
-      document.querySelector("#" + subField).scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "end"
-      });
-    } else {
-      document.querySelector("#" + field).scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "end"
-      });
-    }
-  };
+  if (field !== "codigo") {
+    window.onload = function () {
+      if (field.indexOf(".") >= 0) {
+        const subField = field.substr(field.indexOf(".") + 1);
+        document.querySelector("#" + subField).scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "end"
+        });
+      } else {
+        document.querySelector("#" + field).scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "end"
+        });
+      }
+    };
+  }
 </script>
 <script src="/js/buscaEscola.js"></script>
 

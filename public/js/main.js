@@ -1,47 +1,15 @@
 "use strict";
 
-// Get all text nodes in a given container
-// Source: http://stackoverflow.com/a/4399718/560114
-function getTextNodesIn(node, includeWhitespaceNodes) {
-  let textNodes = [],
-    nonWhitespaceMatcher = /\S/;
+// Functions on page load
+document.addEventListener("DOMContentLoaded", function () {
+  // Toggle the Page Load animation
+  document.querySelector(".loader-trigger").style.display = "none";
 
-  function getTextNodes(node) {
-    if (node.nodeType == 3) {
-      if (includeWhitespaceNodes || nonWhitespaceMatcher.test(node.nodeValue)) {
-        textNodes.push(node);
-      }
-    } else {
-      for (let i = 0, len = node.childNodes.length; i < len; ++i) {
-        getTextNodes(node.childNodes[i]);
-      }
-    }
-  }
-
-  getTextNodes(node);
-  return textNodes;
-}
-
-// Replace every ocurrency of a string in the document Body
-function replaceAllStrings(str, newString) {
-  const textNodes = getTextNodesIn($("body")[0], false);
-  const re = new RegExp(`\\b${str}\\b`, "g");
-
-  let i = textNodes.length;
-  let node;
-
-  while (i--) {
-    node = textNodes[i];
-    node.textContent = node.textContent.replace(re, newString);
-  }
-}
-
-// Zebra pattern for the tables
-function zebraPattern() {
+  // Zebra pattern for the tables
   const visibleRows = document.querySelectorAll("tbody > tr:not(.hidden)");
-  
+
   for (let i = 0; i < visibleRows.length; i++) {
-    if (i % 2 === 0) {
+    if (i % 2 !== 0) {
       const rowCells = visibleRows[i].children;
 
       for (const cell of rowCells) {
@@ -49,11 +17,21 @@ function zebraPattern() {
       }
     }
   }
-}
 
-// Toggle the Page Load animation
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelector(".loader-trigger").style.display = "none";
+  // Replace texts
+  const replaceableElements = document.querySelectorAll(".replace");
+
+  for (const item of replaceableElements) {
+    item.innerHTML = item.innerHTML.replace(/coes/gi, "ções");
+    item.innerHTML = item.innerHTML.replace(/cao/gi, "ção");
+    item.innerHTML = item.innerHTML.replace(/cercaTela/gi, "Cerca/Tela");
+    item.innerHTML = item.innerHTML.replace(/eletricas/gi, "elétricas");
+    item.innerHTML = item.innerHTML.replace(/hidraulicas/gi, "hidráulicas");
+    item.innerHTML = item.innerHTML.replace(/sanitarias/gi, "sanitárias");
+    item.innerHTML = item.innerHTML.replace(/predio/gi, "prédio");
+    item.innerHTML = item.innerHTML.replace(/reservatorio/gi, "reservatório");
+    item.innerHTML = item.innerHTML.replace(/calcada/gi, "calçada");
+  }
 });
 
 // jQuery functions on Page Load
@@ -78,21 +56,4 @@ $(function () {
       }
     });
   }
-
-  zebraPattern();
-
-  // Replace defined strings on the document body
-  replaceAllStrings("codigo", "código");
-  replaceAllStrings("ocupacao", "ocupação");
-  replaceAllStrings("avaliacao", "avaliação");
-  replaceAllStrings("instalacoes", "instalações");
-  replaceAllStrings("eletricas", "elétricas");
-  replaceAllStrings("hidraulicas", "hidráulicas");
-  replaceAllStrings("sanitarias", "sanitárias");
-  replaceAllStrings("impermeabilizacao", "impermeabilização");
-  replaceAllStrings("predio", "prédio");
-  replaceAllStrings("reservatorio", "reservatório");
-  replaceAllStrings("cercaTela", "Cerca/Tela");
-  replaceAllStrings("iluminacao", "iluminação");
-  replaceAllStrings("calcada", "calçada");
 });
