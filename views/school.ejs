@@ -63,6 +63,7 @@
       <h3 class="pb-0 mb-0 md:pb-2">Índices:</h3>
       <form action="/school" method="post">
         <input type="hidden" name="codigo" value="<%= school.codigo %>">
+        <input type="hidden" name="nome" value="<%= school.nome %>">
         <% for (let i = 4; i < 12; i++) { %>
           <div class="py-2 capitalize w-full <%= i % 2 === 0 ? '' : 'intercalado' %> md:py-4">
             <h4 class="mt-1 md:mb-4 replace"><%= fields[i][0] %></h4>

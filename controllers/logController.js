@@ -27,7 +27,7 @@ const logging = (req, _res, next) => {
     .catch((err) => console.log(err));
 };
 
-// GET log
+// GET Request for the log page
 const logView = async (req, res) => {
   let entries = await getLog();
   let users = [];

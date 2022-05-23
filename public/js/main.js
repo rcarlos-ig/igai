@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   for (const item of replaceableElements) {
     item.innerHTML = item.innerHTML.replace(/coes/gi, "ções");
     item.innerHTML = item.innerHTML.replace(/cao/gi, "ção");
+    item.innerHTML = item.innerHTML.replace(/codigo/gi, "código");
     item.innerHTML = item.innerHTML.replace(/cercaTela/gi, "Cerca/Tela");
     item.innerHTML = item.innerHTML.replace(/eletricas/gi, "elétricas");
     item.innerHTML = item.innerHTML.replace(/hidraulicas/gi, "hidráulicas");

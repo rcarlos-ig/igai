@@ -5,7 +5,7 @@
     <div>
       <h2>Registros do sistema</h2>
       <div class="flex justify-center mt-4 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:max-h-[500px] md:overflow-y-scroll">
-        <table class="text-center font-medium w-full" id="escolas" aria-label="Tabela com as unidades da rede.">
+        <table class="text-center font-normal w-full" id="log" aria-label="Tabela com as unidades da rede.">
           <thead class="sticky top-0 z-10">
             <tr>
               <th>Data</th>
@@ -29,7 +29,7 @@
                 <td><%= users[index] %></td>
                 <td class="hidden md:table-cell"><%= item.action %></td>
                 <td><%= item.msg %></td>
-                <td class="text-left capitalize break-words">
+                <td class="text-left break-words replace">
                   <% Object.keys(item.data).forEach(key => { %>
                     <% if(key === "atualizadoEm" || key === "atualizadoPor") { %>
                       <% return %>
@@ -40,7 +40,18 @@
                         maximumFractionDigits: 1
                         }) %>
                     <% } %>
-                    <p><%= `${key}: ${item.data[key]}` %></p>
+                    <% if (item.data[key] === true || item.data[key] === "On") { %>
+                      <% item.data[key] = "Sim"; %>
+                    <% } else if (item.data[key] === false || item.data[key] === "Off") { %>
+                      <% item.data[key] = "Não"; %>
+                    <% } %>
+                    <% if (key.indexOf(".") >= 0) { %>
+                      <% item.data[key] = item.data[key] === "0" ? "X" : item.data[key] %>
+                      <% let oldKeyValue = item.data[key]; %>
+                      <% key = key.replace(".", ", "); %>
+                      <% item.data[key] = oldKeyValue %>
+                    <% } %>
+                    <p><span class="font-medium capitalize"><%= key %></span>: <%= item.data[key] %></p>
                   <% }); %>
                 </td>
               </tr>
