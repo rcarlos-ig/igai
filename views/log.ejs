@@ -51,6 +51,9 @@
                       <% key = key.replace(".", ", "); %>
                       <% item.data[key] = oldKeyValue %>
                     <% } %>
+                    <% if (key.indexOf("capacidade") >= 0) { %>
+                      <% item.data[key] = Number(item.data[key]).toLocaleString("default") + " litros" %>
+                    <% } %>
                     <p><span class="font-medium capitalize"><%= key %></span>: <%= item.data[key] %></p>
                   <% }); %>
                 </td>
