@@ -12,14 +12,14 @@
         </div>
       <% }; %>
     <% }; %>
-    <% if (locals.error) { %>
-      <% if (error.length > 0) { %>
-        <div class="error">
-          <ul>
-            <li><%= error %></li>
-          </ul>
-        </div>
-      <% }; %>
+    <% if (locals.errors) { %>
+      <div class="error <%= errors == '' ? 'hidden' : '' %>">
+        <ul>
+          <% errors.forEach(error => { %>
+          <li><%= error.msg %></li>
+          <% }); %>
+        </ul>
+      </div>
     <% }; %>
     <div>
       <form method="post" action="/register-school">
@@ -56,13 +56,14 @@
           </div>
         </div>
         <div class="form-line">
-          <label for="ocupacao">Ocupação</label>
+          <label for="ocupacao">Ocupação<span class="required">*</span></label>
           <div>
             <% if (locals.ocupacao) { %>
-              <input type="text" name="ocupacao" id="ocupacao" placeholder="Tipo de ocupação da escola" value="<%= ocupacao %>" />
+              <input type="text" name="ocupacao" id="ocupacao" placeholder="Tipo de ocupação da escola" minlength="3" value="<%= ocupacao %>" />
             <% } else { %>
-              <input type="text" name="ocupacao" id="ocupacao" placeholder="Tipo de ocupação da escola" />
+              <input type="text" name="ocupacao" id="ocupacao" placeholder="Tipo de ocupação da escola" minlength="3" />
             <% } %>
+            <span class="hidden validation-error" id="ocupacaoError" aria-live="polite"></span>
           </div>
         </div>
         <div class="form-line">          

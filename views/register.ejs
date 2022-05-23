@@ -9,7 +9,8 @@
         <li><%= emailValidation %></li>
       </ul>
     </div>
-    <% }; %> <% if (locals.errors) { %>
+    <% }; %>
+    <% if (locals.errors) { %>
     <div class="error <%= errors == '' ? 'hidden' : '' %>">
       <ul>
         <% errors.forEach(error => { %>

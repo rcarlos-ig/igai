@@ -5,12 +5,14 @@ let email = $("#email");
 let password = $("#password");
 let nome = $("#nome");
 let bairro = $("#bairro");
+let ocupacao = $("#ocupacao");
 let newPassword = $("#newPassword");
 let confirm = $("#confirm");
 let emailError = $("#emailError");
 let passwordError = $("#passwordError");
 let nomeError = $("#nomeError");
 let bairroError = $("#bairroError");
+let ocupacaoError = $("#ocupacaoError");
 let confirmError = $("#confirmError");
 
 if ($("#name")) nome = $("#name");
@@ -75,6 +77,22 @@ if (bairro.length > 0) {
       } else {
         bairroError.text("Bairro precisa ter 3 caracteres ou mais.");
         bairroError.removeClass("hidden").addClass("block");
+      }
+    },
+    false
+  );
+}
+
+if (ocupacao.length > 0) {
+  ocupacao[0].addEventListener(
+    "input",
+    function () {
+      if (ocupacao[0].validity.valid) {
+        ocupacaoError.text("");
+        ocupacaoError.removeClass("block").addClass("hidden");
+      } else {
+        ocupacaoError.text("Ocupação precisa ter 3 caracteres ou mais.");
+        ocupacaoError.removeClass("hidden").addClass("block");
       }
     },
     false

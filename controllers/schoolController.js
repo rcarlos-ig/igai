@@ -18,7 +18,7 @@ function calculateIGE(data) {
     if (data[key] === 5) indicador += 0;
   }
 
-  indicador /= 27;
+  indicador /= 25;
 
   return indicador;
 }
@@ -87,7 +87,7 @@ const registerSchoolView = (req, res) => {
 
 // POST Request that handles School register
 const registerSchool = (req, res) => {
-  const { codigo, nome, bairro, ocupacao, reservatorio } = req.body;
+  const { codigo, nome, bairro, ocupacao } = req.body;
   let ativa = req.body.ativa === "on" ? true : false;
 
   // Check school
@@ -98,7 +98,6 @@ const registerSchool = (req, res) => {
         nome,
         bairro,
         ocupacao,
-        reservatorio,
         ativa,
         error: "Unidade já cadastrada.",
         user: req.user,
@@ -112,7 +111,6 @@ const registerSchool = (req, res) => {
         nome,
         bairro,
         ocupacao,
-        reservatorio,
         ativa,
         indicador: 0,
         avaliacao: "Não avaliado",

@@ -140,11 +140,19 @@ router.post(
       .trim()
       .isLength({ min: 3 })
       .withMessage("Bairro precisa ter 3 caracteres ou mais."),
+    check("ocupacao")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Ocupação precisa ter 3 caracteres ou mais."),
   ],
   function (req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render("registerSchool", { errors: errors.array() });
+      res.render("registerSchool", {
+        errors: errors.array(),
+        user: req.user,
+        ativa: true,
+      });
     } else {
       req.action = "create";
       req.msg = "Registrada nova unidade.";
@@ -256,6 +264,7 @@ router.post(
       res.render("editSchool", {
         school: req.body,
         errors: errors.array(),
+        user: req.user,
       });
     } else {
       req.action = "update";
