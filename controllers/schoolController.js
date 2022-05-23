@@ -160,7 +160,7 @@ const schoolView = async (req, res) => {
 };
 
 // POST Request for the School page
-const schoolPost = (req, _res, next) => {
+const schoolPost = (req, res) => {
   let data = req.body;
 
   School.findOne({ codigo: data.codigo }).then((school) => {
@@ -170,9 +170,12 @@ const schoolPost = (req, _res, next) => {
     data.atualizadoPor = req.user._id;
     data.indicador2 = school.indicador;
     data.avaliacao2 = school.avaliacao;
+    data.nome = school.nome;
 
     // Update School
-    School.updateOne({ codigo: data.codigo }, { $set: data }).then(next());
+    School.updateOne({ codigo: data.codigo }, { $set: data }).then(function () {
+      res.redirect("/dashboard");
+    });
   });
 };
 
@@ -194,8 +197,12 @@ const editSchool = async (req, res) => {
 
   data.ativa = data.ativa === "on" ? true : false;
   data["cisterna.possui"] = data["cisterna.possui"] === "on" ? true : false;
-  data["cisterna.capacidade"] = data["cisterna.capacidade"] === "" ? 0 : data["cisterna.capacidade"];
-  data["reservatorio.capacidade"] = data["reservatorio.capacidade"] === "" ? 0 : data["reservatorio.capacidade"];
+  data["cisterna.capacidade"] =
+    data["cisterna.capacidade"] === "" ? 0 : data["cisterna.capacidade"];
+  data["reservatorio.capacidade"] =
+    data["reservatorio.capacidade"] === ""
+      ? 0
+      : data["reservatorio.capacidade"];
   data.atualizadoEm = new Date();
   data.atualizadoPor = req.user._id;
 
@@ -240,7 +247,7 @@ const auditSchool = async (req, res) => {
   const fields = Object.entries(School.schema.tree);
 
   let sortOrder = 1;
-  
+
   if (order === "desc") sortOrder = -1;
 
   const sort = { [field]: sortOrder };
