@@ -33,27 +33,26 @@ document.addEventListener("DOMContentLoaded", function () {
     item.innerHTML = item.innerHTML.replace(/reservatorio/gi, "reservatório");
     item.innerHTML = item.innerHTML.replace(/calcada/gi, "calçada");
   }
-});
 
-// jQuery functions on Page Load
-$(function () {
-  // Hide and show "inactive" schools on the Dashboard page
-  if ($("#ativa")) {
-    const checkbox = $("#ativa");
+  // Toggle "inativa" schools on the dashboard
+  const ativa = document.getElementById("ativa");
 
-    checkbox.on("change", function () {
-      if (checkbox.is(":checked")) {
-        $("#escolas tbody tr").each(function () {
-          if ($(this).hasClass("hidden")) {
-            $(this).fadeIn(400).removeClass("hidden").addClass("inativa");
+  if (ativa) {
+    ativa.addEventListener("change", function () {
+      const rows = document.querySelectorAll("#escolas tbody tr");
+
+      if (this.checked) {
+        for (const row of rows) {
+          if (row.classList.contains("hidden")) {
+            row.classList.remove("hidden");
           }
-        });
+        }
       } else {
-        $("#escolas tbody tr").each(function () {
-          if ($(this).hasClass("inativa")) {
-            $(this).fadeOut(400).removeClass("inativa").addClass("hidden");
+        for (const row of rows) {
+          if (row.classList.contains("inativa")) {
+            row.classList.add("hidden");
           }
-        });
+        }
       }
     });
   }

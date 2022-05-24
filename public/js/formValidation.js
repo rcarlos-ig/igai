@@ -1,130 +1,145 @@
 "use strict";
 
 // Define variables
-let email = $("#email");
-let password = $("#password");
-let nome = $("#nome");
-let bairro = $("#bairro");
-let ocupacao = $("#ocupacao");
-let newPassword = $("#newPassword");
-let confirm = $("#confirm");
-let emailError = $("#emailError");
-let passwordError = $("#passwordError");
-let nomeError = $("#nomeError");
-let bairroError = $("#bairroError");
-let ocupacaoError = $("#ocupacaoError");
-let confirmError = $("#confirmError");
+let email = document.getElementById("email");
+let password = document.getElementById("password");
+let nome = document.getElementById("nome");
+let bairro = document.getElementById("bairro");
+let ocupacao = document.getElementById("ocupacao");
+let newPassword = document.getElementById("newPassword");
+let confirmation = document.getElementById("confirm");
+let emailError = document.getElementById("emailError");
+let passwordError = document.getElementById("passwordError");
+let nomeError = document.getElementById("nomeError");
+let bairroError = document.getElementById("bairroError");
+let ocupacaoError = document.getElementById("ocupacaoError");
+let confirmError = document.getElementById("confirmError");
 
-if ($("#name")) nome = $("#name");
-if ($("#verifyPassword")) confirm = $("#verifyPassword");
+if (document.getElementById("name")) nome = document.getElementById("name");
+if (document.getElementById("verifyPassword"))
+  confirmation = document.getElementById("verifyPassword");
 
 // Validation e message toggle
-if (email.length > 0) {
-  email[0].addEventListener(
+if (email) {
+  email.addEventListener(
     "input",
     function () {
-      if (email[0].validity.valid) {
-        emailError.text("");
-        emailError.removeClass("block").addClass("hidden");
+      if (email.validity.valid) {
+        emailError.innerHTML = "";
+        emailError.classList.remove("block");
+        emailError.classList.add("hidden");
       } else {
-        emailError.text("Digite um e-mail válido.");
-        emailError.removeClass("hidden").addClass("block");
+        emailError.innerHTML = "Digite um e-mail válido.";
+        emailError.classList.remove("hidden");
+        emailError.classList.add("block");
       }
     },
     false
   );
 }
 
-if (password.length > 0) {
-  password[0].addEventListener(
+if (password) {
+  password.addEventListener(
     "input",
     function () {
-      if (password[0].validity.valid) {
-        passwordError.text("");
-        passwordError.removeClass("block").addClass("hidden");
+      if (password.validity.valid) {
+        passwordError.innerHTML = "";
+        passwordError.classList.remove("block");
+        passwordError.classList.add("hidden");
       } else {
-        passwordError.text("Senha precisa ter mais de 4 caracteres");
-        passwordError.removeClass("hidden").addClass("block");
+        passwordError.innerHTML = "Senha precisa ter mais de 4 caracteres";
+        passwordError.classList.remove("hidden");
+        passwordError.classList.add("block");
       }
     },
     false
   );
 }
 
-if (nome.length > 0) {
-  nome[0].addEventListener(
+if (nome) {
+  nome.addEventListener(
     "input",
     function () {
-      if (nome[0].validity.valid) {
-        nomeError.text("");
-        nomeError.removeClass("block").addClass("hidden");
+      if (nome.validity.valid) {
+        nomeError.innerHTML = "";
+        nomeError.classList.remove("block");
+        nomeError.classList.add("hidden");
       } else {
-        nomeError.text("Nome precisa ter 3 caracteres ou mais.");
-        nomeError.removeClass("hidden").addClass("block");
+        nomeError.innerHTML = "Nome precisa ter 3 caracteres ou mais.";
+        nomeError.classList.remove("hidden");
+        nomeError.classList.add("block");
       }
     },
     false
   );
 }
 
-if (bairro.length > 0) {
-  bairro[0].addEventListener(
+if (bairro) {
+  bairro.addEventListener(
     "input",
     function () {
-      if (bairro[0].validity.valid) {
-        bairroError.text("");
-        bairroError.removeClass("block").addClass("hidden");
+      if (bairro.validity.valid) {
+        bairroError.innerHTML = "";
+        bairroError.classList.remove("block");
+        bairroError.classList.add("hidden");
       } else {
-        bairroError.text("Bairro precisa ter 3 caracteres ou mais.");
-        bairroError.removeClass("hidden").addClass("block");
+        bairroError.innerHTML = "Bairro precisa ter 3 caracteres ou mais.";
+        bairroError.classList.remove("hidden");
+        bairroError.classList.add("block");
       }
     },
     false
   );
 }
 
-if (ocupacao.length > 0) {
-  ocupacao[0].addEventListener(
+if (ocupacao) {
+  ocupacao.addEventListener(
     "input",
     function () {
-      if (ocupacao[0].validity.valid) {
-        ocupacaoError.text("");
-        ocupacaoError.removeClass("block").addClass("hidden");
+      if (ocupacao.validity.valid) {
+        ocupacaoError.innerHTML = "";
+        ocupacaoError.classList.remove("block");
+        ocupacaoError.classList.add("hidden");
       } else {
-        ocupacaoError.text("Ocupação precisa ter 3 caracteres ou mais.");
-        ocupacaoError.removeClass("hidden").addClass("block");
+        ocupacaoError.innerHTML = "Ocupação precisa ter 3 caracteres ou mais.";
+        ocupacaoError.classList.remove("hidden");
+        ocupacaoError.classList.add("block");
       }
     },
     false
   );
 }
 
-if (newPassword.length > 0) {
-  newPassword[0].addEventListener(
+if (newPassword) {
+  newPassword.addEventListener(
     "input",
     function () {
-      if (newPassword[0].validity.valid) {
-        passwordError.text("");
-        passwordError.removeClass("block").addClass("hidden");
+      if (newPassword.validity.valid) {
+        passwordError.innerHTML = "";
+        passwordError.classList.remove("block");
+        passwordError.classList.add("hidden");
       } else {
-        passwordError.text("Senha precisa ter 3 caracteres ou mais.");
-        passwordError.removeClass("hidden").addClass("block");
+        passwordError.innerHTML = "Senha precisa ter 3 caracteres ou mais.";
+        passwordError.classList.remove("hidden");
+        passwordError.classList.add("block");
       }
     },
     false
   );
 }
 
-if (confirm.length > 0) {
-  confirm[0].addEventListener(
+if (confirmation) {
+  confirmation.addEventListener(
     "input",
     function () {
-      if (confirm[0].validity.valid) {
-        confirmError.text("");
-        confirmError.removeClass("block").addClass("hidden");
+      if (confirmation.validity.valid) {
+        confirmError.innerHTML = "";
+        confirmError.classList.remove("block");
+        confirmError.classList.add("hidden");
       } else {
-        confirmError.text("Confirmação precisa ter 3 caracteres ou mais.");
-        confirmError.removeClass("hidden").addClass("block");
+        confirmError.innerHTML = "Confirmação precisa ter 3 caracteres ou mais.";
+        confirmError.classList.remove("hidden");
+        confirmError.classList.add("block");
       }
     },
     false

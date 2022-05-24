@@ -1,6 +1,6 @@
 {
   "name": "igai",
-  "version": "1.13.11",
+  "version": "1.13.12",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -29,7 +29,6 @@
     "css",
     "ejs",
     "html",
-    "jquery",
     "javascript"
   ],
   "author": "Raphael Carlos sec.ti@angra.rj.gov.br",

@@ -87,7 +87,7 @@
         <tbody>
           <% schools.forEach((school) => { %>
           <tr
-            class="<%= user.role !== 'admin' ? '' : 'cursor-pointer' %> <%= school.ativa === false ? 'hidden' : ''; %>"
+            class="<%= user.role !== 'admin' ? '' : 'cursor-pointer' %> <%= school.ativa === false ? 'hidden inativa' : ''; %>"
             <%= user.role !== 'admin' ? '' : `onClick=window.location='/school?unidade=${school.codigo}' onKeyPress=window.location='/school?unidade=${school.codigo}'` %>
             tabindex="0"
           >

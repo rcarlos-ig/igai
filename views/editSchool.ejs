@@ -70,13 +70,15 @@
         </div>
       </div>
       <div class="form-line">
-        <label for="ocupacao">Ocupação</label>
+        <label for="ocupacao">Ocupação<span class="required">*</span></label>
         <div>
           <input
             type="text"
             name="ocupacao"
             id="ocupacao"
+            minlength="3"
             value="<%= school.ocupacao %>"
+            required
           />
         </div>
       </div>

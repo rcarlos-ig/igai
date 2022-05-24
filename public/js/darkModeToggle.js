@@ -1,5 +1,5 @@
 // Dark mode toggle
-if (typeof html === undefined) {
+if (html === undefined) {
   const html = document.getElementById("html");
 }
 
