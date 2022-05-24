@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const https = require("https");
+const fs = require("fs");
 const flash = require("connect-flash");
 const passport = require("passport");
 const { loginCheck } = require("./controllers/auth/passport");
@@ -103,9 +105,25 @@ app.use(passport.session());
 // Router
 app.use("/", require("./routes/routes"));
 
+// Certificate
+// const privateKey = fs.readFileSync("./ssl/privkey.pem", "utf8");
+// const certificate = fs.readFileSync("./ssl/fullchain.pem", "utf8");
+
+// const credentials = {
+// 	key: privateKey,
+// 	cert: certificate,
+// };
+
 // Server
+// HTTP
 const PORT = process.env.PORT || 80;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
+
+// HTTPS
+// const httpsServer = https.createServer(credentials, app);
+// httpsServer.listen(443, () => {
+//   console.log(`HTTPS server started on port 443`);
+// })
 
 // Sentry test route
 app.get("/debug-sentry", function mainHandler(_req, _res) {
