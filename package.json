@@ -1,6 +1,6 @@
 {
   "name": "igai",
-  "version": "1.14.1",
+  "version": "1.14.2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -51,7 +51,8 @@
     "mongoose": "^6.2.0",
     "nodemailer": "^6.7.2",
     "passport": "^0.5.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "spdy": "^4.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
