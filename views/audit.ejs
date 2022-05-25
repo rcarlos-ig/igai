@@ -79,8 +79,8 @@
             <td class="sticky left-12 text-left z-[1] unidade whitespace-normal"><%= school.nome %></td>
             <td class="whitespace-normal <%= field === "bairro" ? "auditado" : "" %>"><%= school.bairro %></td>
             <td class="sticky left-52 z-[1] <%= field === "indicador" ? "auditado" : "" %>">
-              <%= school.indicador.toLocaleString("default", {style: "decimal",
-              maximumFractionDigits: 1}) %>
+              <% let indicador = Math.floor(school.indicador * 10) / 10 %>
+              <%= indicador.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) %>
             </td>
             <td class="sticky left-72 z-[1] <%= field === "indicador" ? "auditado" : "" %>"><%= school.avaliacao %></td>
             <% for (let i = 4; i < 14; i++) { %>
@@ -131,7 +131,10 @@
               <% } %>
             <% } %>
             <td class="<%= field === "ocupacao" ? "auditado" : "" %>"><%= school.ocupacao %></td>
-            <td class="<%= field === "indicador2" ? "auditado" : "" %>"><%= typeof school.indicador2 !== "undefined" ? school.indicador2.toLocaleString("default", {style: "decimal", maximumFractionDigits: 1}) : "" %> - <%= typeof school.avaliacao2 !== "undefined" ? school.avaliacao2 : "" %></td>
+            <td class="<%= field === "indicador2" ? "auditado" : "" %>">
+              <% let indicador2 = Math.floor(school.indicador2 * 10) / 10 %>
+              <%= typeof school.indicador2 !== "undefined" ? indicador2.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) : "" %> - <%= typeof school.avaliacao2 !== "undefined" ? school.avaliacao2 : "" %>
+            </td>
           </tr>
           <% }) %>
         </tbody>
@@ -157,8 +160,8 @@
             <td class="sticky left-0 text-left z-0 unidade"><%= school.nome %></td>
             <td class="-z-10"><%= school.bairro %></td>
             <td class="<%= field === "indicador" ? "auditado" : "" %>">
-              <%= school.indicador.toLocaleString("default", {style: "decimal",
-              maximumFractionDigits: 1}) %>
+              <% let indicador = Math.floor(school.indicador * 10) / 10 %>
+              <%= indicador.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) %>
             </td>
             <td class="<%= field === "indicador" ? "auditado" : "" %>"><%= school.avaliacao %></td>
           </tr>

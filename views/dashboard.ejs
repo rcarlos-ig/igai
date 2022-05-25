@@ -95,8 +95,8 @@
             <td class="text-left max-w-[50ch] unidade"><%= school.nome %></td>
             <td><%= school.bairro %></td>
             <td>
-              <%= school.indicador.toLocaleString("default", {style:
-              "decimal", maximumFractionDigits: 1}) %>
+              <% let indicador = Math.floor(school.indicador * 10) / 10 %>
+              <%= indicador.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) %>
             </td>
             <td><%= school.avaliacao %></td>
           </tr>
