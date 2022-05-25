@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const https = require("https");
+const http = require('http');
+const spdy = require("spdy");
 const fs = require("fs");
 const flash = require("connect-flash");
 const passport = require("passport");
@@ -71,7 +72,7 @@ app.use(compression());
 app.set("view engine", "ejs");
 
 // Set the static folder
-app.use(express.static("public", { dotfiles: "allow" }));
+app.use(express.static("public"));
 
 // Use 'connect-flash' for flash messages
 app.use(flash());
@@ -106,28 +107,30 @@ app.use(passport.session());
 app.use("/", require("./routes/routes"));
 
 // Certificate
-// const privateKey = fs.readFileSync("./ssl/privkey.pem", "utf8");
-// const certificate = fs.readFileSync("./ssl/fullchain.pem", "utf8");
+const privateKey = fs.readFileSync("./ssl/privkey.pem", "utf8");
+const certificate = fs.readFileSync("./ssl/fullchain.pem", "utf8");
 
-// const credentials = {
-// 	key: privateKey,
-// 	cert: certificate,
-// };
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+};
 
 // Server
-// HTTP
-const PORT = process.env.PORT || 80;
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+spdy.createServer(credentials, app).listen(443, (error) => {
+  if (error) {
+    console.error(error);
+    return process.exit(1);
+  } else {
+    console.log(`Server started on port 443`);
+  }
+});
 
-// HTTPS
-// const httpsServer = https.createServer(credentials, app);
-// httpsServer.listen(443, () => {
-//   console.log(`HTTPS server started on port 443`);
-// })
-
-// Sentry test route
-app.get("/debug-sentry", function mainHandler(_req, _res) {
-  throw new Error("My first Sentry error!");
+// Redirect from http port 80 to https port 443
+http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(80, function () {
+  console.log("Redirect from HTTP (80) to HTTPS (443) runing.");
 });
 
 // 404 error handling

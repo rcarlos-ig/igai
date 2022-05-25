@@ -122,3 +122,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# SSL certificates and keys
+*.pem
