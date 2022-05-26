@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const http = require('http');
+const http = require("http");
 const spdy = require("spdy");
 const fs = require("fs");
 const flash = require("connect-flash");
@@ -34,7 +34,7 @@ Sentry.init({
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
+  tracesSampleRate: 0.7,
   release: "sejin-igaie@" + process.env.npm_package_version,
 });
 
@@ -44,15 +44,12 @@ app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
 
-// The error handler must be before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler());
-
 // MongoDB Connection
 const database = process.env.MONGOLAB_URI;
 mongoose
   .connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => console.log("Database Connected."))
-  .catch((err) => console.log(err));
+  .catch((err) => console.error(err));
 
 // MongoDB Session Store
 const store = new MongoDBStore({
@@ -62,7 +59,7 @@ const store = new MongoDBStore({
 
 // Catch MongoDB Session Store errors
 store.on("error", function (error) {
-  console.log(error);
+  console.error(error);
 });
 
 // Compress all responses
@@ -72,7 +69,7 @@ app.use(compression());
 app.set("view engine", "ejs");
 
 // Set the static folder
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public", { maxAge: "30d" }));
 
 // Use 'connect-flash' for flash messages
 app.use(flash());
@@ -126,14 +123,21 @@ spdy.createServer(credentials, app).listen(443, (error) => {
 });
 
 // Redirect from http port 80 to https port 443
-http.createServer(function (req, res) {
-    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+http
+  .createServer(function (req, res) {
+    res.writeHead(301, {
+      Location: "https://" + req.headers["host"] + req.url,
+    });
     res.end();
-}).listen(80, function () {
-  console.log("Redirect from HTTP (80) to HTTPS (443) runing.");
-});
+  })
+  .listen(80, function () {
+    console.log("Redirect from HTTP (80) to HTTPS (443) runing.");
+  });
 
 // 404 error handling
 app.use((req, res) => {
   res.status(404).render("404", { url: req.url });
 });
+
+// The error handler must be before any other error middleware and after all controllers
+app.use(Sentry.Handlers.errorHandler());
