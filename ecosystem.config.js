@@ -1,5 +1,5 @@
 // Package.json
-const package = require("./package.json");
+const appPackage = require("./package.json");
 
 module.exports = {
   apps: [
@@ -8,8 +8,7 @@ module.exports = {
       script: "index.js",
       watch: ".",
       env: {
-        NODE_ENV: "production",
-        npm_package_version: package.version,
+        npm_package_version: appPackage.version,
       },
     },
   ],

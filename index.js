@@ -22,27 +22,29 @@ dotenv.config();
 const app = express();
 
 // Sentry initialization
-Sentry.init({
-  dsn: "https://d8529091aa49452b934278a38d3b951d@o1259225.ingest.sentry.io/6433768",
-  integrations: [
-    // enable HTTP calls tracing
-    new Sentry.Integrations.Http({ tracing: true }),
-    // enable Express.js middleware tracing
-    new Tracing.Integrations.Express({ app }),
-  ],
+if (process.env.NODE_ENV === "production") {
+  Sentry.init({
+    dsn: "https://d8529091aa49452b934278a38d3b951d@o1259225.ingest.sentry.io/6433768",
+    integrations: [
+      // enable HTTP calls tracing
+      new Sentry.Integrations.Http({ tracing: true }),
+      // enable Express.js middleware tracing
+      new Tracing.Integrations.Express({ app }),
+    ],
 
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 0.7,
-  release: "sejin-igaie@" + process.env.npm_package_version,
-});
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 0.7,
+    release: "sejin-igaie@" + process.env.npm_package_version,
+  });
 
-// RequestHandler creates a separate execution context using domains, so that every
-// transaction/span/breadcrumb is attached to its own Hub instance
-app.use(Sentry.Handlers.requestHandler());
-// TracingHandler creates a trace for every incoming request
-app.use(Sentry.Handlers.tracingHandler());
+  // RequestHandler creates a separate execution context using domains, so that every
+  // transaction/span/breadcrumb is attached to its own Hub instance
+  app.use(Sentry.Handlers.requestHandler());
+  // TracingHandler creates a trace for every incoming request
+  app.use(Sentry.Handlers.tracingHandler());
+}
 
 // MongoDB Connection
 const database = process.env.MONGOLAB_URI;
@@ -103,6 +105,12 @@ app.use(passport.session());
 // Router
 app.use("/", require("./routes/routes"));
 
+// Sentry error handler
+if (process.env.NODE_ENV === "production") {
+  // The error handler must be before any other error middleware and after all controllers
+  app.use(Sentry.Handlers.errorHandler());
+}
+
 // Certificate
 const privateKey = fs.readFileSync("./ssl/privkey.pem", "utf8");
 const certificate = fs.readFileSync("./ssl/fullchain.pem", "utf8");
@@ -138,6 +146,3 @@ http
 app.use((req, res) => {
   res.status(404).render("404", { url: req.url });
 });
-
-// The error handler must be before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler());
