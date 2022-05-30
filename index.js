@@ -121,7 +121,8 @@ const credentials = {
 };
 
 // Server
-spdy.createServer(credentials, app).listen(443, (error) => {
+const server = spdy.createServer(credentials, app);
+server.listen(443, (error) => {
   if (error) {
     console.error(error);
     return process.exit(1);
@@ -141,6 +142,12 @@ http
   .listen(80, function () {
     console.log("Redirect from HTTP (80) to HTTPS (443) runing.");
   });
+
+// Graceful Shutdown
+process.on("SIGTERM", () => {
+  console.log(`Server stopping ${new Date().toISOString()}`);
+  server.close(() => process.exit());
+});
 
 // 404 error handling
 app.use((req, res) => {

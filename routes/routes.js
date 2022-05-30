@@ -28,10 +28,7 @@ const {
 } = require("../controllers/schoolController");
 const { logging, logView } = require("../controllers/logController");
 const { dashboardView } = require("../controllers/dashboardController");
-const {
-  chartsDefaultView,
-  // getChartsData,
-} = require("../controllers/chartsController");
+const { chartsDefaultView } = require("../controllers/chartsController");
 const { protectRoute, isAdmin } = require("../controllers/auth/protect");
 
 // Set the Router
