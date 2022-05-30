@@ -169,8 +169,84 @@
   function updateChart() {
     const field = document.getElementById("fieldSelect").value;
 
-    // Ocupação chart
-    if (field === "ocupacao") {
+    
+    if (field === "cisterna") { // Reservatório chart
+      let cisternas = [];
+
+      activeSchools.forEach(school => {
+        cisternas.push(school.cisterna.possui);
+      });
+
+      const labels = [...new Set(cisternas)];
+
+      let datasetValues = [];
+
+      labels.forEach(label => {
+        datasetValues.push(0);
+      })
+
+      activeSchools.forEach(school => {
+        for (let index = 0; index < labels.length; index++) {
+          if (school.cisterna.possui === labels[index]) {
+            datasetValues[index] += 1;
+          }
+        }
+      });
+
+      for (let index = 0; index < labels.length; index++) {
+        if (labels[index] === true) labels[index] = "Sim";
+        if (labels[index] === false) labels[index] = "Não";
+        if (labels[index] === undefined) labels[index] = "Não avaliado";
+      }
+
+      const datasets = [{
+        label: "Reservatórios por possui.",
+        data: datasetValues,
+        backgroundColor: colors,
+      }];
+
+      const data = {
+        labels: labels,
+        datasets: datasets,
+      };
+
+      const options = {
+        locale: "pt-BR",
+        responsive: true,
+        layout: {
+          padding: 15,
+        },
+        interaction: {
+          mode: "index",
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              footer: percentage,
+            },
+          },
+          htmlLegend: {
+            containerID: "legend-container",
+          },
+          legend: {
+            display: false,
+          },
+        },
+        maintainAspectRatio: false,
+      }
+
+      chart.destroy();
+      chart = new Chart(ctx, {
+        type: "doughnut",
+        data: data,
+        options: options,
+        plugins: [htmlLegendPlugin],
+      });
+      chart.update();
+
+      document.getElementById("graphTitle").textContent = field;
+
+    } else if (field === "ocupacao") { // Ocupação chart
       let ocupacoes = [];
 
       activeSchools.forEach(school => {

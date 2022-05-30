@@ -20,10 +20,12 @@
           aria-label="Selecione um campo para criação do gráfico."
           onchange="updateChart()"
         >
-          <% for (let i = 4; i < 12; i++) { %>
-          <option class="capitalize replace" value="<%= fields[i][0] %>">
-            <%= fields[i][0] %>
-          </option>
+          <% for (let i = 4; i < 14; i++) { %>
+            <% if (fields[i][0] !== "reservatorio") { %>
+              <option class="replace" value="<%= fields[i][0] %>">
+                <%= fields[i][0].replace(/./, fields[i][0][0].toUpperCase()) %>
+              </option>
+            <% } %>
           <% } %>
           <option value="ocupacao">Ocupação</option>
           <option value="avaliacao">IGAI/Avaliação</option>
