@@ -69,34 +69,41 @@
     </div>
     <div class="pt-2 pb-4 md:pt-4 md:pb-6">
       <h3 class="pb-0 mb-0 md:pb-2">Índices:</h3>
-      <form action="/school" method="post">
-        <input type="hidden" name="codigo" value="<%= school.codigo %>">
-        <input type="hidden" name="nome" value="<%= school.nome %>">
-        <% for (let i = 4; i < 12; i++) { %>
-          <div class="py-2 capitalize w-full <%= i % 2 === 0 ? '' : 'intercalado' %> md:py-4">
-            <h4 class="mt-1 md:mb-4 replace"><%= fields[i][0] %></h4>
-            <div class="mt-1 pt-2">
-              <% for (let key in fields[i][1]) { %>
-                <div class="flex items-center form-line px-4 sm:text-base">
-                  <label for="<%= fields[i][0] %>.<%= key %>" class="w-full replace"><%= key %>:</label>
-                  <select name="<%= fields[i][0] %>.<%= key %>" <%= school.ativa === true ? '' : 'disabled' %> aria-label="<%= key %>">
-                    <option value="0" <%= school[fields[i][0]][key] === null ? "selected" : "" %> >X</option>
-                    <option value="1" <%= school[fields[i][0]][key] === 1 ? "selected" : "" %> >1</option>
-                    <option value="2" <%= school[fields[i][0]][key] === 2 ? "selected" : "" %> >2</option>
-                    <option value="3" <%= school[fields[i][0]][key] === 3 ? "selected" : "" %> >3</option>
-                    <option value="4" <%= school[fields[i][0]][key] === 4 ? "selected" : "" %> >4</option>
-                    <option value="5" <%= school[fields[i][0]][key] === 5 ? "selected" : "" %> >5</option>
-                  </select>
-                </div>
-              <% } %>
+      <% if (school.ativa) { %>
+        <form action="/school" method="post">
+          <input type="hidden" name="codigo" value="<%= school.codigo %>">
+          <input type="hidden" name="nome" value="<%= school.nome %>">
+          <% for (let i = 4; i < 12; i++) { %>
+            <div class="py-2 capitalize w-full <%= i % 2 === 0 ? '' : 'intercalado' %> md:py-4">
+              <h4 class="mt-1 md:mb-4 replace"><%= fields[i][0] %></h4>
+              <div class="mt-1 pt-2">
+                <% for (let key in fields[i][1]) { %>
+                  <div class="flex items-center form-line px-4 sm:text-base">
+                    <label for="<%= fields[i][0] %>.<%= key %>" class="w-full replace"><%= key %>:</label>
+                    <select name="<%= fields[i][0] %>.<%= key %>" aria-label="<%= key %>">
+                      <option value="0" <%= school[fields[i][0]][key] === null ? "selected" : "" %> >X</option>
+                      <option value="1" <%= school[fields[i][0]][key] === 1 ? "selected" : "" %> >1</option>
+                      <option value="2" <%= school[fields[i][0]][key] === 2 ? "selected" : "" %> >2</option>
+                      <option value="3" <%= school[fields[i][0]][key] === 3 ? "selected" : "" %> >3</option>
+                      <option value="4" <%= school[fields[i][0]][key] === 4 ? "selected" : "" %> >4</option>
+                      <option value="5" <%= school[fields[i][0]][key] === 5 ? "selected" : "" %> >5</option>
+                    </select>
+                  </div>
+                <% } %>
+              </div>
             </div>
+          <% } %>
+          <div class="flex justify-end gap-4 mt-6 px-6 md:justify-end">
+            <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
+            <button type="submit" class="button button-primary">Salvar</button>
           </div>
-        <% } %>
+        </form>
+      <% } else { %>
+        <h4>Escola inativa.</h4>
         <div class="flex justify-end gap-4 mt-6 px-6 md:justify-end">
           <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
-          <button type="submit" class="button button-primary">Salvar</button>
         </div>
-      </form>
+      <% } %>
     </div>
   </div>
 </div>
