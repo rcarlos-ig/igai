@@ -20,7 +20,9 @@
             <option value="indicador2" <%= field === "indicador2" ? "selected" : "" %> >Histórico</option>
             <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
-                <option class="capitalize replace" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + "." + key ? "selected" : "" %> ><%= fields[i][0] %>: <%= key %></option>
+                <option class="replace" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + "." + key ? "selected" : "" %> >
+                  <%= fields[i][0].replace(/./, fields[i][0][1].toUpperCase()) %>: <%= key.replace(/./, key[0].toUpperCase()) %>
+                </option>
               <% } %>
             <% } %>
           </select>
@@ -45,11 +47,11 @@
       <table class="text-center mx-auto w-full whitespace-nowrap" aria-label="Tabela com as unidades de acordo com os critérios de ordenação selecionados." id="escolas">
         <thead class="sticky top-0 z-10">
           <tr>
-            <th class="sticky left-0 min-w-[3rem]" scope="col" rowspan="2">#</th>
-            <th class="sticky left-12 min-w-[10rem]" scope="col" rowspan="2">Nome</th>
+            <th class="sticky left-0 min-w-[4rem]" scope="col" rowspan="2">#</th>
+            <th class="sticky left-16 min-w-[14rem]" scope="col" rowspan="2">Nome</th>
             <th scope="col" rowspan="2" id="bairro" class="<%= field === "bairro" ? "auditado" : "" %>">Bairro</th>
-            <th class="sticky left-52 min-w-[5rem] <%= field === "indicador" ? "auditado" : "" %>" scope="col" rowspan="2" id="indicador">IGAI</th>
-            <th class="sticky left-72 <%= field === "indicador" ? "auditado" : "" %>" scope="col" rowspan="2">Avaliação</th>
+            <th class="sticky left-72 min-w-[6rem] <%= field === "indicador" ? "auditado" : "" %>" scope="col" rowspan="2" id="indicador">IGAI</th>
+            <th class="sticky left-96 <%= field === "indicador" ? "auditado" : "" %>" scope="col" rowspan="2">Avaliação</th>
             <% for (let i = 4; i < 14; i++) { %>
               <% let keys = 0; %>
               <% for (let key in fields[i][1]) { %>
@@ -76,13 +78,13 @@
           <tr>
             <% count += 1; %>
             <td class="sticky left-0 text-center z-[1]"><%= count %></td>
-            <td class="sticky left-12 text-left z-[1] unidade whitespace-normal"><%= school.nome %></td>
+            <td class="sticky left-16 text-left z-[1] unidade whitespace-normal"><%= school.nome %></td>
             <td class="whitespace-normal <%= field === "bairro" ? "auditado" : "" %>"><%= school.bairro %></td>
-            <td class="sticky left-52 z-[1] <%= field === "indicador" ? "auditado" : "" %>">
+            <td class="sticky left-72 z-[1] <%= field === "indicador" ? "auditado" : "" %>">
               <% let indicador = Math.floor(school.indicador * 10) / 10 %>
               <%= indicador.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) %>
             </td>
-            <td class="sticky left-72 z-[1] <%= field === "indicador" ? "auditado" : "" %>"><%= school.avaliacao %></td>
+            <td class="sticky left-96 z-[1] <%= field === "indicador" ? "auditado" : "" %>"><%= school.avaliacao %></td>
             <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
                 <% if (i < 12) { %>
@@ -116,7 +118,7 @@
                     </span>
                   </td>
                 <% } else { %>
-                  <td class="-z-10 <%= field === fields[i][0] + "." + key ? "auditado" : "" %>">
+                  <td class="-z-10 whitespace-normal <%= field === fields[i][0] + "." + key ? "auditado" : "" %>">
                     <% if (school[fields[i][0]][key] === true) { %>
                       Sim
                     <% } else if (school[fields[i][0]][key] === false) { %>

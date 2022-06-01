@@ -136,8 +136,7 @@ http
   .createServer(function (req, res) {
     res.writeHead(301, {
       Location: "https://" + req.headers["host"] + req.url,
-    });
-    res.end();
+    }).end();
   })
   .listen(80, function () {
     console.log("Redirect from HTTP (80) to HTTPS (443) runing.");

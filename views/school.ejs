@@ -38,32 +38,32 @@
       <div class="border-b-2 border-gray-300 pt-2 pb-4 md:pt-4 md:pb-6">
         <h3>Avaliação:</h3>
         <p>Indicador: <span class="font-semibold">
-          <% let indicador = Math.floor(school.indicador * 10) / 10 %>
+          <% let indicador = Math.floor(historicData[0].indicador * 10) / 10 %>
           <%= indicador.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) %>
         </span></p>
-        <p>Avaliação: <span class="font-semibold"><%= school.avaliacao %></span>
-        <% if (school.avaliacao2) { %>
-          <% if (school.indicador < school.indicador2) { %>
+        <p>Avaliação: <span class="font-semibold"><%= historicData[0].avaliacao %></span>
+        <% if (historicData[1].avaliacao !== "Não avaliado") { %>
+          <% if (historicData[0].indicador < historicData[1].indicador) { %>
             <%- `<span class="text-xl font-semibold text-green-600">&uArr;</span>` %>
           <% } %>
-          <% if (school.indicador > school.indicador2) { %>
+          <% if (historicData[0].indicador > historicData[1].indicador) { %>
             <%- `<span class="text-xl font-semibold text-red-600">&dArr;</span>` %>
           <% } %>
-          </p>
-          <p>Histórico: 
-            <span class="font-semibold">
-              <% let indicador2 = Math.floor(school.indicador2 * 10) / 10 %>
-              <%= indicador2.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) %></span> - <span class="font-semibold"><%= school.avaliacao2 %>
-            </span>
-          </p>
         <% } %>
+        </p>
+        <p>Histórico: 
+          <span class="font-semibold">
+            <% let historico = Math.floor(historicData[1].indicador * 10) / 10 %>
+            <%= historico.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) %></span> - <span class="font-semibold"><%= historicData[1].avaliacao %>
+          </span>
+        </p>
         <% const atualizadoEm = new Intl.DateTimeFormat("default", { 
           day:"2-digit",
           month: "2-digit",
           year: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
-          }).format(school.atualizadoEm); %>
+          }).format(historicData[0].atualizadoEm); %>
         <p>Última atualização em <span class="font-semibold"><%= atualizadoEm %></span>, por <span class="font-semibold"><%= userName %></span></p>
       </div>
     </div>

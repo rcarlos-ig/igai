@@ -64,15 +64,16 @@ const SchoolSchema = new mongoose.Schema({
   },
   bomba: String,
   ocupacao: String,
-  atualizadoEm: {
+  criadoPor: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  criadoEm: {
     type: Date,
     default: Date.now,
   },
-  atualizadoPor: String,
   indicador: Number,
-  indicador2: Number,
   avaliacao: String,
-  avaliacao2: String,
 });
 
 const School = mongoose.model("School", SchoolSchema);

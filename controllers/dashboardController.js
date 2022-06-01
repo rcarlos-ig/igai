@@ -4,6 +4,9 @@ const {
   getActiveSchools,
 } = require("../controllers/schoolController");
 
+// Historic Data Controller
+const HistoricData = require("../models/HistoricData");
+
 //GET request for Dashboard Page
 const dashboardView = async (req, res) => {
   const schools = await getSchools();
@@ -20,8 +23,14 @@ const dashboardView = async (req, res) => {
 
   let chartData = [0, 0, 0, 0, 0, 0];
 
-  activeSchools.forEach((school) => {
-    switch (school.avaliacao) {
+  for (const school of activeSchools) {
+    const data = await HistoricData.find({ schoolCodigo: school.codigo })
+      .sort({ atualizadoEm: -1 })
+      .then((result) => {
+        return result;
+      });
+
+    switch (data[0].avaliacao) {
       case chartLabels[1]:
         chartData[1] += 1;
         break;
@@ -41,7 +50,7 @@ const dashboardView = async (req, res) => {
         chartData[0] += 1;
         break;
     }
-  });
+  }
 
   res.render("dashboard", {
     user: req.user,

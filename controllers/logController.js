@@ -1,6 +1,5 @@
 // MongoDB Schemas
 const Log = require("../models/Log");
-const School = require("../models/Schools");
 const User = require("../models/User");
 
 // Get log

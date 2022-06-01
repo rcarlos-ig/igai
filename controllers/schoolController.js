@@ -1,9 +1,10 @@
 // MongoDB Schemas
 const School = require("../models/Schools");
 const User = require("../models/User");
+const HistoricData = require("../models/HistoricData");
 
 // Calculate the "IGE"
-function calculateIGE(data) {
+function calculateIGAIE(data) {
   let indicador = Number();
 
   for (let key in data) {
@@ -104,7 +105,7 @@ const registerSchool = (req, res) => {
       });
     } else {
       // New school
-      const atualizadoPor = req.user._id;
+      const criadoPor = req.user._id;
 
       const newSchool = new School({
         codigo,
@@ -112,19 +113,30 @@ const registerSchool = (req, res) => {
         bairro,
         ocupacao,
         ativa,
-        indicador: 0,
+        criadoPor,
+        indicador: null,
         avaliacao: "Não avaliado",
-        atualizadoPor,
       });
       newSchool
         .save() // Save the new School on the database
-        .then(
-          res.render("registerSchool", {
-            success: "Escola cadastrada com sucesso.",
-            user: req.user,
-          })
-        )
-        .catch((err) => console.log(err));
+        .then(function () {
+          const newHistoricData = new HistoricData({
+            schoolCodigo: codigo,
+            indicador: null,
+            avaliacao: "Não avaliado",
+            atualizadoPor: criadoPor,
+          });
+
+          newHistoricData
+            .save() // Save the first historic data
+            .then(
+              res.render("registerSchool", {
+                success: "Escola cadastrada com sucesso.",
+                user: req.user,
+              })
+            );
+        })
+        .catch((err) => console.error(err));
     }
   });
 };
@@ -135,47 +147,72 @@ const schoolView = async (req, res) => {
 
   // Check School
   School.findOne({ codigo: req.query.unidade }).then((school) => {
-    if (school) {
-      // Check user
-      User.findOne({ _id: school.atualizadoPor }).then((user) => {
-        let userName;
-
-        if (user) {
-          userName = user.name;
-        } else {
-          userName = "Usuário indisponível";
+    // Check HistoricData
+    HistoricData.find({ schoolCodigo: school.codigo })
+      .sort({ atualizadoEm: -1 })
+      .then((historicData) => {
+        if (historicData.length < 2) {
+          const legacyHistoricData = {
+            indicador: school.indicador2,
+            avaliacao: school.avaliacao2,
+          };
+          historicData.push(legacyHistoricData);
         }
 
-        res.render("school", {
-          school,
-          fields: fields,
-          userName,
-          user: req.user,
+        // Check user
+        User.findOne({ _id: historicData[0].atualizadoPor }).then((user) => {
+          let userName;
+          if (user) {
+            userName = user.name;
+          } else {
+            userName = "Usuário indisponível";
+          }
+
+          res.render("school", {
+            school,
+            fields,
+            historicData,
+            userName,
+            user: req.user,
+          });
         });
       });
-    } else {
-      res.redirect("/dashboard");
-    }
   });
 };
 
 // POST Request for the School page
 const schoolPost = (req, res) => {
+  // Update School
   let data = req.body;
 
-  School.findOne({ codigo: data.codigo }).then((school) => {
-    data.indicador = calculateIGE(data);
-    data.avaliacao = calculateAvaliacao(data.indicador);
-    data.atualizadoEm = new Date();
-    data.atualizadoPor = req.user._id;
-    data.indicador2 = school.indicador;
-    data.avaliacao2 = school.avaliacao;
+  School.findOne({ codigo: data.codigo }).then((school) => {    
+    const schoolCodigo = data.codigo;
+    const indicador = calculateIGAIE(data);
+    const avaliacao = calculateAvaliacao(indicador);
+    const atualizadoPor = req.user._id;
+    const atualizadoEm = new Date();
+
     data.nome = school.nome;
+    data.indicador = indicador;
+    data.avaliacao = avaliacao;
 
     // Update School
-    School.updateOne({ codigo: data.codigo }, { $set: data }).then(function () {
-      res.redirect("/dashboard");
+    School.updateOne({ codigo: data.codigo }, { $set: data });
+    
+    // Update HistoricData
+    const newHistoricData = new HistoricData({
+      schoolCodigo,
+      indicador,
+      avaliacao,
+      atualizadoPor,
+      atualizadoEm,
     });
+    newHistoricData
+      .save() // Save the new HistoricData on the database
+      .then(function () {
+        res.redirect("/dashboard");
+      })
+      .catch((err) => console.log(err));
   });
 };
 
