@@ -17,11 +17,10 @@
             <option value="indicador" <%= field === "indicador" ? "selected" : "" %> >IGAI/Avaliação</option>
             <option value="bairro" <%= field === "bairro" ? "selected" : "" %> >Bairro</option>
             <option value="ocupacao" <%= field === "ocupacao" ? "selected" : "" %> >Ocupação</option>
-            <option value="indicador2" <%= field === "indicador2" ? "selected" : "" %> >Histórico</option>
             <% for (let i = 4; i < 14; i++) { %>
               <% for (let key in fields[i][1]) { %>
                 <option class="replace" value="<%= fields[i][0] %>.<%= key %>" <%= field === fields[i][0] + "." + key ? "selected" : "" %> >
-                  <%= fields[i][0].replace(/./, fields[i][0][1].toUpperCase()) %>: <%= key.replace(/./, key[0].toUpperCase()) %>
+                  <%= fields[i][0].replace(/./, fields[i][0][0].toUpperCase()) %>: <%= key.replace(/./, key[0].toUpperCase()) %>
                 </option>
               <% } %>
             <% } %>
@@ -62,7 +61,6 @@
               </th>              
             <% } %>
             <th class="capitalize <%= field === "ocupacao" ? "auditado" : "" %>" scope="col" rowspan="2" id="ocupacao">Ocupação</th>
-            <th class="capitalize <%= field === "indicador2" ? "auditado" : "" %>" scope="col" rowspan="2" id="indicador2">Histórico</th>
           </tr>
           <tr>
             <% for (let i = 4; i < 14; i++) { %>
@@ -133,10 +131,6 @@
               <% } %>
             <% } %>
             <td class="<%= field === "ocupacao" ? "auditado" : "" %>"><%= school.ocupacao %></td>
-            <td class="<%= field === "indicador2" ? "auditado" : "" %>">
-              <% let indicador2 = Math.floor(school.indicador2 * 10) / 10 %>
-              <%= typeof school.indicador2 !== "undefined" ? indicador2.toLocaleString("default", {style: "decimal", minimumFractionDigits: 1, maximumFractionDigits: 1}) : "" %> - <%= typeof school.avaliacao2 !== "undefined" ? school.avaliacao2 : "" %>
-            </td>
           </tr>
           <% }) %>
         </tbody>
