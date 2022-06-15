@@ -63,6 +63,13 @@
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript><link rel="stylesheet" href="/css/hint.min.css" /></noscript>
+    <link
+      rel="preload"
+      href="/css/tabulator.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript><link rel="stylesheet" href="/css/tabulator.min.css" /></noscript>
 
     <!-- META and Social -->
     <meta
@@ -120,7 +127,9 @@
   <body>
     <%- include('loader.ejs'); %>
     <header>
-      <h1>SEJIN - IGAIE</h1>
-      <small>Indicador Gerencial de Avaliação do Imóvel Educacional</small>
+      <a href="/dashboard" aria-label="Página inicial.">
+        <h1>SEJIN - IGAIE</h1>
+        <small>Indicador Gerencial de Avaliação do Imóvel Educacional</small>
+      </a>
     </header>
     <main>

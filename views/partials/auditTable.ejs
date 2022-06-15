@@ -1,0 +1,259 @@
+<div
+  class="mt-4 mb-8 scroll-smooth"
+  id="tabulatorTable"
+  aria-label="Tabela com as unidades e seus critérios."
+></div>
+
+<script type="text/javascript">
+  const schools = fetch("/schools-data")
+    .then((response) => response.json())
+    .then((schools) => {
+      let tableData = [];
+
+      for (const {
+        nome: nome,
+        bairro: bairro,
+        indicador: indicador,
+        avaliacao: avaliacao,
+        ativa: ativa,
+        instalacoes: instalacoes,
+        cobertura: cobertura,
+        revestimento: revestimento,
+        esquadrias: esquadrias,
+        estrutura: estrutura,
+        quadra: quadra,
+        acessibilidade: acessibilidade,
+        externas: externas,
+        reservatorio: reservatorio,
+        cisterna: cisterna,
+        ocupacao: ocupacao,
+      } of schools) {
+        const newSchool = {
+          nome: nome,
+          bairro: bairro,
+          IGAIE: indicador,
+          avaliacao: avaliacao,
+          ativa: ativa,
+          instalacoes: instalacoes,
+          cobertura: cobertura,
+          revestimento: revestimento,
+          esquadrias: esquadrias,
+          estrutura: estrutura,
+          quadra: quadra,
+          acessibilidade: acessibilidade,
+          externas: externas,
+          reservatorio: reservatorio,
+          cisterna: cisterna,
+          ocupacao: ocupacao,
+        };
+
+        for (const key in newSchool) {
+          if (Object.hasOwnProperty.call(newSchool, key)) {
+            const item = newSchool[key];
+
+            if (
+              typeof item === "object" &&
+              key !== "reservatorio" &&
+              key !== "cisterna"
+            )
+              for (const subKey in item) {
+                if (Object.hasOwnProperty.call(item, subKey)) {
+                  if (item[subKey] === 0) item[subKey] = "X";
+                }
+              }
+          }
+        }
+
+        if (newSchool.ativa) tableData.push(newSchool);
+      }
+
+      tableData.forEach((school) => {
+        school.reservatorio.capacidade =
+          school.reservatorio.capacidade.toLocaleString("pt-BR");
+        school.cisterna.capacidade =
+          school.cisterna.capacidade.toLocaleString("pt-BR");
+      });
+
+      const tabulatorTable = new Tabulator("#tabulatorTable", {
+        height: "600px",
+        layout: "fitDataStretch",
+        data: tableData,
+        columnHeaderVertAlign: "middle",
+        columnDefaults: {
+          headerFilter: true,
+          headerSortTristate: true,
+          headerHozAlign: "center",
+          hozAlign: "center",
+          resizable: "header",
+          cssClass: "cursor-default",
+        },
+        columns: [
+          {
+            title: "#",
+            formatter: "rownum",
+            headerFilter: false,
+            headerSort: false,
+            frozen: true,
+          },
+          {
+            field: "nome",
+            title: "nome",
+            hozAlign: "left",
+            frozen: true,
+            width: 200,
+          },
+          {
+            field: "IGAIE",
+            title: "IGAIE",
+            formatter: "money",
+            formatterParams: { decimal: ",", precision: 1 },
+            headerFilter: false,
+            frozen: true,
+          },
+          { field: "avaliacao", title: "avaliação", frozen: true },
+          { field: "bairro", title: "bairro" },
+          {
+            title: "instalações",
+            headerFilter: false,
+            columns: [
+              { field: "instalacoes.eletricas", title: "elétricas" },
+              { field: "instalacoes.hidraulicas", title: "hidráulicas" },
+              { field: "instalacoes.sanitarias", title: "sanitárias" },
+            ],
+          },
+          {
+            title: "cobertura",
+            headerFilter: false,
+            columns: [
+              { field: "cobertura.telhas", title: "telhas" },
+              { field: "cobertura.madeiramento", title: "madeiramento" },
+              {
+                field: "cobertura.impermeabilizacao",
+                title: "impermeabilização",
+              },
+            ],
+          },
+          {
+            title: "revestimento",
+            headerFilter: false,
+            columns: [
+              { field: "revestimento.paredes", title: "paredes" },
+              { field: "revestimento.tetos", title: "tetos" },
+              { field: "revestimento.pisos", title: "pisos" },
+              { field: "revestimento.pintura", title: "pintura" },
+            ],
+          },
+          {
+            title: "esquadrias",
+            headerFilter: false,
+            columns: [
+              { field: "esquadrias.portas", title: "portas" },
+              { field: "esquadrias.janelas", title: "janelas" },
+            ],
+          },
+          {
+            title: "estrutura",
+            headerFilter: false,
+            columns: [
+              { field: "estrutura.predio", title: "prédio" },
+              { field: "estrutura.reservatorio", title: "reservatório" },
+            ],
+          },
+          {
+            title: "quadra",
+            headerFilter: false,
+            columns: [
+              { field: "quadra.cercaTela", title: "cerca/tela" },
+              { field: "quadra.piso", title: "piso" },
+              { field: "quadra.cobertura", title: "cobertura" },
+              { field: "quadra.pintura", title: "pintura" },
+              { field: "quadra.equipamentos", title: "equipamentos" },
+              { field: "quadra.iluminacao", title: "iluminação" },
+            ],
+          },
+          {
+            title: "acessibilidade",
+            headerFilter: false,
+            columns: [
+              { field: "acessibilidade.rampa", title: "rampa" },
+              { field: "acessibilidade.elevador", title: "elevador" },
+              { field: "acessibilidade.instalacoes", title: "instalações" },
+            ],
+          },
+          {
+            title: "externas",
+            headerFilter: false,
+            columns: [
+              { field: "externas.calcada", title: "calçada" },
+              { field: "externas.muro", title: "muro" },
+            ],
+          },
+          {
+            title: "reservatorio",
+            headerFilter: false,
+            columns: [
+              {
+                field: "reservatorio.tipo",
+                title: "tipo",
+                hozAlign: "left",
+                width: 150,
+              },
+              {
+                field: "reservatorio.capacidade",
+                title: "capacidade",
+                formatter: function (cell, formatterParams, onRendered) {
+                  const data =
+                    cell.getValue() === "0" ? "" : cell.getValue() + " litros";
+                  return data;
+                },
+              },
+            ],
+          },
+          {
+            title: "cisterna",
+            headerFilter: false,
+            columns: [
+              {
+                field: "cisterna.possui",
+                title: "possui",
+                formatter: function (cell, formatterParams, onRendered) {
+                  let data = cell.getValue();
+
+                  if (data === true) {
+                    data = "Sim";
+                  } else if (data === false) {
+                    data = "Não";
+                  } else {
+                    data = "";
+                  }
+
+                  return data;
+                },
+              },
+              {
+                field: "cisterna.capacidade",
+                title: "capacidade",
+                formatter: function (cell, formatterParams, onRendered) {
+                  const data =
+                    cell.getValue() === "0" ? "" : cell.getValue() + " litros";
+                  return data;
+                },
+              },
+            ],
+          },
+          { field: "ocupacao", title: "ocupação" },
+        ],
+      });
+
+      tabulatorTable.on("tableBuilt", function () {
+        // Set tabulator tables search input placeholders
+        const searchInput = document.querySelectorAll(
+          ".tabulator-header-filter > input"
+        );
+
+        searchInput.forEach((input) => {
+          input.placeholder = "Pesquisar...";
+        });
+      });
+    });
+</script>

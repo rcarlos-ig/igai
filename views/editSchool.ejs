@@ -85,13 +85,13 @@
       <div class="form-line">
         <label for="reservatorio.tipo">Reservatório</label>
         <div class="flex flex-wrap gap-2">
-          <input
-            type="text"
+          <textarea
             name="reservatorio.tipo"
             id="reservatorio.tipo"
             value="<%= school.reservatorio.tipo %>"
             placeholder="Tipo de reservatorio."
-          />
+            class="w-full"
+          ></textarea>
           <input
             type="number"
             name="reservatorio.capacidade"

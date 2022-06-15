@@ -185,7 +185,7 @@ const schoolPost = (req, res) => {
   // Update School
   let data = req.body;
 
-  School.findOne({ codigo: data.codigo }).then((school) => {    
+  School.findOne({ codigo: data.codigo }).then((school) => {
     const schoolCodigo = data.codigo;
     const indicador = calculateIGAIE(data);
     const avaliacao = calculateAvaliacao(indicador);
@@ -198,7 +198,7 @@ const schoolPost = (req, res) => {
 
     // Update School
     School.updateOne({ codigo: data.codigo }, { $set: data });
-    
+
     // Update HistoricData
     const newHistoricData = new HistoricData({
       schoolCodigo,
@@ -300,6 +300,13 @@ const auditSchool = async (req, res) => {
   });
 };
 
+// GET Request for Tabulator tables
+const getSchoolsData = async (_req, res) => {
+  const schoolsData = await getSchools();
+
+  res.send(schoolsData);
+};
+
 module.exports = {
   getSchools,
   getActiveSchools,
@@ -311,4 +318,5 @@ module.exports = {
   editSchool,
   auditSchoolView,
   auditSchool,
+  getSchoolsData,
 };

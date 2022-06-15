@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="card w-full md:w-2/3 lg:w-1/3">
+<div class="card w-full md:w-2/3">
   <div class="w-full">
     <h2>Dados da Unidade</h2>
     <% if (locals.success) { %>
@@ -31,7 +31,8 @@
         <% } %>
         <p>Bomba da cisterna: <span class="font-semibold"><%= school.bomba %></span></p>
         <p>Ativa: <span class="font-semibold"><%= school.ativa === true ? 'Sim' : 'Não' %></span></p>
-        <div class="mt-2">
+        <div class="flex justify-end gap-4 mt-2">
+          <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
           <button type="button" class="button button-secondary" onclick="window.location='<%= `/edit-school?unidade=${school.codigo}` %>'">Editar</button>
         </div>
       </div>

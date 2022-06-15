@@ -41,4 +41,42 @@ const logView = async (req, res) => {
   res.render("log", { log: entries, users, user: req.user });
 };
 
-module.exports = { logging, logView };
+// GET Request for Tabulator tables
+const getLogsData = async (_req, res) => {
+  let data = await getLog();
+  let finalData = [];
+
+  for (const entry of data) {
+    const userName = await User.findById(entry.user).then((user) => {
+      return user.name;
+    });
+
+    let dataString = "";
+
+    for (const key in entry.data) {
+      if (Object.hasOwnProperty.call(entry.data, key)) {
+        if (key === "atualizadoEm" || key === "atualizadoPor") continue;
+        dataString += `${key}: ${entry.data[key]}<br />`;
+      }
+    }
+
+    const newValues = {
+      createdAt: entry.createdAt.toLocaleDateString("default", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      user: userName,
+      action: entry.action,
+      msg: entry.msg,
+      data: dataString,
+    };
+    finalData.push(newValues);
+  }
+
+  res.send(finalData);
+};
+
+module.exports = { logging, logView, getLogsData };

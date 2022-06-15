@@ -1,24 +1,7 @@
 "use strict";
 
-// Functions on page load
-document.addEventListener("DOMContentLoaded", function () {
-  // Toggle the Page Load animation
-  document.querySelector(".loader-trigger").style.display = "none";
-
-  // Zebra pattern for the tables
-  const visibleRows = document.querySelectorAll("tbody > tr:not(.hidden)");
-
-  for (let i = 0; i < visibleRows.length; i++) {
-    if (i % 2 !== 0) {
-      const rowCells = visibleRows[i].children;
-
-      for (const cell of rowCells) {
-        cell.classList.add("zebrado");
-      }
-    }
-  }
-
-  // Replace texts
+// Replace texts
+function replaceStrings() {
   const replaceableElements = document.querySelectorAll(".replace");
 
   for (const item of replaceableElements) {
@@ -33,27 +16,37 @@ document.addEventListener("DOMContentLoaded", function () {
     item.innerHTML = item.innerHTML.replace(/reservatorio/gi, "reservatório");
     item.innerHTML = item.innerHTML.replace(/calcada/gi, "calçada");
   }
+}
 
-  // Toggle "inativa" schools on the dashboard
+// Toggle "inativa" schools on the dashboard
+function inativasToggle() {
   const ativa = document.getElementById("ativa");
 
   if (ativa) {
     ativa.addEventListener("change", function () {
-      const rows = document.querySelectorAll("#escolas tbody tr");
+      const table = Tabulator.findTable("#tabulatorTable");
 
       if (this.checked) {
-        for (const row of rows) {
-          if (row.classList.contains("hidden")) {
-            row.classList.remove("hidden");
-          }
+        for (const row of table[0].rowManager.rows) {
+          if (!row.data.ativa) row.getElement().classList.remove("hidden");
         }
       } else {
-        for (const row of rows) {
-          if (row.classList.contains("inativa")) {
-            row.classList.add("hidden");
-          }
+        for (const row of table[0].rowManager.rows) {
+          if (!row.data.ativa) row.getElement().classList.add("hidden");
         }
       }
     });
   }
+}
+
+// Functions on page load
+document.addEventListener("DOMContentLoaded", function () {
+  // Toggle the Page Load animation
+  document.querySelector(".loader-trigger").style.display = "none";
+
+  // Replace texts
+  replaceStrings();
+
+  // Toggle "inativa" schools on the dashboard
+  inativasToggle();
 });

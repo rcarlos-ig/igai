@@ -4,64 +4,7 @@
   <div class="w-full">
     <div>
       <h2>Registros do sistema</h2>
-      <div class="flex justify-center mt-4 mb-8 w-full scroll-smooth md:justify-start md:border md:border-primary md:max-h-[500px] md:overflow-y-scroll">
-        <table class="text-center font-normal w-full" id="log" aria-label="Tabela com as unidades da rede.">
-          <thead class="sticky top-0 z-10">
-            <tr>
-              <th>Data</th>
-              <th>Usuário</th>
-              <th class="hidden md:table-cell">Ação</th>
-              <th>Mensagem</th>
-              <th>Dados</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% log.forEach((item, index) => { %>
-              <tr>
-                <td class="md:whitespace-nowrap"><%= item.createdAt.toLocaleDateString("default", { 
-                  day:"2-digit",
-                  month: "2-digit",
-                  year: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit"
-                  }) %></td>
-                <td><%= users[index] %></td>
-                <td class="hidden md:table-cell"><%= item.action %></td>
-                <td><%= item.msg %></td>
-                <td class="text-left break-words replace">
-                  <% Object.keys(item.data).forEach(key => { %>
-                    <% if(key === "atualizadoEm" || key === "atualizadoPor") { %>
-                      <% return %>
-                    <% } %>                    
-                    <% if(key === "indicador") { %>
-                      <% item.data[key] = item.data[key].toLocaleString("default", {
-                        style: "decimal",
-                        maximumFractionDigits: 1
-                        }) %>
-                    <% } %>
-                    <% if (item.data[key] === true || item.data[key] === "On") { %>
-                      <% item.data[key] = "Sim"; %>
-                    <% } else if (item.data[key] === false || item.data[key] === "Off") { %>
-                      <% item.data[key] = "Não"; %>
-                    <% } %>
-                    <% if (key.indexOf(".") >= 0) { %>
-                      <% item.data[key] = item.data[key] === "0" ? "X" : item.data[key] %>
-                      <% let oldKeyValue = item.data[key]; %>
-                      <% key = key.replace(".", ", "); %>
-                      <% item.data[key] = oldKeyValue %>
-                    <% } %>
-                    <% if (key.indexOf("capacidade") >= 0) { %>
-                      <% item.data[key] = Number(item.data[key]).toLocaleString("default") + " litros" %>
-                    <% } %>
-                    <p><span class="font-medium capitalize"><%= key %></span>: <%= item.data[key] %></p>
-                  <% }); %>
-                </td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
+      <%- include("partials/logTable.ejs") %> 
       <div class="flex justify-center mt-8">
         <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
       </div>
