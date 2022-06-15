@@ -25,8 +25,13 @@ const {
   editSchool,
   auditSchoolView,
   auditSchool,
+  getSchoolsData,
 } = require("../controllers/schoolController");
-const { logging, logView } = require("../controllers/logController");
+const {
+  logging,
+  logView,
+  getLogsData,
+} = require("../controllers/logController");
 const { dashboardView } = require("../controllers/dashboardController");
 const { chartsDefaultView } = require("../controllers/chartsController");
 const { protectRoute, isAdmin } = require("../controllers/auth/protect");
@@ -288,5 +293,11 @@ router.post("/user-theme", protectRoute, setUserTheme);
 
 // Charts
 router.get("/charts", protectRoute, chartsDefaultView);
+
+// Schools data for tabulator
+router.get("/schools-data", protectRoute, getSchoolsData);
+
+// Logs data for tabulator
+router.get("/logs-data", protectRoute, getLogsData);
 
 module.exports = router;

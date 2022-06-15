@@ -115,12 +115,17 @@
         })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
       </script>
     <% } %>
+
+    <!-- Tabulator JS and CSS -->
+    <link href="/css/tabulator.min.css" rel="stylesheet">
   </head>
 
   <body>
     <%- include('loader.ejs'); %>
     <header>
-      <h1>SEJIN - IGAIE</h1>
-      <small>Indicador Gerencial de Avaliação do Imóvel Educacional</small>
+      <a href="/dashboard" aria-label="Página inicial.">
+        <h1>SEJIN - IGAIE</h1>
+        <small>Indicador Gerencial de Avaliação do Imóvel Educacional</small>
+      </a>
     </header>
     <main>

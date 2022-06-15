@@ -1,0 +1,81 @@
+<div
+  class="mt-4 mb-8 scroll-smooth"
+  id="tabulatorTable"
+  aria-label="Tabela com as unidades da rede."
+></div>
+
+<script type="text/javascript">
+  const schools = fetch("/schools-data")
+    .then((response) => response.json())
+    .then((schools) => {
+      let tableData = [];
+
+      for (const {
+        codigo: codigo,
+        nome: nome,
+        bairro: bairro,
+        indicador: indicador,
+        avaliacao: avaliacao,
+        ativa: ativa,
+      } of schools) {
+        const newSchool = {
+          cód: codigo,
+          nome: nome,
+          bairro: bairro,
+          IGAIE: indicador,
+          avalição: avaliacao,
+          ativa: ativa,
+        };
+        tableData.push(newSchool);
+      }
+
+      const tabulatorTable = new Tabulator("#tabulatorTable", {
+        height: "500px",
+        layout: "fitDataStretch",
+        columnHeaderVertAlign: "middle",
+        data: tableData,
+        columnDefaults: {
+          headerFilter: true,
+          headerSortTristate: true,
+          headerHozAlign: "center",
+          hozAlign: "center",
+          resizable: "header",
+        },
+        autoColumns: true,
+        autoColumnsDefinitions: function (definitions) {
+          definitions.forEach((column) => {
+            if (column.field === "nome") column.hozAlign = "left";
+            if (column.field === "IGAIE") {
+              (column.headerFilter = false), (column.formatter = "money");
+              column.formatterParams = {
+                decimal: ",",
+                precision: 1,
+              };
+            }
+            if (column.field === "ativa") column.visible = false;
+          });
+          return definitions;
+        },
+        rowFormatter: function (row) {
+          const data = row.getData();
+
+          if (!data.ativa) row.getElement().classList.add("inativa", "hidden");
+
+          row.getElement().onclick = function () {
+            window.location = "/school?unidade=" + data.codigo;
+          };
+        },
+      });
+
+      tabulatorTable.on("tableBuilt", function () {
+        // Set tabulator tables search input placeholders
+        const searchInput = document.querySelectorAll(
+          ".tabulator-header-filter > input"
+        );
+
+        searchInput.forEach((input) => {
+          input.placeholder = "Pesquisar...";
+        });
+      });
+    });
+</script>

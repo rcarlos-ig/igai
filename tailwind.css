@@ -63,26 +63,6 @@ select:-webkit-autofill:focus {
   -webkit-text-fill-color: rgb(var(--primary));
 }
 
-/* Tables Scrollbar Styling Start */
-div::-webkit-scrollbar {
-  height: 0.75em;
-  width: 0.75rem;
-}
-/* Track */
-div::-webkit-scrollbar-track {
-  @apply bg-primary/10;
-  border-radius: 5px;
-}
-/* Handle */
-div::-webkit-scrollbar-thumb {
-  @apply bg-primary/40;
-  border-radius: 5px;
-}
-/* Handle on hover */
-div::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary/50;
-}
-
 /* Propriedades gerais do documento */
 *:focus {
   @apply outline-none ring-1 ring-offset-1 ring-primary;
@@ -103,7 +83,7 @@ main {
 }
 
 footer {
-  @apply flex flex-col justify-center items-center text-center w-full h-[300px] p-4 mx-auto border-t-2 border-t-gray-300 md:w-11/12;
+  @apply flex flex-col justify-center items-center text-center w-full h-[300px] p-4 mx-auto border-t-2 border-t-gray-300 md:w-2/3;
 }
 
 footer img {
@@ -223,7 +203,9 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="number"],
-select {
+input[type="search"],
+select,
+textarea {
   @apply text-primary bg-gray-100 border border-gray-300 rounded-md px-3 py-1 w-full focus:bg-gray-50 focus:border-primary focus:ring-offset-0 focus:ring-opacity-0 focus:outline-none invalid:text-red-900 invalid:bg-red-100 invalid:border invalid:border-red-500 invalid:focus:text-red-900 invalid:focus:bg-red-100 invalid:focus:border invalid:focus:border-red-500;
 }
 
@@ -249,16 +231,32 @@ table {
   border-spacing: 0;
 }
 
+.tabulator {
+  @apply w-full tracking-wide text-xs md:text-base select-none border border-primary !important;
+}
+
 th {
   @apply font-medium tracking-wider;
   @apply border-r border-b border-gray-300;
   @apply bg-primary text-light p-4 lg:py-3 lg:px-4;
 }
 
+.tabulator-col {
+  @apply font-medium tracking-wider border-gray-300 bg-primary text-light capitalize !important;
+}
+
 td {
   @apply bg-gray-100;
   @apply border-r border-b border-gray-300;
   @apply p-1 md:py-2 md:px-3;
+}
+
+.tabulator-row-odd {
+  @apply bg-gray-100 !important;
+}
+
+.tabulator-cell {
+  @apply border-b border-r border-gray-300 py-1 md:py-2 !important;
 }
 
 thead tr:first-child th:last-child {
@@ -269,12 +267,13 @@ tbody tr td:last-child {
   @apply border-r-0;
 }
 
-.zebrado {
-  background-color: rgb(231, 239, 248);
+.tabulator-row-even {
+  background-color: rgb(231, 239, 248) !important;
 }
 
+.inativa > .tabulator-cell,
 .inativa td {
-  @apply bg-gray-400 text-gray-300 line-through;
+  @apply text-gray-600 line-through !important;
 }
 
 th.auditado {
@@ -843,7 +842,9 @@ html.dark input[type="text"],
 html.dark input[type="email"],
 html.dark input[type="password"],
 html.dark input[type="number"],
-html.dark select {
+html.dark input[type="search"],
+html.dark select,
+html.dark textarea {
   @apply text-primary bg-gray-900 border border-gray-700 focus:bg-gray-700 focus:text-text focus:border-primary invalid:text-red-900 invalid:bg-red-100 invalid:border invalid:border-red-500 invalid:focus:text-red-900 invalid:focus:bg-red-100 invalid:focus:border invalid:focus:border-red-500;
 }
 
@@ -862,25 +863,24 @@ html.dark .intercalado {
 }
 
 /* Tables */
-html.dark th {
-  @apply border-gray-300;
+html.dark .tabulator-table {
+  color: rgb(var(--text)) !important;
 }
 
-html.dark td {
-  @apply bg-gray-800;
-  @apply border-gray-600;
+html.dark .tabulator-row-odd {
+  @apply bg-gray-800 !important;
 }
 
-html.dark tbody tr:last-child td {
-  @apply border-b-0;
+html.dark .tabulator-cell {
+  @apply border-gray-600 !important;
 }
 
-html.dark .zebrado {
-  @apply bg-gray-700;
+html.dark .tabulator-row-even {
+  @apply bg-gray-700 !important;
 }
 
-html.dark .inativa td {
-  @apply bg-gray-500;
+html.dark .inativa > .tabulator-cell {
+  @apply text-gray-400 line-through !important;
 }
 
 html.dark th.auditado {

@@ -1,0 +1,73 @@
+<div
+  class="mt-4 mb-8 scroll-smooth"
+  id="tabulatorTable"
+  aria-label="Tabela com os registros de utilização do sistema."
+></div>
+
+<script type="text/javascript">
+  const logs = fetch("/logs-data")
+    .then((response) => response.json())
+    .then((logs) => {
+      let tableData = [];
+
+      for (const {
+        createdAt: createdAt,
+        user: user,
+        action: action,
+        msg: msg,
+        data: data,
+      } of logs) {
+        const newLog = {
+          createdAt: createdAt,
+          user: user,
+          action: action,
+          msg: msg,
+          data: data,
+        };
+        tableData.push(newLog);
+      }
+
+      const tabulatorTable = new Tabulator("#tabulatorTable", {
+        height: "500px",
+        layout: "fitDataStretch",
+        data: tableData,
+        columnHeaderVertAlign: "middle",
+        columnDefaults: {
+          headerFilter: true,
+          headerSortTristate: true,
+          headerHozAlign: "center",
+          hozAlign: "center",
+          vertAlign: "middle",
+          cssClass: "cursor-default",
+        },
+        columns: [
+          { title: "Data", field: "createdAt" },
+          { title: "Usuário", field: "user" },
+          { title: "Ação", field: "action" },
+          { title: "Mensagem", field: "msg", headerSort: false },
+          {
+            title: "Dados",
+            field: "data",
+            headerSort: false,
+            hozAlign: "left",
+            cssClass: "replace capitalize cursor-default",
+            formatter: function (cell, formatterParams, onRendered) {
+              const data = cell.getValue().replace("<br />", "<br />");
+              return data;
+            },
+          },
+        ],
+      });
+
+      tabulatorTable.on("tableBuilt", function () {
+        // Set tabulator tables search input placeholders
+        const searchInput = document.querySelectorAll(
+          ".tabulator-header-filter > input"
+        );
+
+        searchInput.forEach((input) => {
+          input.placeholder = "Pesquisar...";
+        });
+      });
+    });
+</script>
