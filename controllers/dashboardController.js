@@ -5,7 +5,7 @@ const {
 } = require("../controllers/schoolController");
 
 // Historic Data Controller
-const HistoricData = require("../models/HistoricData");
+const HistoricData = require("../models/historicData");
 
 //GET request for Dashboard Page
 const dashboardView = async (req, res) => {

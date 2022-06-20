@@ -2,7 +2,7 @@
 const { getActiveSchools } = require("../controllers/schoolController");
 
 // School model
-const School = require("../models/Schools");
+const School = require("../models/schools");
 
 // Charts Labels
 const labels = [

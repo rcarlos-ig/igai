@@ -1,7 +1,7 @@
 // MongoDB Schemas
-const School = require("../models/Schools");
-const User = require("../models/User");
-const HistoricData = require("../models/HistoricData");
+const School = require("../models/schools");
+const User = require("../models/user");
+const HistoricData = require("../models/historicData");
 
 // Calculate the "IGE"
 function calculateIGAIE(data) {

@@ -1,6 +1,6 @@
 // MongoDB Schemas
-const User = require("../models/User");
-const Token = require("../models/Token");
+const User = require("../models/user");
+const Token = require("../models/token");
 
 // Requirements
 const bcrypt = require("bcryptjs");

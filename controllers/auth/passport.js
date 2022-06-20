@@ -6,7 +6,7 @@ const path = require("path");
 const LocalStrategy = require("passport-local").Strategy;
 
 // Load model
-const User = require(path.join(__dirname, "..", "..", "models", "User"));
+const User = require(path.join(__dirname, "..", "..", "models", "user"));
 
 // Login
 const loginCheck = (passport) => {

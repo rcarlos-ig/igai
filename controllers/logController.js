@@ -1,6 +1,6 @@
 // MongoDB Schemas
-const Log = require("../models/Log");
-const User = require("../models/User");
+const Log = require("../models/log");
+const User = require("../models/user");
 
 // Get log
 const getLog = async () => {
