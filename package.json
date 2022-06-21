@@ -1,6 +1,6 @@
 {
   "name": "igai",
-  "version": "1.16.5",
+  "version": "1.16.6",
   "main": "index.js",
   "scripts": {
     "test": "npx autocannon -c 50 -d 30 --workers 2 --renderStatusCodes --latency --debug --warmup [ -c 1 -d 2] https://localhost",
@@ -52,6 +52,7 @@
     "nodemailer": "^6.7.2",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
+    "prom-client": "^14.0.1",
     "spdy": "^4.0.2"
   },
   "devDependencies": {

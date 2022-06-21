@@ -109,7 +109,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Server
-const server = app.listen(3000, () => console.log("Server running on port 3000."))
+const server = app.listen(3000, () =>
+  console.log("Server running on port 3000.")
+);
 
 // Graceful Shutdown
 process.on("SIGTERM", () => {
