@@ -4,9 +4,6 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const http = require("http");
-const spdy = require("spdy");
-const fs = require("fs");
 const flash = require("connect-flash");
 const passport = require("passport");
 const { loginCheck } = require("./controllers/auth/passport");
@@ -111,36 +108,8 @@ if (process.env.NODE_ENV === "production") {
   app.use(Sentry.Handlers.errorHandler());
 }
 
-// Certificate
-const privateKey = fs.readFileSync("./ssl/privkey.pem", "utf8");
-const certificate = fs.readFileSync("./ssl/fullchain.pem", "utf8");
-
-const credentials = {
-  key: privateKey,
-  cert: certificate,
-};
-
 // Server
-const server = spdy.createServer(credentials, app);
-server.listen(443, (error) => {
-  if (error) {
-    console.error(error);
-    return process.exit(1);
-  } else {
-    console.log(`Server started on port 443`);
-  }
-});
-
-// Redirect from http port 80 to https port 443
-http
-  .createServer(function (req, res) {
-    res.writeHead(301, {
-      Location: "https://" + req.headers["host"] + req.url,
-    }).end();
-  })
-  .listen(80, function () {
-    console.log("Redirect from HTTP (80) to HTTPS (443) runing.");
-  });
+const server = app.listen(3000, () => console.log("Server running on port 3000."))
 
 // Graceful Shutdown
 process.on("SIGTERM", () => {
