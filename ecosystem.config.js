@@ -11,6 +11,7 @@ module.exports = {
       watch: ".",
       env: {
         npm_package_version: appPackage.version,
+        NODE_ENV: "production"
       },
     },
   ],
