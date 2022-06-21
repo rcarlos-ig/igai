@@ -58,11 +58,12 @@
         },
         rowFormatter: function (row) {
           const data = row.getData();
+          
 
           if (!data.ativa) row.getElement().classList.add("inativa", "hidden");
 
           row.getElement().onclick = function () {
-            window.location = "/school?unidade=" + data.codigo;
+            window.location = "/school?unidade=" + data.cód;
           };
         },
       });
