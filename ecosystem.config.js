@@ -6,6 +6,8 @@ module.exports = {
     {
       name: "igai",
       script: "index.js",
+      instances: "2",
+      exec_mode: "cluster",
       watch: ".",
       env: {
         npm_package_version: appPackage.version,
