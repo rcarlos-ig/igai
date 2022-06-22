@@ -1,19 +1,6 @@
 // Requirements
 const express = require("express");
 const { check, validationResult } = require("express-validator");
-const client = require("prom-client");
-
-// Create a Registry which registers the metrics
-const register = new client.Registry();
-
-// Add a default label which is added to all metrics
-register.setDefaultLabels({
-  app: "igaie",
-});
-
-// Enable the collection of default metrics
-client.collectDefaultMetrics({ register });
-
 
 // Controller Imports
 const {
@@ -312,11 +299,5 @@ router.get("/schools-data", protectRoute, getSchoolsData);
 
 // Logs data for tabulator
 router.get("/logs-data", protectRoute, getLogsData);
-
-// Return all metrics the Prometheus exposition format
-router.get("/metrics", protectRoute, async (_req, res) => {
-  res.setHeader("Content-Type", register.contentType);
-  res.end(await register.metrics());
-});
 
 module.exports = router;
