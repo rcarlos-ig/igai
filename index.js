@@ -68,7 +68,11 @@ app.use(compression());
 app.set("view engine", "ejs");
 
 // Set the static folder
-app.use(express.static(__dirname + "/public", { maxAge: "30d" }));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(__dirname + "/public", { maxAge: "30d" }));
+} else {
+  app.use(express.static(__dirname + "/public"));
+}
 
 // Use 'connect-flash' for flash messages
 app.use(flash());
@@ -109,8 +113,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Server
-const server = app.listen(3000, () =>
-  console.log("Server running on port 3000.")
+const port = 4000;
+const server = app.listen(port, () =>
+  console.log(`Server running on port ${port}.`)
 );
 
 // Graceful Shutdown

@@ -25,13 +25,9 @@ if (email) {
     "input",
     function () {
       if (email.validity.valid) {
-        emailError.innerHTML = "";
-        emailError.classList.remove("block");
-        emailError.classList.add("hidden");
+        emailError.style.visibility = "hidden";
       } else {
-        emailError.innerHTML = "Digite um e-mail válido.";
-        emailError.classList.remove("hidden");
-        emailError.classList.add("block");
+        emailError.style.visibility = "visible";
       }
     },
     false
@@ -43,13 +39,9 @@ if (password) {
     "input",
     function () {
       if (password.validity.valid) {
-        passwordError.innerHTML = "";
-        passwordError.classList.remove("block");
-        passwordError.classList.add("hidden");
+        passwordError.style.visibility = "hidden";
       } else {
-        passwordError.innerHTML = "Senha precisa ter mais de 4 caracteres";
-        passwordError.classList.remove("hidden");
-        passwordError.classList.add("block");
+        passwordError.style.visibility = "visible";
       }
     },
     false
@@ -137,7 +129,8 @@ if (confirmation) {
         confirmError.classList.remove("block");
         confirmError.classList.add("hidden");
       } else {
-        confirmError.innerHTML = "Confirmação precisa ter 3 caracteres ou mais.";
+        confirmError.innerHTML =
+          "Confirmação precisa ter 3 caracteres ou mais.";
         confirmError.classList.remove("hidden");
         confirmError.classList.add("block");
       }

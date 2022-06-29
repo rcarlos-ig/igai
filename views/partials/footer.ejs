@@ -8,17 +8,19 @@
           <img src="/img/SEC_logo.webp" alt="Logomarca da Secretaria Municipal de Educação." class="w-[100px] h-[47px] sm:w-[150px] sm:h-[70px]">
         </span>
       </div>
-      <div class="flex flex-col items-center mt-4 text-primary font-medium">
-        <span for="help-modal-controller" id="helpModalController" class="font-semibold cursor-help select-none my-2">Sobre o IGAIE</span>
+      <div class="flex flex-col items-center mt-1 font-medium">
+        <span for="help-modal-controller" id="helpModalController" class="link font-semibold cursor-help select-none my-1">Sobre o IGAIE</span>
         <p>
-          Desenvolvido por <span class="font-semibold cursor-help select-none hint--top hint--info hint--rounded hint--bounce" aria-label="sec.ti@angra.rj.gov.br">Raphael Carlos</span>
+          Desenvolvido por <span class="text-primary font-semibold cursor-help select-none hint--top hint--info hint--rounded hint--bounce" aria-label="sec.ti@angra.rj.gov.br">Raphael Carlos</span>
         </p>
         <p>
           v<%= process.env.npm_package_version %> &#8212 <%= new Date().getFullYear() %>
         </p>
-        <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR" class="hint--top hint--info hint--medium hint--rounded hint--bounce" aria-label="Creative Commons License, CC-BY-NC-SA 4.0 International." target="_blank">
-          <img class="mt-2 cursor-pointer" alt="Creative Commons License, CC-BY-NC-SA 4.0 International." src="/img/license.webp" width="80" height="15">
-        </a>
+        <p class="mt-1">Licença:
+          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR" class="align-middle hint--top hint--info hint--medium hint--rounded hint--bounce" aria-label="Creative Commons License, CC-BY-NC-SA 4.0 International." target="_blank">
+            <img class="cursor-pointer" alt="Creative Commons License, CC-BY-NC-SA 4.0 International." src="/img/license.webp" width="80" height="15">
+          </a>
+        </p>
       </div>
     </footer>
     <script src="/js/main.js"></script>

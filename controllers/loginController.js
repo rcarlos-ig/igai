@@ -100,7 +100,7 @@ const registerView = (req, res) => {
     } else {
       console.log("Invalid link or expired.");
       res.render("login", {
-        error: "Link inválido ou expirado.",
+        errors: ["Link inválido ou expirado."],
         user: req.user,
       });
     }
@@ -157,7 +157,11 @@ const registerUser = (req, res) => {
 
 // GET request For Login page
 const loginView = (req, res) => {
-  res.render("login", { error: req.flash("error") });
+  let errors;
+  if (req.flash("error")) {
+    error = [req.flash("error")];
+  }
+  res.render("login", { errors });
 };
 
 //POST Request for Login page

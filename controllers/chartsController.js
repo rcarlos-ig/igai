@@ -121,5 +121,4 @@ const chartsDefaultView = async (req, res) => {
 
 module.exports = {
   chartsDefaultView,
-  // getChartsData,
 };
