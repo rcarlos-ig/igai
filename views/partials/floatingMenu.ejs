@@ -1,0 +1,109 @@
+<div class="menu">
+  <input type="checkbox" name="menu-open" id="menu-open" class="opacity-0" />
+  <label class="menu-open-button" for="menu-open">
+    <span class="hamburger">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </span>
+  </label>
+</div>
+
+<% if (locals.user) { %>
+<script>
+  const theme = "<%= user.theme %>";
+  const role = "<%= user.role %>";
+</script>
+<% } %>
+
+<script>
+  const menu = document.querySelector(".menu");
+  const buttonsData = [];
+
+  const auditData = {
+    onclick: `onclick="window.location='/audit'"`,
+    ariaLabel: "Auditar dados",
+    icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg></span>`,
+  };
+  buttonsData.push(auditData);
+
+  const createSchoolData = {
+    onclick: `onclick="window.location='/register-school'"`,
+    ariaLabel: "Cadastrar unidade",
+    icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>`,
+  };
+  if (role === "admin") buttonsData.push(createSchoolData);
+
+  const chartsData = {
+    onclick: `onclick="window.location='/charts'"`,
+    ariaLabel: "Gráficos",
+    icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>`,
+  };
+  buttonsData.push(chartsData);
+
+  const logData = {
+    onclick: `onclick="window.location='/log'"`,
+    ariaLabel: "Registro do sistema",
+    icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></span>`,
+  };
+  if (role === "admin") buttonsData.push(logData);
+
+  const themeData = {
+    id: "darkModeToggle",
+    ariaLabel: "Modo claro/escuro",
+    icon: `<span class="icon ${
+      theme === "dark" ? "hidden" : ""
+    }" id="dark"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span><span class="icon ${
+      theme === "light" ? "hidden" : ""
+    }" id="light"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`,
+  };
+  buttonsData.push(themeData);
+
+  const logoutData = {
+    id: "logoutModalOpen",
+    ariaLabel: "Sair",
+    icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></span>`,
+  };
+  buttonsData.push(logoutData);
+
+  if (role === "admin") {
+    for (let count = 1; count <= buttonsData.length; count++) {
+      const data = buttonsData[count - 1];
+
+      const button = `<button class="menu-item menu-item-${count} hint--left hint--info hint--medium hint--rounded hint--bounce" ${
+        data.onclick !== undefined ? data.onclick : ""
+      } aria-label="${data.ariaLabel}" ${
+        data.id !== undefined ? "id='" + data.id + "'" : ""
+      }>${data.icon}</button>`;
+
+      menu.innerHTML = menu.innerHTML + button;
+    }
+  } else {
+    for (let count = 3; count <= buttonsData.length + 2; count++) {
+      const data = buttonsData[count - 3];
+
+      const button = `<button class="menu-item menu-item-${count} hint--left hint--info hint--medium hint--rounded hint--bounce" ${
+        data.onclick !== undefined ? data.onclick : ""
+      } aria-label="${data.ariaLabel}" ${
+        data.id !== undefined ? "id='" + data.id + "'" : ""
+      }>${data.icon}</button>`;
+
+      menu.innerHTML = menu.innerHTML + button;
+    }
+  }
+</script>
+
+<dialog class="logout-modal" id="logoutModal">
+  <h2 class="mt-4">Sair da aplicação</h2>
+  <p class="text-lg mt-4">Deseja encerrar as atividades e sair da aplicação?</p>
+  <div class="logout-modal-buttons">
+    <button class="button button-tertiary" id="logoutModalClose">
+      Retornar
+    </button>
+    <button class="button button-primary" onclick="window.location='/logout'">
+      Sair
+    </button>
+  </div>
+</dialog>
+
+<script src="/js/logoutModal.js" defer></script>

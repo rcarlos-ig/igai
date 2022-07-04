@@ -4,15 +4,15 @@
   // HTML Legend plugin
   const getOrCreateLegendList = (chart, id) => {
     const legendContainer = document.getElementById(id);
-    let listContainer = legendContainer.querySelector('ul');
+    let listContainer = legendContainer.querySelector("ul");
 
     if (!listContainer) {
-      listContainer = document.createElement('ul');
-      listContainer.style.display = 'flex';
-      listContainer.style.flexDirection = 'row';
-      listContainer.style.flexWrap = 'wrap';
-      listContainer.style.justifyContent = 'center';
-      listContainer.style.gap = '1rem';
+      listContainer = document.createElement("ul");
+      listContainer.style.display = "flex";
+      listContainer.style.flexDirection = "row";
+      listContainer.style.flexWrap = "wrap";
+      listContainer.style.justifyContent = "center";
+      listContainer.style.gap = "1rem";
       listContainer.style.margin = 0;
       listContainer.style.padding = 0;
 
@@ -23,7 +23,7 @@
   };
 
   const htmlLegendPlugin = {
-    id: 'htmlLegend',
+    id: "htmlLegend",
     afterUpdate(chart, args, options) {
       const ul = getOrCreateLegendList(chart, options.containerID);
 
@@ -35,41 +35,44 @@
       // Reuse the built-in legendItems generator
       const items = chart.options.plugins.legend.labels.generateLabels(chart);
 
-      items.forEach(item => {
-        const li = document.createElement('li');
-        li.style.alignItems = 'center';
-        li.style.cursor = 'pointer';
-        li.style.display = 'flex';
-        li.style.flexDirection = 'row';
-        li.style.gap = '.5rem';
+      items.forEach((item) => {
+        const li = document.createElement("li");
+        li.style.alignItems = "center";
+        li.style.cursor = "pointer";
+        li.style.display = "flex";
+        li.style.flexDirection = "row";
+        li.style.gap = ".5rem";
 
         li.onclick = () => {
-          const {type} = chart.config;
-          if (type === 'pie' || type === 'doughnut') {
+          const { type } = chart.config;
+          if (type === "pie" || type === "doughnut") {
             // Pie and doughnut charts only have a single dataset and visibility is per item
             chart.toggleDataVisibility(item.index);
           } else {
-            chart.setDatasetVisibility(item.datasetIndex, !chart.isDatasetVisible(item.datasetIndex));
+            chart.setDatasetVisibility(
+              item.datasetIndex,
+              !chart.isDatasetVisible(item.datasetIndex)
+            );
           }
           chart.update();
         };
 
         // Color box
-        const boxSpan = document.createElement('span');
+        const boxSpan = document.createElement("span");
         boxSpan.style.background = item.fillStyle;
         boxSpan.style.borderColor = item.strokeStyle;
-        boxSpan.style.borderWidth = item.lineWidth + 'px';
-        boxSpan.style.display = 'inline-block';
-        boxSpan.style.height = '20px';
-        boxSpan.style.width = '20px';
+        boxSpan.style.borderWidth = item.lineWidth + "px";
+        boxSpan.style.display = "inline-block";
+        boxSpan.style.height = "20px";
+        boxSpan.style.width = "20px";
         boxSpan.style.borderWidth = 0;
 
         // Text
-        const textContainer = document.createElement('p');
+        const textContainer = document.createElement("p");
         textContainer.style.color = item.fontColor;
         textContainer.style.margin = 0;
         textContainer.style.padding = 0;
-        textContainer.style.textDecoration = item.hidden ? 'line-through' : '';
+        textContainer.style.textDecoration = item.hidden ? "line-through" : "";
 
         const text = document.createTextNode(item.text);
         textContainer.appendChild(text);
@@ -78,7 +81,7 @@
         li.appendChild(textContainer);
         ul.appendChild(li);
       });
-    }
+    },
   };
 
   // Default chart data
@@ -138,7 +141,7 @@
       },
     },
     maintainAspectRatio: false,
-  }
+  };
 
   // Default chart
   let chart = new Chart(ctx, {
@@ -171,11 +174,11 @@
   function updateChart() {
     const field = document.getElementById("fieldSelect").value;
 
-    
-    if (field === "cisterna") { // Reservatório chart
+    if (field === "cisterna") {
+      // Cisterna chart
       let cisternas = [];
 
-      activeSchools.forEach(school => {
+      activeSchools.forEach((school) => {
         cisternas.push(school.cisterna.possui);
       });
 
@@ -183,11 +186,11 @@
 
       let datasetValues = [];
 
-      labels.forEach(label => {
+      labels.forEach((label) => {
         datasetValues.push(0);
-      })
+      });
 
-      activeSchools.forEach(school => {
+      activeSchools.forEach((school) => {
         for (let index = 0; index < labels.length; index++) {
           if (school.cisterna.possui === labels[index]) {
             datasetValues[index] += 1;
@@ -201,11 +204,13 @@
         if (labels[index] === undefined) labels[index] = "Não avaliado";
       }
 
-      const datasets = [{
-        label: "Reservatórios por possui.",
-        data: datasetValues,
-        backgroundColor: colors,
-      }];
+      const datasets = [
+        {
+          label: "Reservatórios por possui.",
+          data: datasetValues,
+          backgroundColor: colors,
+        },
+      ];
 
       const data = {
         labels: labels,
@@ -235,7 +240,7 @@
           },
         },
         maintainAspectRatio: false,
-      }
+      };
 
       chart.destroy();
       chart = new Chart(ctx, {
@@ -247,11 +252,11 @@
       chart.update();
 
       document.getElementById("graphTitle").textContent = field;
-
-    } else if (field === "ocupacao") { // Ocupação chart
+    } else if (field === "ocupacao") {
+      // Ocupação chart
       let ocupacoes = [];
 
-      activeSchools.forEach(school => {
+      activeSchools.forEach((school) => {
         ocupacoes.push(school.ocupacao);
       });
 
@@ -259,11 +264,11 @@
 
       let datasetValues = [];
 
-      labels.forEach(label => {
+      labels.forEach((label) => {
         datasetValues.push(0);
-      })
+      });
 
-      activeSchools.forEach(school => {
+      activeSchools.forEach((school) => {
         for (let index = 0; index < labels.length; index++) {
           if (school.ocupacao === labels[index]) {
             datasetValues[index] += 1;
@@ -271,11 +276,13 @@
         }
       });
 
-      const datasets = [{
-        label: "Ocupações por tipo.",
-        data: datasetValues,
-        backgroundColor: colors,
-      }];
+      const datasets = [
+        {
+          label: "Ocupações por tipo.",
+          data: datasetValues,
+          backgroundColor: colors,
+        },
+      ];
 
       const data = {
         labels: labels,
@@ -305,7 +312,7 @@
           },
         },
         maintainAspectRatio: false,
-      }
+      };
 
       chart.destroy();
       chart = new Chart(ctx, {
@@ -316,9 +323,9 @@
       });
       chart.update();
 
-      document.getElementById("graphTitle").textContent = field;
-
-    } else if (field === "avaliacao") { // Avaliação chart
+      document.getElementById("graphTitle").textContent = "Ocupação";
+    } else if (field === "avaliacao") {
+      // Avaliação chart
 
       const labels = [
         "Não Avaliado",
@@ -326,24 +333,26 @@
         "Bom",
         "Regular",
         "Ruim",
-        "Péssimo"
+        "Péssimo",
       ];
 
       let datasetValues = [0, 0, 0, 0, 0, 0];
 
-      activeSchools.forEach(school => {
+      activeSchools.forEach((school) => {
         for (let index = 0; index < labels.length; index++) {
           if (school.avaliacao === labels[index]) {
             datasetValues[index] += 1;
           }
         }
-      })
+      });
 
-      const datasets = [{
-        label: "Avaliações por tipo.",
-        data: datasetValues,
-        backgroundColor: colors,
-      }];
+      const datasets = [
+        {
+          label: "Avaliações por tipo.",
+          data: datasetValues,
+          backgroundColor: colors,
+        },
+      ];
 
       const data = {
         labels: labels,
@@ -372,8 +381,8 @@
             display: false,
           },
         },
-        maintainAspectRatio: false,
-      }
+        maintainAspectRatio: true,
+      };
 
       chart.destroy();
       chart = new Chart(ctx, {
@@ -384,29 +393,30 @@
       });
       chart.update();
 
-      document.getElementById("graphTitle").textContent = field;
-
-    } else { // Other charts
+      document.getElementById("graphTitle").textContent = "Avaliação";
+    } else {
+      // Other charts
 
       const labels = [
-      "Não se aplica",
-      "Nota 1",
-      "Nota 2",
-      "Nota 3",
-      "Nota 4",
-      "Nota 5",
+        "Não se aplica",
+        "Nota 1",
+        "Nota 2",
+        "Nota 3",
+        "Nota 4",
+        "Nota 5",
       ];
       const datasets = [];
 
       for (const key in activeSchools[0][field]) {
         if (Object.hasOwnProperty.call(activeSchools[0][field], key)) {
-          datasets.push({label: key, data: [0, 0, 0, 0, 0, 0]})
+          datasets.push({ label: key, data: [0, 0, 0, 0, 0, 0] });
         }
-      };
+      }
 
-      activeSchools.forEach(school => {
-        datasets.forEach(data => {
+      activeSchools.forEach((school) => {
+        datasets.forEach((data) => {
           const label = data.label;
+          if (school[field] === undefined) return;
           switch (school[field][label]) {
             case 1:
               data.data[1] += 1;
@@ -432,7 +442,7 @@
               data.data[0] += 1;
               break;
           }
-        })
+        });
       });
 
       const data = {
@@ -453,7 +463,7 @@
         "reservatorio",
         "cercaTela",
         "iluminacao",
-        "calcada"
+        "calcada",
       ];
 
       const replacedText = [
@@ -469,18 +479,19 @@
         "reservatório",
         "Cerca/Tela",
         "iluminação",
-        "calçada"
+        "calçada",
       ];
 
       originalText.forEach((text, index) => {
-        data.datasets.forEach(dataset => {
+        data.datasets.forEach((dataset) => {
           if (dataset.label === text) dataset.label = replacedText[index];
-        })
-      })
+        });
+      });
 
-      data.datasets.forEach(dataset => {
-        dataset.label = dataset.label.charAt(0).toUpperCase() + dataset.label.slice(1);
-      })
+      data.datasets.forEach((dataset) => {
+        dataset.label =
+          dataset.label.charAt(0).toUpperCase() + dataset.label.slice(1);
+      });
 
       chart.destroy();
       chart = new Chart(ctx, {
@@ -498,9 +509,10 @@
 
       originalText.forEach((text, index) => {
         if (document.getElementById("graphTitle").textContent === text) {
-          document.getElementById("graphTitle").textContent = replacedText[index];
+          document.getElementById("graphTitle").textContent =
+            replacedText[index];
         }
-      })
+      });
     }
   }
 </script>

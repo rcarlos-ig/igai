@@ -53,13 +53,9 @@ if (nome) {
     "input",
     function () {
       if (nome.validity.valid) {
-        nomeError.innerHTML = "";
-        nomeError.classList.remove("block");
-        nomeError.classList.add("hidden");
+        nomeError.style.visibility = "hidden";
       } else {
-        nomeError.innerHTML = "Nome precisa ter 3 caracteres ou mais.";
-        nomeError.classList.remove("hidden");
-        nomeError.classList.add("block");
+        nomeError.style.visibility = "visible";
       }
     },
     false
@@ -71,13 +67,9 @@ if (bairro) {
     "input",
     function () {
       if (bairro.validity.valid) {
-        bairroError.innerHTML = "";
-        bairroError.classList.remove("block");
-        bairroError.classList.add("hidden");
+        bairroError.style.visibility = "hidden";
       } else {
-        bairroError.innerHTML = "Bairro precisa ter 3 caracteres ou mais.";
-        bairroError.classList.remove("hidden");
-        bairroError.classList.add("block");
+        bairroError.style.visibility = "visible";
       }
     },
     false
@@ -89,13 +81,9 @@ if (ocupacao) {
     "input",
     function () {
       if (ocupacao.validity.valid) {
-        ocupacaoError.innerHTML = "";
-        ocupacaoError.classList.remove("block");
-        ocupacaoError.classList.add("hidden");
+        ocupacaoError.style.visibility = "hidden";
       } else {
-        ocupacaoError.innerHTML = "Ocupação precisa ter 3 caracteres ou mais.";
-        ocupacaoError.classList.remove("hidden");
-        ocupacaoError.classList.add("block");
+        ocupacaoError.style.visibility = "visible";
       }
     },
     false
@@ -107,13 +95,9 @@ if (newPassword) {
     "input",
     function () {
       if (newPassword.validity.valid) {
-        passwordError.innerHTML = "";
-        passwordError.classList.remove("block");
-        passwordError.classList.add("hidden");
+        passwordError.style.visibility = "hidden";
       } else {
-        passwordError.innerHTML = "Senha precisa ter 3 caracteres ou mais.";
-        passwordError.classList.remove("hidden");
-        passwordError.classList.add("block");
+        passwordError.style.visibility = "visible";
       }
     },
     false
@@ -125,14 +109,9 @@ if (confirmation) {
     "input",
     function () {
       if (confirmation.validity.valid) {
-        confirmError.innerHTML = "";
-        confirmError.classList.remove("block");
-        confirmError.classList.add("hidden");
+        confirmError.style.visibility = "hidden";
       } else {
-        confirmError.innerHTML =
-          "Confirmação precisa ter 3 caracteres ou mais.";
-        confirmError.classList.remove("hidden");
-        confirmError.classList.add("block");
+        confirmError.style.visibility = "visible";
       }
     },
     false

@@ -19,35 +19,12 @@
   --light: 240 240 240;
   --accent: 2 182 108;
   --dark-accent: 0 99 28;
-  --bg-primary-shadow-filter: drop-shadow(2px 2px 2px rgba(4, 49, 103, 0.08))
-    drop-shadow(4.5px 4.5px 4.5px rgba(4, 49, 103, 0.061))
-    drop-shadow(7.9px 7.9px 7.9px rgba(4, 49, 103, 0.052))
-    drop-shadow(12.5px 12.5px 12.5px rgba(4, 49, 103, 0.046))
-    drop-shadow(19.3px 19.3px 19.3px rgba(4, 49, 103, 0.04))
-    drop-shadow(30.1px 30.1px 30.1px rgba(4, 49, 103, 0.034))
-    drop-shadow(50px 50px 50px rgba(4, 49, 103, 0.028))
-    drop-shadow(100px 100px 100px rgba(4, 49, 103, 0.019));
-  --bg-gray-50-shadow-filter: drop-shadow(2px 2px 2px rgba(94, 94, 94, 0.08))
-    drop-shadow(4.5px 4.5px 4.5px rgba(94, 94, 94, 0.061))
-    drop-shadow(7.9px 7.9px 7.9px rgba(94, 94, 94, 0.052))
-    drop-shadow(12.5px 12.5px 12.5px rgba(94, 94, 94, 0.046))
-    drop-shadow(19.3px 19.3px 19.3px rgba(94, 94, 94, 0.04))
-    drop-shadow(30.1px 30.1px 30.1px rgba(94, 94, 94, 0.034))
-    drop-shadow(50px 50px 50px rgba(94, 94, 94, 0.028))
-    drop-shadow(100px 100px 100px rgba(94, 94, 94, 0.019));
-  --bg-gray-50-shadow-box: 2px 2px 2px rgba(94, 94, 94, 0.08),
-    4.5px 4.5px 4.5px rgba(94, 94, 94, 0.061),
-    7.9px 7.9px 7.9px rgba(94, 94, 94, 0.052),
-    12.5px 12.5px 12.5px rgba(94, 94, 94, 0.046),
-    19.3px 19.3px 19.3px rgba(94, 94, 94, 0.04),
-    30.1px 30.1px 30.1px rgba(94, 94, 94, 0.034),
-    50px 50px 50px rgba(94, 94, 94, 0.028),
-    100px 100px 100px rgba(94, 94, 94, 0.019);
 }
 
 /* Propriedades especiais */
 ::selection {
   @apply bg-primary text-light;
+  text-shadow: none;
 }
 
 /* Change Autocomplete styles in Chrome*/
@@ -65,7 +42,7 @@ select:-webkit-autofill:focus {
 
 /* Propriedades gerais do documento */
 *:focus {
-  @apply outline-none ring-1 ring-offset-1 ring-primary;
+  @apply outline-none;
 }
 
 html {
@@ -76,11 +53,7 @@ html {
 
 /* Seções */
 header {
-  @apply flex flex-col justify-center content-center p-4 mt-6 mb-8 mx-auto w-5/6 min-w-[340px] select-none sm:h-40;
-}
-
-header a {
-  @apply flex flex-col;
+  @apply flex flex-col justify-center content-center p-4 my-6 select-none sm:h-40;
 }
 
 main {
@@ -91,8 +64,8 @@ footer {
   @apply flex flex-col justify-center items-center text-center w-5/6 min-w-[340px] py-6 px-4 mx-auto rounded-xl;
 }
 
-footer img {
-  /* filter: var(--bg-gray-50-shadow-filter); */
+dialog {
+  @apply text-text;
 }
 
 dialog[open] {
@@ -127,20 +100,37 @@ dialog.hide::backdrop {
 }
 
 .card {
-  @apply flex justify-center mb-8 mx-auto p-4 rounded-xl;
-  box-shadow: 16px 16px 32px #b5b5b5, -16px -16px 32px #ffffff;
+  @apply flex justify-center mb-10 mx-auto p-4 rounded-xl;
+  box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+}
+
+.card-inset {
+  @apply flex justify-center mb-10 mx-auto p-4 rounded-xl;
+  box-shadow: inset 10px 10px 20px #bebebe, inset -10px -10px 20px #ffffff;
+}
+
+@media (min-width: 640px) {
+  .card {
+    @apply mb-12;
+    box-shadow: 16px 16px 32px #bebebe, -16px -16px 32px #ffffff;
+  }
+
+  .card-inset {
+    @apply mb-12;
+    box-shadow: inset 16px 16px 32px #bebebe, inset -16px -16px 32px #ffffff;
+  }
 }
 
 .success {
   @apply absolute top-[15%] left-0 right-0 w-[300px] mx-auto text-green-900 bg-green-200/50 border border-green-300 rounded-md p-4 mb-4 backdrop-blur-sm z-50;
   @apply sm:w-[340px] sm:bg-green-300/50;
-  box-shadow: 16px 16px 32px #b5b5b5;
+  box-shadow: 16px 16px 32px #bebebe;
 }
 
 .error {
   @apply absolute top-[15%] left-0 right-0 w-[300px] mx-auto text-red-900 bg-red-200/50 border border-red-300 rounded-md p-4 mb-4 backdrop-blur-sm z-50;
   @apply sm:w-[340px] sm:bg-red-300/50;
-  box-shadow: 16px 16px 32px #b5b5b5;
+  box-shadow: 16px 16px 32px #bebebe;
 }
 
 .close-toast {
@@ -148,17 +138,17 @@ dialog.hide::backdrop {
 }
 
 .show-toast {
-  animation: showToast 0.75s ease-out normal;
+  animation: showToast 1s ease-out normal;
 }
 
 .hide-toast {
-  @apply -top-[15%];
-  animation: hideToast .75s ease-out normal;
+  @apply -top-[50%];
+  animation: hideToast 1s ease-in normal;
 }
 
 @keyframes showToast {
   from {
-    top: -15%;
+    top: -50%;
   }
   to {
     top: 15%;
@@ -170,7 +160,7 @@ dialog.hide::backdrop {
     top: 15%;
   }
   to {
-    top: -15%;
+    top: -50%;
   }
 }
 
@@ -204,11 +194,23 @@ h2 {
 }
 
 h3 {
-  @apply text-xl my-2 sm:text-2xl;
+  @apply text-xl w-fit mx-auto mb-5 p-2 rounded-md sm:text-2xl sm:mb-8;
+  text-shadow: 2px 2px 4px #bebebe, -2px -2px 4px #ffffff;
+  box-shadow: inset 10px 10px 20px #bebebe, inset -10px -10px 20px #ffffff;
+}
+
+h3::before {
+  @apply px-2;
+  content: "::";
+}
+
+h3::after {
+  @apply px-2;
+  content: "::";
 }
 
 h4 {
-  @apply text-lg my-2 sm:text-xl;
+  @apply text-lg mb-3 sm:text-xl;
 }
 
 h1 + small {
@@ -222,7 +224,7 @@ h1 + small {
 
 .link:hover,
 .link:active {
-  box-shadow: inset 6px 6px 12px #b5b5b5, inset -6px -6px 12px #ffffff;
+  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
 }
 
 .link:focus {
@@ -239,7 +241,11 @@ select,
 textarea {
   @apply text-primary rounded-md px-3 py-2 w-full focus:ring-offset-0 focus:ring-opacity-0 focus:outline-none invalid:text-red-900 invalid:bg-red-100 invalid:focus:text-red-900;
   background-color: #e0e0e0;
-  box-shadow: inset 6px 6px 12px #b5b5b5, inset -6px -6px 12px #ffffff;
+  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
+}
+
+select:focus {
+  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
 }
 
 .form-line {
@@ -256,131 +262,104 @@ textarea {
 
 .validation-error {
   @apply block text-sm text-red-900 font-semibold tracking-wide bg-red-50 w-full mt-1 py-1 px-3 rounded-md transition-all duration-300 invisible;
-  box-shadow: inset 6px 6px 12px #b5b5b5, inset -6px -6px 12px #ffffff;
-}
-
-.intercalado {
-  @apply bg-gray-200 rounded-md;
+  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
 }
 
 /* Tables */
-table {
-  @apply table-auto border-separate tracking-wide text-xs md:text-base;
-  border-spacing: 0;
-}
-
 .tabulator {
-  @apply w-full tracking-wide text-xs md:text-base select-none border border-primary !important;
+  @apply w-full tracking-wide text-xs select-none border-0 bg-transparent rounded-md !important;
+  box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
 }
 
-th {
-  @apply font-medium tracking-wider;
-  @apply border-r border-b border-gray-300;
-  @apply bg-primary text-light p-4 lg:py-3 lg:px-4;
+@media (min-width: 640px) {
+  .tabulator {
+    @apply text-base !important;
+    box-shadow: 16px 16px 32px #bebebe, -16px -16px 32px #ffffff;
+  }
+
+  .tabulator-col {
+    @apply p-2 !important;
+  }
+}
+
+.tabulator-table {
+  @apply bg-transparent !important;
 }
 
 .tabulator-col {
-  @apply font-medium tracking-wider border-gray-300 bg-primary text-light capitalize !important;
+  @apply font-medium tracking-wider capitalize border-gray-300 !important;
 }
 
-td {
-  @apply bg-gray-100;
-  @apply border-r border-b border-gray-300;
-  @apply p-1 md:py-2 md:px-3;
+.tabulator-col-group {
+  @apply p-0 !important;
+}
+
+.tabulator-header,
+.tabulator-col-group-cols {
+  @apply border-gray-300 !important;
 }
 
 .tabulator-row-odd {
-  @apply bg-gray-100 !important;
+  @apply bg-light !important;
+}
+
+.tabulator-row-even {
+  @apply bg-[#e0e0e0] !important;
 }
 
 .tabulator-cell {
   @apply border-b border-r border-gray-300 py-1 md:py-2 !important;
 }
 
-thead tr:first-child th:last-child {
-  @apply border-r-0;
-}
-
-tbody tr td:last-child {
-  @apply border-r-0;
-}
-
-.tabulator-row-even {
-  background-color: rgb(231, 239, 248) !important;
-}
-
-.inativa > .tabulator-cell,
-.inativa td {
+.inativa > .tabulator-cell {
   @apply text-gray-600 line-through !important;
 }
 
-th.auditado {
-  @apply bg-darkAccent;
-}
-
-.auditado {
-  @apply font-bold bg-[#C7ECDF];
-}
-
 /* Toggle */
-input[type="checkbox"].toggle {
-  @apply opacity-0 absolute left-[-9000px];
+.switch-toggle {
+  height: 40px;
 }
-
-input[type="checkbox"].toggle + label {
-  @apply relative flex items-center cursor-pointer;
+.switch-toggle input[type="checkbox"] {
+  @apply absolute opacity-0 -z-10;
 }
-
-input[type="checkbox"].toggle + label::before {
-  @apply bg-gray-500 mr-2 transition ease-in-out;
-  content: "";
-  width: 2rem;
-  height: 0.7rem;
-  border-radius: 1rem;
+.switch-toggle input[type="checkbox"] + label {
+  @apply relative inline-block m-0 rounded-md cursor-pointer;
+  width: 100px;
+  height: 40px;
+  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffff;
 }
-
-input[type="checkbox"].toggle + label::after {
-  @apply absolute left-0 bg-gray-200 transition ease-in-out;
-  content: "";
-  width: 1.2rem;
-  height: 1.2rem;
-  border-radius: 1rem;
+.switch-toggle input[type="checkbox"] + label::before {
+  @apply absolute text-xs text-center rounded-sm;
+  content: "OFF";
+  line-height: 25px;
+  top: 8px;
+  left: 8px;
+  width: 45px;
+  height: 25px;
+  transition: all 0.3s linear;
+  background: linear-gradient(145deg, #f0f0f0, #cacaca);
+  box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffff;
 }
-
-input[type="checkbox"].toggle + label:focus {
-  @apply outline-none ring-2 ring-accent;
-}
-
-input[type="checkbox"].toggle:checked + label::before {
-  @apply bg-darkAccent;
-}
-
-input[type="checkbox"].toggle:checked + label::after {
-  @apply bg-accent;
-  transform: translateX(1rem);
+.switch-toggle input[type="checkbox"]:checked + label::before {
+  @apply left-1/2 text-light;
+  content: "ON";
+  background: linear-gradient(145deg, #0552b1, #054595);
 }
 
 /* Buttons */
 .button {
-  @apply font-semibold tracking-wider px-4 py-2 border border-transparent rounded-md transition-colors duration-300;
-  box-shadow: 6px 6px 12px #b5b5b5, -6px -6px 12px #ffffff;
+  @apply font-semibold tracking-wider px-4 py-2 rounded-md transition-colors duration-300;
+  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
 }
 
 .button-primary {
   @apply text-light;
   background: linear-gradient(145deg, #054595, #0552b1);
-  box-shadow: 8px 8px 16px #b5b5b5, -8px -8px 16px #ffffff;
 }
 
 .button-primary:hover {
-  @apply text-light transition-colors duration-100;
+  @apply transition-colors duration-100;
   background: linear-gradient(145deg, #0552b1, #054595);
-}
-
-.button-primary:active {
-  @apply text-primary;
-  background: #e0e0e0;
-  box-shadow: inset 6px 6px 12px #b5b5b5, inset -6px -6px 12px #ffffff;
 }
 
 .button-secondary {
@@ -393,35 +372,29 @@ input[type="checkbox"].toggle:checked + label::after {
 
 .button-tertiary {
   @apply text-primary;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
 }
 
 .button-tertiary:hover {
-  @apply text-darkPrimary;
+  @apply transition-colors duration-100;
+  background: linear-gradient(145deg, #f0f0f0, #cacaca);
+}
+
+.button:active {
+  @apply text-primary;
+  background: #e0e0e0;
+  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
 }
 
 .button:disabled,
 .button:disabled:hover {
-  @apply bg-gray-300 border-gray-700 text-gray-400 filter-none shadow-none cursor-not-allowed;
-}
-
-.limpa-busca {
-  @apply absolute top-0 right-0 w-12 h-full rounded-md transition-all duration-300;
-  background: url("../img/delete.svg") no-repeat center;
-}
-
-.limpa-busca:hover {
-  background: url("../img/delete-hover.svg") no-repeat center;
-}
-
-.limpa-busca:active,
-.limpa-busca:focus,
-.limpa-busca:focus-within,
-.limpa-busca:focus-visible {
-  @apply ring-offset-0 scale-95;
+  @apply text-gray-500 cursor-not-allowed;
+  background: #e0e0e0;
+  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
 }
 
 .senha-olho {
-  @apply absolute top-0 right-0 w-12 h-10 box-content border border-transparent rounded-md transition-all duration-300;
+  @apply absolute top-0 right-0 w-12 h-10 box-border border border-transparent rounded-md transition-all duration-300;
   background: url("../img/eye.svg") no-repeat center;
 }
 
@@ -433,7 +406,7 @@ input[type="checkbox"].toggle:checked + label::after {
 .senha-olho:focus,
 .senha-olho:focus-within,
 .senha-olho:focus-visible {
-  @apply ring-offset-0 scale-95;
+  @apply ring-0 ring-offset-0 scale-95;
 }
 
 .senha-olho-riscado {
@@ -443,6 +416,7 @@ input[type="checkbox"].toggle:checked + label::after {
 .senha-olho-riscado:hover {
   background: url("../img/eye-off-hover.svg") no-repeat center;
 }
+
 /* Images */
 img {
   @apply h-fit;
@@ -450,7 +424,7 @@ img {
 }
 
 .img-filter {
-  filter: var(--bg-gray-50-shadow-filter);
+  filter: drop-shadow(3px 3px 6px #bebebe) drop-shadow(3px 3px 6px #fff);
 }
 
 /* Page Load animation */
@@ -492,7 +466,6 @@ img {
 /* Modal de saída */
 .logout-modal {
   @apply w-[50ch] bg-gray-100 py-4 px-8 rounded-md;
-  box-shadow: var(--bg-gray-50-shadow-box);
 }
 
 .logout-modal::backdrop {
@@ -505,7 +478,7 @@ img {
 
 /* Gráfico do dashboard */
 #dashboardChart {
-  filter: var(--bg-gray-50-shadow-filter);
+  filter: drop-shadow(6px 6px 12px #bebebe) drop-shadow(6px 6px 12px #fff);
 }
 
 /* Floating Menu */
@@ -528,7 +501,7 @@ img {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background-color: rgb(var(--accent));
+  background-color: rgb(var(--primary));
   cursor: pointer;
   justify-content: center;
   align-items: center;
@@ -538,7 +511,7 @@ img {
 #menu-open:checked + .menu-open-button,
 .menu-item:hover,
 .menu-item:focus {
-  background-color: rgb(var(--dark-accent));
+  background-color: rgb(var(--dark-primary));
   outline: 0;
 }
 
@@ -555,7 +528,7 @@ img {
   right: 2rem;
   width: 4rem;
   height: 4rem;
-  background-color: rgb(var(--accent));
+  background-color: rgb(var(--primary));
   border-radius: 50%;
   z-index: -10;
 }
@@ -568,17 +541,17 @@ img {
   right: 2rem;
   width: 4rem;
   height: 4rem;
-  background-color: rgb(var(--accent));
+  background-color: rgb(var(--primary));
   border-radius: 50%;
   z-index: -10;
 }
 
 #menu-open:checked + .menu-open-button::before {
-  background-color: rgb(var(--dark-accent));
+  background-color: rgb(var(--dark-primary));
 }
 
 #menu-open:checked + .menu-open-button::after {
-  background-color: rgb(var(--dark-accent));
+  background-color: rgb(var(--dark-primary));
 }
 
 .menu-item {
@@ -685,42 +658,42 @@ img {
 .menu-open-button:focus .menu-item-1 {
   opacity: 1;
   transform: translateY(-810%) scale(1);
-  transition: all 100ms 400ms ease-in-out;
+  transition: transform 100ms 400ms ease-in-out, color 100ms linear;
 }
 
 #menu-open:checked ~ .menu-item-2,
 .menu-open-button:focus .menu-item-2 {
   opacity: 1;
   transform: translateY(-680%) scale(1);
-  transition: all 100ms 300ms ease-in-out;
+  transition: transform 100ms 300ms ease-in-out, color 100ms linear;
 }
 
 #menu-open:checked ~ .menu-item-3,
 .menu-open-button:focus .menu-item-3 {
   opacity: 1;
   transform: translateY(-550%) scale(1);
-  transition: all 100ms 200ms ease-in-out;
+  transition: transform 100ms 200ms ease-in-out, color 100ms linear;
 }
 
 #menu-open:checked ~ .menu-item-4,
 .menu-open-button:focus .menu-item-4 {
   opacity: 1;
   transform: translateY(-420%) scale(1);
-  transition: all 100ms 100ms ease-in-out;
+  transition: transform 100ms 100ms ease-in-out, color 100ms linear;
 }
 
 #menu-open:checked ~ .menu-item-5,
 .menu-open-button:focus .menu-item-5 {
   opacity: 1;
   transform: translateY(-290%) scale(1);
-  transition: all 100ms ease-in-out;
+  transition: transform 100ms ease-in-out, color 100ms linear;
 }
 
 #menu-open:checked ~ .menu-item-6,
 .menu-open-button:focus .menu-item-6 {
   opacity: 1;
   transform: translateY(-160%) scale(1);
-  transition: all 100ms ease-in-out;
+  transition: transform 100ms ease-in-out, color 100ms linear;
 }
 
 .menu-item[class*="hint--"] {

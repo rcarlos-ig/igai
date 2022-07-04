@@ -58,7 +58,7 @@ router.get("/", protectRoute, dashboardView);
 // Register user
 router.get("/register/:token", registerView);
 router.post(
-  "/register/:token",
+  "/register",
   [
     check("name")
       .trim()
@@ -91,7 +91,7 @@ router.post(
   function (req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render("register", { errors: errors.array() });
+      res.render("register", { errors: errors.array(), token: req.body.token });
     } else {
       next();
     }

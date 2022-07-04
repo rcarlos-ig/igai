@@ -1,46 +1,42 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="card w-full">
-  <div class="w-full">
-    <h2>Gráficos</h2>
-    <div class="mt-8 px-4">
-      <h3 class="capitalize" id="graphTitle">Instalações</h3>
-      <div class="md:w-2/3 h-[500px] mt-4 mb-24 mx-auto">
-        <canvas id="chart"></canvas>
-        <div id="legend-container" class="mt-1 md:mt-4"></div>
-      </div>
+<div class="flex flex-col justify-center mb-8 mx-auto px-3 w-full md:w-11/12 lg:w-3/4">
+  <h2 class="mb-8 sm:mb-12 xl:mb-16">Gráficos</h2>
+  <h3 class="capitalize" id="graphTitle">Instalações</h3>
+  <div class="card flex-col w-full min-w-[336px]">
+    <div class="relative w-full h-[300px] mt-4 mb-20 mx-auto sm:h-[400px] sm:mb-8 md:mb-12 xl:h-[600px]">
+      <canvas id="chart"></canvas>
+      <div id="legend-container" class="mt-1 md:mt-4"></div>
     </div>
-    <div class="flex flex-col mx-auto px-4 sm:w-1/2 lg:w-1/4">
-      <h3>Selecionar os dados</h3>
-      <div class="w-full mt-4">
-        <select
-          name="fieldSelect"
-          id="fieldSelect"
-          class="capitalize w-full"
-          aria-label="Selecione um campo para criação do gráfico."
-          onchange="updateChart()"
-        >
-          <% for (let i = 4; i < 14; i++) { %>
-            <% if (fields[i][0] !== "reservatorio") { %>
-              <option class="replace" value="<%= fields[i][0] %>">
-                <%= fields[i][0].replace(/./, fields[i][0][0].toUpperCase()) %>
-              </option>
-            <% } %>
-          <% } %>
-          <option value="ocupacao">Ocupação</option>
-          <option value="avaliacao">IGAI/Avaliação</option>
-        </select>
-      </div>
-      <div class="flex justify-center gap-4 mt-4">
-        <button
-          type="button"
-          class="button button-tertiary"
-          onclick="window.location='/dashboard'"
-        >
-          Retornar
-        </button>
-      </div>
-    </div>
+  </div>
+  <h3>Selecionar os dados</h3>
+  <div class="flex w-full min-w-[336px] max-w-md px-4 mx-auto">
+    <select
+      name="fieldSelect"
+      id="fieldSelect"
+      class="capitalize w-full mx-auto"
+      aria-label="Selecione um campo para criação do gráfico."
+      onchange="updateChart()"
+    >
+      <% for (let i = 4; i < 14; i++) { %>
+        <% if (fields[i][0] !== "reservatorio") { %>
+          <option class="replace" value="<%= fields[i][0] %>">
+            <%= fields[i][0].replace(/./, fields[i][0][0].toUpperCase()) %>
+          </option>
+        <% } %>
+      <% } %>
+      <option value="ocupacao">Ocupação</option>
+      <option value="avaliacao">IGAI/Avaliação</option>
+    </select>
+  </div>
+  <div class="flex justify-center gap-4 mt-8 sm:mt-12">
+    <button
+      type="button"
+      class="button button-tertiary"
+      onclick="window.location='/dashboard'"
+    >
+      Retornar
+    </button>
   </div>
 </div>
 
@@ -48,5 +44,5 @@
   <%- include('partials/chartsScript.ejs') %> 
 <% } %>
 
-<%- user.role === 'admin' ? include('partials/floatingMenuAdmin.ejs') : include('partials/floatingMenuBasic.ejs'); %>
+<%- include('partials/floatingMenu.ejs'); %>
 <%- include('partials/footer.ejs'); %>

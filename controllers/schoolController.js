@@ -3,7 +3,7 @@ const School = require("../models/schools");
 const User = require("../models/user");
 const HistoricData = require("../models/historicData");
 
-// Calculate the "IGE"
+// Calculate the "IGAIE"
 function calculateIGAIE(data) {
   let indicador = Number();
 
@@ -100,7 +100,7 @@ const registerSchool = (req, res) => {
         bairro,
         ocupacao,
         ativa,
-        error: "Unidade já cadastrada.",
+        errors: ["Unidade já cadastrada."],
         user: req.user,
       });
     } else {
@@ -131,7 +131,7 @@ const registerSchool = (req, res) => {
             .save() // Save the first historic data
             .then(
               res.render("registerSchool", {
-                success: "Escola cadastrada com sucesso.",
+                success: ["Escola cadastrada com sucesso."],
                 user: req.user,
               })
             );
@@ -255,7 +255,7 @@ const editSchool = async (req, res) => {
     if (!school) return;
     res.render("editSchool", {
       school,
-      success: "Dados atualizados com sucesso.",
+      success: ["Dados atualizados com sucesso."],
       user: req.user,
     });
   });

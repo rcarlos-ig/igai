@@ -22,14 +22,18 @@ const logout = (req, res) => {
         user.lastLogin = new Date();
         user.save();
       }
-      req.logout();
+      req.logout(function (err) {
+        if (err) return next(err);
+        req.session.destroy();
+        res.redirect("/login");
+      });
+    });
+  } else {
+    req.logout(function (err) {
+      if (err) return next(err);
       req.session.destroy();
       res.redirect("/login");
     });
-  } else {
-    req.logout();
-    req.session.destroy();
-    res.redirect("/login");
   }
 };
 
@@ -78,14 +82,19 @@ const createToken = async (req, res) => {
   });
 
   console.log("token created");
+
+  let success = ["Token criado."];
+
+  const link = `<a href="/register/${token.token}" target="_blank" class="font-semibold underline">Registrar usuário</a>`;
+  success.push(link);
+
   res.render("dashboard", {
-    token: token.token,
     user: req.user,
     schools,
     activeSchools,
     chartData,
     chartLabels,
-    success: "Token criado.",
+    success,
   });
 };
 
@@ -96,7 +105,7 @@ const registerView = (req, res) => {
     token: req.params.token,
   }).then((token) => {
     if (token) {
-      res.render("register", { token, errors: [""], user: req.user });
+      res.render("register", { token: token.token, errors: [""], user: req.user });
     } else {
       console.log("Invalid link or expired.");
       res.render("login", {
@@ -109,23 +118,23 @@ const registerView = (req, res) => {
 
 // POST Request for Register page
 const registerUser = (req, res) => {
-  const { name, email, password, confirm } = req.body;
+  const { name, email, password, confirm, token } = req.body;
 
   // Check token
   Token.findOne({
-    token: req.params.token,
-  }).then((token) => {
-    if (!token) return;
+    token: token,
+  }).then((tokenFound) => {
+    if (!tokenFound) return;
     // Check user
     User.findOne({ email: email }).then((user) => {
       if (user) {
-        const emailValidation = "E-mail já cadastrado.";
         res.render("register", {
           name,
           email,
           password,
           confirm,
-          emailValidation,
+          errors: ["E-mail já cadastrado."],
+          token: tokenFound.token,
         });
       } else {
         // New user
@@ -144,8 +153,8 @@ const registerUser = (req, res) => {
             newUser
               .save() // Save nes user on database
               .then(() => {
-                token.deleteOne().then(console.log("Deleted: " + token._id));
-                res.render("login", { success: "Cadastro realizado." });
+                tokenFound.deleteOne().then(console.log("Deleted: " + tokenFound._id));
+                res.render("login", { success: ["Cadastro realizado."] });
               })
               .catch((err) => console.log(err));
           })
@@ -159,7 +168,7 @@ const registerUser = (req, res) => {
 const loginView = (req, res) => {
   let errors;
   if (req.flash("error")) {
-    error = [req.flash("error")];
+    errors = [req.flash("error")];
   }
   res.render("login", { errors });
 };
@@ -221,7 +230,9 @@ const requestResetPassword = async (req, res) => {
     } else {
       console.log("User not found.");
 
-      res.render("login", { error: "E-mail não cadastrado." });
+      const errors = ["E-mail não cadastrado."];
+
+      res.render("requestResetPassword", { errors });
     }
   });
 };

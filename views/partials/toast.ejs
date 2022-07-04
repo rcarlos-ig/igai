@@ -1,0 +1,61 @@
+<script>
+  const toastMessages = function (msg, msgType) {
+    const toast = document.createElement("div");
+    const closeButton = document.createElement("span");
+
+    closeButton.innerHTML = "X";
+    closeButton.classList.add("close-toast");
+    toast.appendChild(closeButton);
+
+    closeButton.addEventListener("click", function () {
+      toast.classList.remove("show-toast");
+      toast.classList.add("hide-toast");
+    });
+
+    if (msgType === "error") {
+      toast.classList.add("error", "show-toast");
+
+      const errorList = document.createElement("ul");
+      errors.forEach((error) => {
+        if (error.msg) {
+          errorList.innerHTML += `<li>${error.msg}</li>`;
+        } else {
+          errorList.innerHTML += `<li>${error}</li>`;
+        }
+      });
+      toast.appendChild(errorList);
+
+      document.body.appendChild(toast);
+    }
+
+    if (msgType === "success") {
+      toast.classList.add("success", "show-toast");
+
+      const successList = document.createElement("ul");
+      success.forEach((item) => {
+        successList.innerHTML += `<li>${item}</li>`;
+      });
+      toast.appendChild(successList);
+
+      document.body.appendChild(toast);
+    }
+  };
+</script>
+
+<% if (locals.errors) { %>
+<script>
+  const errors = <%- JSON.stringify(locals.errors) %>;
+  if (errors.length === 1) {
+    if (errors[0].length !== 0) {
+      toastMessages(errors, "error")
+    };
+  } else {
+    toastMessages(errors, "error");
+  }
+</script>
+<% } %> <% if (locals.success) { %>
+<script>
+  const success = <%- JSON.stringify(locals.success) %>;
+  toastMessages(success, "success");
+</script>
+<% } %>

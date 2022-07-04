@@ -1,40 +1,22 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="card w-full md:w-11/12 lg:w-2/3">
-  <div class="w-full">
-    <h2>Dashboard</h2>
-    <% if (locals.success) { %>
-      <div class="success">
-        <ul>
-          <li><%= success %></li>
-          <% if (locals.token) { %>
-            <li class="break-all cursor-pointer" onclick=<%= `window.location='/register/${token}'` %> onkeypress=<%= `window.location='/register/${token}'` %> >
-              Link de registro
-            </li>
-          <% } %>
-        </ul>
-      </div>
-    <% }; %>
-    <% if (locals.error) { %>
-      <div class="error">
-        <ul>
-          <li><%= error %></li>
-        </ul>
-      </div>
-    <% }; %>
-    <div class="flex flex-col items-center pb-4 border-b-2 border-gray-300 lg:flex-row lg:justify-center">
+<div class="flex flex-col justify-center mb-8 mx-auto px-3 w-full md:w-11/12 lg:w-3/4">
+  <h2 class="mb-8 sm:mb-12 xl:mb-16">Dashboard</h2>
+  <div class="flex flex-col xl:grid xl:grid-cols-2 xl:gap-x-8">
+    <h3 class="xl:col-end-2 xl:row-end-2">Dados do Usuário</h3>
+    <div class="flex flex-col justify-center mb-10 mx-auto p-4 w-full min-w-[336px] xl:col-start-1 xl:col-end-2 xl:row-start-2 xl:row-end-3 xl:max-h-21 xl:justify-start">
       <% const hour = new Date().getHours(); %>
-      <% let greeting = 'Boa noite'; %>
-      <% if (hour >= 6) greeting = 'Bom dia';  %>
-      <% if (hour >= 12) greeting = 'Boa tarde';  %>
-      <% if (hour >= 19) greeting = 'Boa noite';  %>
-      <div class="flex flex-col w-full pb-4 border-b-2 border-b-gray-300 lg:w-1/2 lg:text-left lg:border-b-0">
-        <p class="px-6"><%= greeting %>, <span class="font-medium text-lg text-primary"><%= user.name %></span>.</p>
-        <p class="px-8 mt-2 md:mt-4">E-mail: <span class="font-medium text-primary"><%= user.email %></span></p>
-        <p class="px-8">Tipo de acesso: <span class="font-medium text-primary"><%= user.role === 'admin' ? 'Completo' : 'Visualização' %></span></p>
-        <p class="px-8">Nº de acessos: <span class="font-medium text-primary"><%= user.accesses %></span></p>
-        <p class="px-8">Último acesso: 
-          <span class="font-medium text-primary">
+      <% let greeting = "Boa noite"; %>
+      <% if (hour >= 6) greeting = "Bom dia";  %>
+      <% if (hour >= 12) greeting = "Boa tarde";  %>
+      <% if (hour >= 19) greeting = "Boa noite";  %>
+      <div class="flex flex-col justify-center">
+        <p><%= greeting %>, <span class="font-medium text-lg"><%= user.name %></span>.</p>
+        <p class="mt-2 md:mt-4">E-mail: <span class="font-medium"><%= user.email %></span></p>
+        <p>Tipo de acesso: <span class="font-medium"><%= user.role === "admin" ? "Completo" : "Visualização" %></span></p>
+        <p>Nº de acessos: <span class="font-medium"><%= user.accesses %></span></p>
+        <p>Último acesso: 
+          <span class="font-medium">
             <% if (user.lastLogin) { %>
               <%= user.lastLogin.toLocaleString("default", {
                 day:"2-digit",
@@ -46,31 +28,42 @@
             <% } %>            
           </span>
         </p>
-        <p class="px-8">Tema: <span class="font-medium text-primary" id="dashThemeText"><%= user.theme === 'dark' ? 'Escuro' : 'Claro' %></span></p>
-        <p class="px-8">Cadastrado em: <span class="font-medium text-primary"><%= user.createdAt.toLocaleString("default", {
+        <p>Tema: <span class="font-medium" id="dashThemeText"><%= user.theme === "dark" ? "Escuro" : "Claro" %></span></p>
+        <p>Cadastrado em: <span class="font-medium"><%= user.createdAt.toLocaleString("default", {
           day:"2-digit",
           month: "2-digit",
           year: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
           }) %></span></p>
-        <p class="px-6 mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
+        <p class="mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
       </div>
-      <div id="chart" class="w-full mt-4 lg:w-1/2">
-        <h3>Gráfico de Avaliações</h3>
+    </div>
+    <h3 class="xl:col-start-2 xl:col-end-3 xl:row-start-1 xl:row-end-2">Gráfico de Avaliações</h3>
+    <div class="card flex-col w-full min-w-[336px] xl:col-start-2 xl:col-end-3 xl:row-start-2 xl:row-end-3 xl:max-h-21">
+      <div id="chart">
         <canvas class="aspect-square" id="dashboardChart" aria-label="Gráfico de Avaliações">
           <p>Gráfico gerado dinâmicamente e inacessível para leitores de tela.</p>
         </canvas>
+        <div id="legend-container" class="mt-1 md:mt-4"></div>
       </div>
     </div>
-    <div class="flex flex-col mt-6 px-4">
-      <input type="checkbox" name="ativa" id="ativa" class="toggle" />
-      <label for="ativa">Mostrar inativas?</label>
-    </div>
-    <%- include('partials/dashTable.ejs') %> 
   </div>
+  <h3>Unidades da Rede</h3>
+  <div class="flex justify-center xl:justify-start">
+    <div class="flex justify-center items-center mx-auto mb-2 sm:mb-4 p-4 gap-4 sm:gap-8 w-[336px]" style="margin-left: 0; margin-right: 0;">
+      <div class="switch-label">
+        <span>Mostrar inativas?</span>
+      </div>
+      <div class="switch-toggle">
+        <input type="checkbox" id="ativa" name="ativa">
+        <label for="ativa"></label>
+      </div>
+    </div>
+  </div>
+  <%- include('partials/dashTable.ejs') %>
 </div>
 
 <%- include('partials/dashboardChart.ejs'); %>
-<%- user.role === 'admin' ? include('partials/floatingMenuAdmin.ejs') : include('partials/floatingMenuBasic.ejs'); %>
+<%- include('partials/floatingMenu.ejs'); %>
 <%- include('partials/footer.ejs'); %>

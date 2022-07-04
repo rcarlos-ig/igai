@@ -1,26 +1,11 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="card w-[320px] sm:w-1/2 lg:w-1/3">
+<div class="card min-w-[336px] w-5/6 max-w-md sm:w-3/4">
   <div class="w-full">
     <h2>Criar usuário</h2>
-    <% if (locals.emailValidation) { %>
-    <div class="error">
-      <ul>
-        <li><%= emailValidation %></li>
-      </ul>
-    </div>
-    <% }; %>
-    <% if (locals.errors) { %>
-    <div class="error <%= errors == '' ? 'hidden' : '' %>">
-      <ul>
-        <% errors.forEach(error => { %>
-        <li><%= error.msg %></li>
-        <% }); %>
-      </ul>
-    </div>
-    <% }; %>
     <div>
-      <form method="post" action="<%= `/register/${token.token}` %>">
+      <form method="post" action="/register">
+        <input type="hidden" name="token" value="<%= token %>">
         <div class="form-line">
           <label for="name">Nome<span class="required">*</span></label>
           <div>
@@ -44,11 +29,7 @@
               autofocus
             />
             <% } %>
-            <span
-              class="hidden validation-error"
-              id="nomeError"
-              aria-live="polite"
-            ></span>
+            <span class="hidden validation-error" id="nomeError" aria-live="polite">Nome precisa ter 3 caracteres ou mais.</span>
           </div>
         </div>
         <div class="form-line">
@@ -71,11 +52,9 @@
               placeholder="Digite seu e-mail"
             />
             <% } %>
-            <span
-              class="hidden validation-error"
-              id="emailError"
-              aria-live="polite"
-            ></span>
+            <span class="validation-error" id="emailError" aria-live="polite">
+              Digite um e-mail válido.
+            </span>
           </div>
         </div>
         <div class="form-line">
@@ -100,10 +79,12 @@
             />
             <% } %>
             <span
-              class="hidden validation-error"
+              class="validation-error"
               id="passwordError"
               aria-live="polite"
-            ></span>
+            >
+              Senha precisa ter mais de 4 caracteres.
+            </span>
           </div>
         </div>
         <div class="form-line">
@@ -130,10 +111,12 @@
             />
             <% } %>
             <span
-              class="hidden validation-error"
+              class="validation-error"
               id="confirmError"
               aria-live="polite"
-            ></span>
+            >
+            Confirmação precisa ter 3 caracteres ou mais.
+            </span>
           </div>
         </div>
         <div class="flex justify-end gap-4 mt-6">
@@ -152,5 +135,14 @@
     </div>
   </div>
 </div>
+
+<script>
+  const submitButton = document.querySelector("button[type='submit']");
+  submitButton.addEventListener("click", () => {
+    const form = document.querySelector("form");
+    form.submit();
+    submitButton.disabled = true;
+  });
+</script>
 
 <%- include('partials/footer.ejs'); %>

@@ -16,7 +16,7 @@
         <p>
           v<%= process.env.npm_package_version %> &#8212 <%= new Date().getFullYear() %>
         </p>
-        <p class="mt-1">Licença:
+        <p class="mt-1 mb-4">Licença:
           <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR" class="align-middle hint--top hint--info hint--medium hint--rounded hint--bounce" aria-label="Creative Commons License, CC-BY-NC-SA 4.0 International." target="_blank">
             <img class="cursor-pointer" alt="Creative Commons License, CC-BY-NC-SA 4.0 International." src="/img/license.webp" width="80" height="15">
           </a>
@@ -28,5 +28,6 @@
     <script src="/js/darkModeToggle.js"></script>
     <script src="/js/tabulator.min.js" async></script>
     <%- include('ajuda.ejs'); %>
+    <%- include('toast.ejs'); %>
   </body>
 </html>

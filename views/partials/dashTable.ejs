@@ -1,5 +1,5 @@
 <div
-  class="mt-4 mb-8 scroll-smooth"
+  class="w-full min-w-[336px] scroll-smooth"
   id="tabulatorTable"
   aria-label="Tabela com as unidades da rede."
 ></div>
@@ -34,6 +34,11 @@
         layout: "fitDataStretch",
         columnHeaderVertAlign: "middle",
         data: tableData,
+        persistence: {
+          sort: true, //persist column sorting
+          filter: true, //persist filter sorting
+          columns: true, //persist columns
+        },
         columnDefaults: {
           headerFilter: true,
           headerSortTristate: true,

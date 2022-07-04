@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="card min-w-[340px] max-w-sm w-5/6 sm:w-3/4 md:w-1/2">
+<div class="card min-w-[336px] max-w-sm w-5/6 sm:w-3/4 md:w-1/2">
   <div class="w-full">
     <h2>Entrar</h2>
     <div>
@@ -44,7 +44,7 @@
             >
               Senha precisa ter mais de 4 caracteres.
             </span>
-            <div class="flex justify-end text-sm mt-2">
+            <div class="flex justify-center text-sm mt-1">
               <a class="link" href="/resetPassword">Esqueci minha senha</a>
             </div>
           </div>
@@ -57,59 +57,15 @@
   </div>
 </div>
 
+<script>
+  const submitButton = document.querySelector("button[type='submit']");
+  submitButton.addEventListener("click", () => {
+    const form = document.querySelector("form");
+    form.submit();
+    submitButton.disabled = true;
+  });
+</script>
+
 <script src="/js/senhaOlho.js"></script>
-
-<% if (locals.errors) { %>
-  <script>
-    const errors = <%- JSON.stringify(locals.errors) %>;
-  
-    const errorToast = document.createElement("div");
-    errorToast.classList.add("error", "show-toast");
-  
-    const closeButton = document.createElement("span");
-    closeButton.innerHTML = "X";
-    closeButton.classList.add("close-toast");
-  
-    const errorList = document.createElement("ul");
-    errors.forEach(error => {
-      if (error.msg) {
-        errorList.innerHTML += `<li>${error.msg}</li>`;
-      } else {
-        errorList.innerHTML += `<li>${error}</li>`;
-      };
-    });
-  
-    errorToast.appendChild(closeButton);
-    errorToast.appendChild(errorList);
-    document.body.appendChild(errorToast);
-  
-    closeButton.addEventListener("click", function () {
-      errorToast.classList.remove("show-toast");
-      errorToast.classList.add("hide-toast");
-    });
-  </script>
-<% } %>
-
-<% if (locals.success) { %>
-  <script>
-    const success = <%- JSON.stringify(locals.success) %>;
-  
-    const successToast = document.createElement("div");
-    successToast.classList.add("success", "show-toast");
-    successToast.innerHTML = success;
-  
-    const closeButton = document.createElement("span");
-    closeButton.innerHTML = "X";
-    closeButton.classList.add("close-toast");
-  
-    successToast.appendChild(closeButton);
-    document.body.appendChild(successToast);
-  
-    closeButton.addEventListener("click", function () {
-      successToast.classList.remove("show-toast");
-      successToast.classList.add("hide-toast");
-    });
-  </script>
-<% } %>
 
 <%- include('partials/footer.ejs'); %>
