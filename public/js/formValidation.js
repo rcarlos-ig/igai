@@ -24,7 +24,7 @@ if (email) {
   email.addEventListener(
     "input",
     function () {
-      if (email.validity.valid) {
+      if (email.value.length === 0 || email.validity.valid) {
         emailError.style.visibility = "hidden";
       } else {
         emailError.style.visibility = "visible";
@@ -38,7 +38,7 @@ if (password) {
   password.addEventListener(
     "input",
     function () {
-      if (password.validity.valid) {
+      if (password.value.length === 0 || password.validity.valid) {
         passwordError.style.visibility = "hidden";
       } else {
         passwordError.style.visibility = "visible";
@@ -52,7 +52,7 @@ if (nome) {
   nome.addEventListener(
     "input",
     function () {
-      if (nome.validity.valid) {
+      if (nome.value.length === 0 || nome.validity.valid) {
         nomeError.style.visibility = "hidden";
       } else {
         nomeError.style.visibility = "visible";
@@ -66,7 +66,7 @@ if (bairro) {
   bairro.addEventListener(
     "input",
     function () {
-      if (bairro.validity.valid) {
+      if (bairro.value.length === 0 || bairro.validity.valid) {
         bairroError.style.visibility = "hidden";
       } else {
         bairroError.style.visibility = "visible";
@@ -80,7 +80,7 @@ if (ocupacao) {
   ocupacao.addEventListener(
     "input",
     function () {
-      if (ocupacao.validity.valid) {
+      if (ocupacao.value.length === 0 || ocupacao.validity.valid) {
         ocupacaoError.style.visibility = "hidden";
       } else {
         ocupacaoError.style.visibility = "visible";
@@ -94,7 +94,7 @@ if (newPassword) {
   newPassword.addEventListener(
     "input",
     function () {
-      if (newPassword.validity.valid) {
+      if (newPassword.value.length === 0 || newPassword.validity.valid) {
         passwordError.style.visibility = "hidden";
       } else {
         passwordError.style.visibility = "visible";
@@ -108,7 +108,7 @@ if (confirmation) {
   confirmation.addEventListener(
     "input",
     function () {
-      if (confirmation.validity.valid) {
+      if (confirmation.value.length === 0 || confirmation.validity.valid) {
         confirmError.style.visibility = "hidden";
       } else {
         confirmError.style.visibility = "visible";

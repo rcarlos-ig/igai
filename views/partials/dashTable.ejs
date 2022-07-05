@@ -31,14 +31,8 @@
 
       const tabulatorTable = new Tabulator("#tabulatorTable", {
         height: "500px",
-        layout: "fitDataStretch",
         columnHeaderVertAlign: "middle",
         data: tableData,
-        persistence: {
-          sort: true, //persist column sorting
-          filter: true, //persist filter sorting
-          columns: true, //persist columns
-        },
         columnDefaults: {
           headerFilter: true,
           headerSortTristate: true,
