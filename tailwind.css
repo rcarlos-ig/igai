@@ -264,15 +264,50 @@ select:focus {
 }
 
 /* Tables */
-.tabulator {
-  @apply w-full tracking-wide text-xs select-none border-0 bg-transparent rounded-md !important;
+#tabulatorTable {
   box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
 }
 
+#tabulatorTable:empty::before {
+  content: "";
+  background: url("/img/SEC_logo.webp") no-repeat center;
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: tableLoader 1.3s ease-in-out infinite both;
+}
+
+@keyframes tableLoader {
+  0% {
+    background-size: 80px;
+    opacity: 0.8;
+  }
+  80% {
+    background-size: 480px;
+    opacity: 0;
+  }
+  100% {
+    background-size: 880px;
+    opacity: 0;
+  }
+}
+
+.tabulator {
+  @apply w-full tracking-wide text-xs select-none border-0 bg-transparent rounded-md !important;
+}
+
 @media (min-width: 640px) {
+  #tabulatorTable {
+    box-shadow: 16px 16px 32px #bebebe, -16px -16px 32px #ffffff;
+  }
+
   .tabulator {
     @apply text-base !important;
-    box-shadow: 16px 16px 32px #bebebe, -16px -16px 32px #ffffff;
   }
 
   .tabulator-col {
@@ -494,59 +529,29 @@ img {
   cursor: pointer;
   justify-content: center;
   align-items: center;
-  box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffffff;
-}
-
-#menu-open:checked + .menu-open-button,
-.menu-item:hover,
-.menu-item:focus {
-  background-color: rgb(var(--dark-primary));
-  outline: 0;
+  box-shadow: 10px 10px 15px #00000070;
 }
 
 .menu-open-button {
   display: flex;
   z-index: 2;
-}
-
-.menu-open-button::before {
-  content: "";
-  animation: ring-1 5s linear infinite forwards;
-  position: fixed;
-  bottom: 1rem;
-  right: 2rem;
-  width: 4rem;
-  height: 4rem;
-  background-color: rgb(var(--primary));
-  border-radius: 50%;
-  z-index: -10;
-}
-
-.menu-open-button::after {
-  content: "";
-  animation: ring-2 5s linear infinite both;
-  position: fixed;
-  bottom: 1rem;
-  right: 2rem;
-  width: 4rem;
-  height: 4rem;
-  background-color: rgb(var(--primary));
-  border-radius: 50%;
-  z-index: -10;
-}
-
-#menu-open:checked + .menu-open-button::before {
-  background-color: rgb(var(--dark-primary));
-}
-
-#menu-open:checked + .menu-open-button::after {
-  background-color: rgb(var(--dark-primary));
+  animation: pulse 3s infinite;
+  transition: all 0.5s ease;
 }
 
 .menu-item {
   position: absolute;
   bottom: 0;
   z-index: 1;
+}
+
+#menu-open:checked + .menu-open-button,
+.menu-open-button:hover,
+.menu-open-button:focus,
+.menu-item:hover,
+.menu-item:focus {
+  background-color: rgb(4, 53, 114);
+  outline: 0;
 }
 
 .icon {
@@ -695,47 +700,17 @@ img {
     bottom: 2rem;
     right: 2rem;
   }
-
-  .menu-open-button::before {
-    position: fixed;
-    bottom: 2rem;
-    right: 3rem;
-  }
-
-  .menu-open-button::after {
-    position: fixed;
-    bottom: 2rem;
-    right: 3rem;
-  }
 }
 
-@keyframes ring-1 {
+@keyframes pulse {
   0% {
-    opacity: 1;
-    transform: scale(1);
+    box-shadow: 0 0 0 0 rgb(var(--primary));
   }
   60% {
-    opacity: 1;
-    transform: scale(1);
+    box-shadow: 0 0 0 20px rgb(var(--primary) / 0%);
   }
   100% {
-    opacity: 0;
-    transform: scale(1.5);
-  }
-}
-
-@keyframes ring-2 {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  80% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.5);
+    box-shadow: 0 0 0 0 rgb(var(--primary) / 0%);
   }
 }
 
@@ -802,7 +777,7 @@ html.dark select:-webkit-autofill:hover,
 html.dark select:-webkit-autofill:focus {
   -webkit-text-fill-color: rgb(var(--text));
   transition: background-color 5000s ease-in-out 0s;
-}  
+}
 
 /* Seções */
 html.dark .card {
@@ -817,7 +792,7 @@ html.dark .card-inset {
   html.dark .card {
     box-shadow: 16px 16px 32px #00000070, -16px -16px 32px #3a3a3a70;
   }
-  
+
   html.dark .card-inset {
     box-shadow: inset 16px 16px 32px #00000070, inset -16px -16px 32px #3a3a3a70;
   }
@@ -865,12 +840,12 @@ html.dark .validation-error {
 }
 
 /* Tables */
-html.dark .tabulator {
+html.dark #tabulatorTable {
   box-shadow: 10px 10px 20px #00000070, -10px -10px 20px #3a3a3a70;
 }
 
 @media (min-width: 640px) {
-  html.dark .tabulator {
+  html.dark #tabulatorTable {
     box-shadow: 16px 16px 32px #00000070, -16px -16px 32px #3a3a3a70;
   }
 }
@@ -985,11 +960,21 @@ html.dark .help-modal::backdrop {
 
 /* Gráfico do dashboard */
 html.dark #dashboardChart {
-  filter: drop-shadow(6px 6px 12px #00000070) drop-shadow(6px 6px 12px #3a3a3a70);
+  filter: drop-shadow(6px 6px 12px #00000070)
+    drop-shadow(6px 6px 12px #3a3a3a70);
 }
 
 /* Floating Menu */
 html.dark .menu-open-button,
 html.dark .menu-item {
-  box-shadow: 3px 3px 6px #00000070, -3px -3px 6px #3a3a3a70;
+  box-shadow: 10px 10px 15px #00000070;
+}
+
+html.dark #menu-open:checked + .menu-open-button,
+html.dark .menu-open-button:hover,
+html.dark .menu-open-button:focus,
+html.dark .menu-item:hover,
+html.dark .menu-item:focus {
+  background-color: rgb(0, 88, 142);
+  outline: 0;
 }
