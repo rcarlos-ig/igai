@@ -242,6 +242,7 @@
           },
           { field: "ocupacao", title: "ocupação" },
         ],
+        footerElement: `<span>Exibindo <span id="search-count"></span> de <span id="total-count"></span> unidades.`,
       });
 
       tabulatorTable.on("tableBuilt", function () {
@@ -253,6 +254,18 @@
         searchInput.forEach((input) => {
           input.placeholder = "Pesquisar...";
         });
+      });
+
+      tabulatorTable.on("dataLoaded", function (data) {
+        const totalCount = document.getElementById("total-count");
+
+        totalCount.innerHTML = data.length;
+      });
+
+      tabulatorTable.on("dataFiltered", function (filters, rows) {
+        const searchCount = document.getElementById("search-count");
+
+        searchCount.innerHTML = rows.length;
       });
     });
 </script>

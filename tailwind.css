@@ -14,15 +14,22 @@
 :root {
   animation: none !important;
   --primary: 5 77 165;
-  --dark-primary: 3 31 72;
+  --dark-primary: 4 53 114;
   --text: 68 70 80;
   --light: 240 240 240;
+  --background: 224 224 224;
+  --shadow-dark: #8d8d8d;
+  --shadow-light: #f5f5f5;
 }
 
 /* Propriedades especiais */
 ::selection {
   @apply bg-primary text-light;
   text-shadow: none;
+}
+
+::placeholder {
+  @apply text-sm text-gray-500 !important;
 }
 
 /* Change Autocomplete styles in Chrome*/
@@ -39,14 +46,17 @@ select:-webkit-autofill:focus {
 }
 
 /* Propriedades gerais do documento */
-*:focus {
+*:focus,
+*:focus-within,
+*:focus-visible {
   @apply outline-none;
 }
 
 html {
-  @apply text-text scroll-smooth h-full;
+  @apply text-base scroll-smooth h-full xl:text-lg;
   font-family: "Nunito Sans", sans-serif;
-  background-color: #e0e0e0;
+  background-color: rgb(var(--background));
+  color: rgb(var(--text));
 }
 
 /* Seções */
@@ -63,7 +73,17 @@ footer {
 }
 
 dialog {
-  @apply text-text;
+  @apply rounded-md;
+  background-color: rgb(var(--background));
+  color: rgb(var(--text));
+}
+
+dialog::backdrop {
+  @apply bg-gray-600/90 backdrop-blur-sm;
+}
+
+dialog .dialog-buttons {
+  @apply flex justify-end items-center gap-4 mt-8 pb-4;
 }
 
 dialog[open] {
@@ -99,36 +119,23 @@ dialog.hide::backdrop {
 
 .card {
   @apply flex justify-center mb-10 mx-auto p-4 rounded-xl;
-  box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+  box-shadow: 12px 12px 12px var(--shadow-dark),
+    -12px -12px 12px var(--shadow-light);
 }
 
-.card-inset {
-  @apply flex justify-center mb-10 mx-auto p-4 rounded-xl;
-  box-shadow: inset 10px 10px 20px #bebebe, inset -10px -10px 20px #ffffff;
-}
-
-@media (min-width: 640px) {
-  .card {
-    @apply mb-12;
-    box-shadow: 16px 16px 32px #bebebe, -16px -16px 32px #ffffff;
-  }
-
-  .card-inset {
-    @apply mb-12;
-    box-shadow: inset 16px 16px 32px #bebebe, inset -16px -16px 32px #ffffff;
-  }
+.toast {
+  @apply absolute top-[15%] left-0 right-0 w-[300px] text-base mx-auto rounded-md p-4 mb-4 backdrop-blur-sm z-50 sm:w-[340px];
+  box-shadow: 16px 16px 16px var(--shadow-dark);
 }
 
 .success {
-  @apply absolute top-[15%] left-0 right-0 w-[300px] mx-auto text-green-900 bg-green-200/50 border border-green-300 rounded-md p-4 mb-4 backdrop-blur-sm z-50;
-  @apply sm:w-[340px] sm:bg-green-300/50;
-  box-shadow: 16px 16px 32px #bebebe;
+  @apply text-green-900 bg-green-200/50 border border-green-300;
+  @apply sm:bg-green-300/50;
 }
 
 .error {
-  @apply absolute top-[15%] left-0 right-0 w-[300px] mx-auto text-red-900 bg-red-200/50 border border-red-300 rounded-md p-4 mb-4 backdrop-blur-sm z-50;
-  @apply sm:w-[340px] sm:bg-red-300/50;
-  box-shadow: 16px 16px 32px #bebebe;
+  @apply text-red-900 bg-red-200/50 border border-red-300;
+  @apply sm:bg-red-300/50;
 }
 
 .close-toast {
@@ -181,6 +188,10 @@ h1 {
   @apply text-4xl font-bold sm:text-6xl;
 }
 
+h1 + small {
+  @apply text-base text-center text-gray-500 sm:text-xl;
+}
+
 h2,
 h3,
 h4 {
@@ -193,8 +204,9 @@ h2 {
 
 h3 {
   @apply text-xl w-fit mx-auto mb-5 p-2 rounded-md sm:text-2xl sm:mb-8;
-  text-shadow: 2px 2px 4px #bebebe, -2px -2px 4px #ffffff;
-  box-shadow: inset 10px 10px 20px #bebebe, inset -10px -10px 20px #ffffff;
+  text-shadow: 2px 2px 4px var(--shadow-dark), -2px -2px 4px var(--shadow-light);
+  box-shadow: inset 10px 10px 16px var(--shadow-dark),
+    inset -10px -10px 16px var(--shadow-light);
 }
 
 h3::before {
@@ -211,22 +223,17 @@ h4 {
   @apply text-lg mb-3 sm:text-xl;
 }
 
-h1 + small {
-  @apply text-sm text-center md:text-base lg:text-lg;
-}
-
 /* Links */
 .link {
   @apply font-semibold tracking-wider py-1 px-3 rounded-md duration-300 transition-shadow;
 }
 
 .link:hover,
-.link:active {
-  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
-}
-
+.link:active,
 .link:focus {
   @apply ring-0;
+  box-shadow: inset 6px 6px 10px var(--shadow-dark),
+    inset -6px -6px 10px var(--shadow-light);
 }
 
 /* Forms */
@@ -237,13 +244,15 @@ input[type="number"],
 input[type="search"],
 select,
 textarea {
-  @apply text-primary rounded-md px-3 py-2 w-full focus:ring-offset-0 focus:ring-opacity-0 focus:outline-none invalid:text-red-900 invalid:bg-red-100 invalid:focus:text-red-900;
-  background-color: #e0e0e0;
-  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
+  @apply text-primary rounded-md px-3 py-2 w-full focus:ring-offset-0 focus:ring-opacity-0 focus:outline-none invalid:text-red-900 invalid:focus:text-red-900;
+  background-color: rgb(var(--background));
+  box-shadow: inset 8px 8px 13px var(--shadow-dark),
+    inset -8px -8px 13px var(--shadow-light);
 }
 
 select:focus {
-  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
+  box-shadow: inset 8px 8px 13px var(--shadow-dark),
+    inset -8px -8px 13px var(--shadow-light);
 }
 
 .form-line {
@@ -260,12 +269,14 @@ select:focus {
 
 .validation-error {
   @apply block text-sm text-red-900 font-semibold tracking-wide bg-red-50 w-full mt-1 py-1 px-3 rounded-md transition-all duration-300 invisible;
-  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
+  box-shadow: inset 6px 6px 10px var(--shadow-dark),
+    inset -6px -6px 10px var(--shadow-light);
 }
 
 /* Tables */
 #tabulatorTable {
-  box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+  box-shadow: 10px 10px 10px var(--shadow-dark),
+    -10px -10px 10px var(--shadow-light);
 }
 
 #tabulatorTable:empty::before {
@@ -298,14 +309,10 @@ select:focus {
 }
 
 .tabulator {
-  @apply w-full tracking-wide text-xs select-none border-0 bg-transparent rounded-md !important;
+  @apply w-full tracking-wide select-none border-0 bg-transparent rounded-md !important;
 }
 
 @media (min-width: 640px) {
-  #tabulatorTable {
-    box-shadow: 16px 16px 32px #bebebe, -16px -16px 32px #ffffff;
-  }
-
   .tabulator {
     @apply text-base !important;
   }
@@ -320,7 +327,7 @@ select:focus {
 }
 
 .tabulator-col {
-  @apply font-medium tracking-wider capitalize border-gray-300 !important;
+  @apply bg-primary font-medium tracking-wider capitalize border-gray-300 !important;
 }
 
 .tabulator-col-group {
@@ -329,7 +336,13 @@ select:focus {
 
 .tabulator-header,
 .tabulator-col-group-cols {
-  @apply border-gray-300 !important;
+  @apply bg-primary text-light border-gray-300 !important;
+}
+
+.tabulator-footer {
+  @apply text-xs !important;
+  background-color: rgb(var(--background)) !important;
+  color: rgb(var(--primary)) !important;
 }
 
 .tabulator-row-odd {
@@ -337,7 +350,7 @@ select:focus {
 }
 
 .tabulator-row-even {
-  @apply bg-[#e0e0e0] !important;
+  background-color: rgb(var(--background)) !important;
 }
 
 .tabulator-cell {
@@ -352,15 +365,19 @@ select:focus {
 .switch-toggle {
   height: 40px;
 }
+
 .switch-toggle input[type="checkbox"] {
   @apply absolute opacity-0 -z-10;
 }
+
 .switch-toggle input[type="checkbox"] + label {
   @apply relative inline-block m-0 rounded-md cursor-pointer;
   width: 100px;
   height: 40px;
-  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffff;
+  box-shadow: inset 6px 6px 10px var(--shadow-dark),
+    inset -6px -6px 10px var(--shadow-light);
 }
+
 .switch-toggle input[type="checkbox"] + label::before {
   @apply absolute text-xs text-center rounded-sm;
   content: "OFF";
@@ -371,8 +388,9 @@ select:focus {
   height: 25px;
   transition: all 0.3s linear;
   background: linear-gradient(145deg, #f0f0f0, #cacaca);
-  box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffff;
+  box-shadow: 3px 3px 5px var(--shadow-dark), -3px -3px 5px var(--shadow-light);
 }
+
 .switch-toggle input[type="checkbox"]:checked + label::before {
   @apply left-1/2 text-light;
   content: "ON";
@@ -382,40 +400,43 @@ select:focus {
 /* Buttons */
 .button {
   @apply font-semibold tracking-wider px-4 py-2 rounded-md transition-colors duration-300;
-  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+  box-shadow: 6px 6px 6px var(--shadow-dark), -6px -6px 6px var(--shadow-light);
 }
 
 .button-primary {
   @apply text-light;
-  background: linear-gradient(145deg, #054595, #0552b1);
+  background: linear-gradient(145deg, #0552b1, #054595);
 }
 
 .button-primary:hover {
-  @apply transition-colors duration-100;
-  background: linear-gradient(145deg, #0552b1, #054595);
+  background: linear-gradient(145deg, #054595, #0552b1);
 }
 
 .button-tertiary {
   @apply text-primary;
-  background: linear-gradient(145deg, #cacaca, #f0f0f0);
-}
-
-.button-tertiary:hover {
-  @apply transition-colors duration-100;
   background: linear-gradient(145deg, #f0f0f0, #cacaca);
 }
 
-.button:active {
+.button-tertiary:hover {
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+}
+
+.button:active,
+.button:focus,
+.button:focus-within,
+.button:focus-visible {
   @apply text-primary;
-  background: #e0e0e0;
-  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
+  background: rgb(var(--background)) !important;
+  box-shadow: inset 6px 6px 10px var(--shadow-dark),
+    inset -6px -6px 10px var(--shadow-light);
 }
 
 .button:disabled,
 .button:disabled:hover {
   @apply text-gray-500 cursor-not-allowed;
-  background: #e0e0e0;
-  box-shadow: inset 6px 6px 12px #bebebe, inset -6px -6px 12px #ffffff;
+  background-color: rgb(var(--background));
+  box-shadow: inset 6px 6px 10px var(--shadow-dark),
+    inset -6px -6px 10px var(--shadow-light);
 }
 
 .senha-olho {
@@ -448,12 +469,14 @@ img {
 }
 
 .img-filter {
-  filter: drop-shadow(3px 3px 6px #bebebe) drop-shadow(3px 3px 6px #fff);
+  filter: drop-shadow(3px 3px 6px var(--shadow-dark))
+    drop-shadow(-3px -3px 6px var(--shadow-light));
 }
 
 /* Page Load animation */
 .loader-wrapper {
-  @apply flex justify-center items-center fixed top-[-50vh] left-[-50vw] bg-gray-100 w-[200vw] h-[200vh] rounded-[50%] filter backdrop-blur-[2px] z-[1000];
+  @apply flex justify-center items-center fixed top-[-50vh] left-[-50vw] w-[200vw] h-[200vh] rounded-[50%] filter backdrop-blur-[2px] z-[1000];
+  background-color: rgb(var(--background));
 }
 
 .loader {
@@ -489,20 +512,14 @@ img {
 
 /* Modal de saída */
 .logout-modal {
-  @apply w-[50ch] bg-gray-100 py-4 px-8 rounded-md;
+  @apply w-[50ch] py-4 px-8;
 }
 
-.logout-modal::backdrop {
-  @apply bg-gray-600/90 backdrop-blur-sm;
-}
-
-.logout-modal-buttons {
-  @apply flex justify-end items-center gap-4 mt-8 pb-4;
-}
-
-/* Gráfico do dashboard */
-#dashboardChart {
-  filter: drop-shadow(6px 6px 12px #bebebe) drop-shadow(6px 6px 12px #fff);
+/* Gráficos */
+#dashboardChart,
+#chart {
+  filter: drop-shadow(3px 3px 6px var(--shadow-dark))
+    drop-shadow(-3px -3px 6px var(--shadow-light));
 }
 
 /* Floating Menu */
@@ -529,7 +546,7 @@ img {
   cursor: pointer;
   justify-content: center;
   align-items: center;
-  box-shadow: 10px 10px 15px #00000070;
+  box-shadow: 6px 6px 10px var(--shadow-dark);
 }
 
 .menu-open-button {
@@ -540,7 +557,6 @@ img {
 }
 
 .menu-item {
-  position: absolute;
   bottom: 0;
   z-index: 1;
 }
@@ -550,7 +566,7 @@ img {
 .menu-open-button:focus,
 .menu-item:hover,
 .menu-item:focus {
-  background-color: rgb(4, 53, 114);
+  background-color: rgb(var(--dark-primary));
   outline: 0;
 }
 
@@ -717,15 +733,11 @@ img {
 /* Modal de ajuda */
 /* modal open|close controller */
 .help-modal {
-  @apply w-11/12 bg-gray-100 p-0 rounded-md md:w-3/4 xl:w-1/2;
-}
-
-.help-modal::backdrop {
-  @apply bg-gray-600/90 backdrop-blur-sm;
+  @apply w-11/12 p-0 md:w-3/4 xl:w-1/2;
 }
 
 .help-modal-close {
-  @apply text-[2rem] leading-none px-2 cursor-pointer md:text-5xl md:px-4;
+  @apply bg-red-400 text-4xl leading-none mb-2 px-2 cursor-pointer rounded-bl-md md:text-5xl md:mb-4 md:px-4 md:pb-1;
 }
 
 .help-modal-nav {
@@ -733,7 +745,8 @@ img {
 }
 
 [class*="-slide"] {
-  @apply bg-primary text-light text-[2rem] leading-none pb-1 px-3 rounded-md cursor-pointer md:text-5xl md:pb-2 md:px-5;
+  @apply bg-primary text-light text-4xl leading-none pb-1 px-4 rounded-md cursor-pointer md:text-5xl md:pb-2 md:px-5;
+  box-shadow: 3px 3px 8px var(--shadow-dark), -3px -3px 8px var(--shadow-light);
 }
 
 .help-modal-nav > .disabled {
@@ -744,25 +757,20 @@ img {
   @apply w-full pb-8 px-4 md:pb-12 md:px-8;
 }
 
-.help-modal-buttons {
-  @apply flex justify-end items-center gap-4 mt-8 pb-4;
-}
-
 /* Dark Mode */
 html.dark {
   /* Variáveis */
   --primary: 0 127 206;
-  --background: 26 26 26;
+  --dark-primary: 0 88 142;
   --text: 166 166 171;
-  --light: 240 240 240;
-  background-color: rgb(var(--background));
-  color: rgb(var(--text));
+  --background: 26 26 26;
+  --shadow-dark: #101010;
+  --shadow-light: #242424;
 }
 
 /* Propriedades especiais */
 html.dark ::selection {
   @apply bg-light text-primary;
-  text-shadow: none;
 }
 
 /* Change Autocomplete styles in Chrome*/
@@ -780,47 +788,15 @@ html.dark select:-webkit-autofill:focus {
 }
 
 /* Seções */
-html.dark .card {
-  box-shadow: 10px 10px 20px #00000070, -10px -10px 20px #3a3a3a70;
-}
-
-html.dark .card-inset {
-  box-shadow: inset 10px 10px 20px #00000070, inset -10px -10px 20px #3a3a3a70;
-}
-
-@media (min-width: 640px) {
-  html.dark .card {
-    box-shadow: 16px 16px 32px #00000070, -16px -16px 32px #3a3a3a70;
-  }
-
-  html.dark .card-inset {
-    box-shadow: inset 16px 16px 32px #00000070, inset -16px -16px 32px #3a3a3a70;
-  }
-}
-
 html.dark .success {
   @apply text-green-100 bg-green-800/50 border-green-700;
-  box-shadow: 16px 16px 32px #00000070;
 }
 
 html.dark .error {
   @apply text-red-100 bg-red-800/50 border-red-700;
-  box-shadow: 16px 16px 32px #00000070;
 }
 
 /* Itens */
-/* Títulos */
-html.dark h3 {
-  text-shadow: 2px 2px 4px #00000070, -2px -2px 4px #3a3a3a70;
-  box-shadow: inset 10px 10px 20px #00000070, inset -10px -10px 20px #3a3a3a70;
-}
-
-/* Links */
-html.dark .link:hover,
-html.dark .link:active {
-  box-shadow: inset 6px 6px 12px #00000070, inset -6px -6px 12px #3a3a3a70;
-}
-
 /* Forms */
 html.dark input[type="text"],
 html.dark input[type="email"],
@@ -829,27 +805,15 @@ html.dark input[type="number"],
 html.dark input[type="search"],
 html.dark select,
 html.dark textarea {
-  @apply invalid:text-red-100 invalid:bg-red-900 invalid:focus:text-red-100;
-  background-color: rgb(var(--background));
-  box-shadow: inset 6px 6px 12px #00000070, inset -6px -6px 12px #3a3a3a70;
+  @apply invalid:text-red-100 invalid:focus:text-red-100;
 }
 
 html.dark .validation-error {
-  @apply text-red-100 bg-red-900;
-  box-shadow: inset 6px 6px 12px #00000070, inset -6px -6px 12px #3a3a3a70;
+  @apply text-red-100 bg-red-800/50;
+  box-shadow: inset 6px 6px 10px #471414, inset -6px -6px 10px #611c1c;
 }
 
 /* Tables */
-html.dark #tabulatorTable {
-  box-shadow: 10px 10px 20px #00000070, -10px -10px 20px #3a3a3a70;
-}
-
-@media (min-width: 640px) {
-  html.dark #tabulatorTable {
-    box-shadow: 16px 16px 32px #00000070, -16px -16px 32px #3a3a3a70;
-  }
-}
-
 html.dark .tabulator-table {
   color: rgb(var(--text)) !important;
 }
@@ -857,8 +821,7 @@ html.dark .tabulator-table {
 html.dark .tabulator-header,
 html.dark .tabulator-col,
 html.dark .tabulator-col-group-cols {
-  @apply text-text border-text/10 !important;
-  background: rgb(var(--background)) !important;
+  @apply border-text/50 !important;
 }
 
 html.dark .tabulator-row-odd {
@@ -869,34 +832,22 @@ html.dark .tabulator-cell {
   @apply border-text/10 !important;
 }
 
-html.dark .tabulator-row-even {
-  background-color: rgb(35, 35, 35) !important;
-}
-
 html.dark .inativa > .tabulator-cell {
   @apply text-text/50 line-through !important;
 }
 
 /* Toggle */
-html.dark .switch-toggle input[type="checkbox"] + label {
-  box-shadow: inset 6px 6px 12px #00000070, inset -6px -6px 12px #3a3a3a70;
-}
 html.dark .switch-toggle input[type="checkbox"] + label::before {
   background: linear-gradient(145deg, #1c1c1c, #171717);
-  box-shadow: 3px 3px 6px #00000070, -3px -3px 6px #3a3a3a70;
 }
+
 html.dark .switch-toggle input[type="checkbox"]:checked + label::before {
   background: linear-gradient(145deg, #0088dc, #0072b9);
 }
 
 /* Buttons */
-html.dark button {
-  box-shadow: 6px 6px 12px #00000070, -6px -6px 12px #3a3a3a70;
-}
-
 html.dark .button-primary {
   background: linear-gradient(145deg, #0088dc, #0072b9);
-  box-shadow: 6px 6px 12px #00000070, -6px -6px 12px #3a3a3a70;
 }
 
 html.dark .button-primary:hover {
@@ -905,23 +856,15 @@ html.dark .button-primary:hover {
 
 html.dark .button-tertiary {
   background: linear-gradient(145deg, #1c1c1c, #171717);
-  box-shadow: 6px 6px 12px #00000070, -6px -6px 12px #3a3a3a70;
 }
 
 html.dark .button-tertiary:hover {
   background: linear-gradient(145deg, #171717, #1c1c1c);
 }
 
-html.dark .button:active {
-  @apply text-primary;
+html.dark .button:active,
+html.dark .button:focus {
   background: rgb(var(--background));
-  box-shadow: inset 6px 6px 12px #00000070, inset -6px -6px 12px #3a3a3a70;
-}
-
-html.dark .button:disabled,
-html.dark .button:disabled:hover {
-  background: rgb(var(--background));
-  box-shadow: inset 6px 6px 12px #00000070, inset -6px -6px 12px #3a3a3a70;
 }
 
 html.dark #senha-olho {
@@ -934,47 +877,4 @@ html.dark .senha-olho:hover {
 
 html.dark .senha-olho-riscado:hover {
   background: url("../img/eye-off-dark-hover.svg") no-repeat center;
-}
-
-/* Images */
-html.dark .img-filter {
-  filter: drop-shadow(3px 3px 6px #00000070) drop-shadow(3px 3px 6px #3a3a3a70);
-}
-
-/* Page Load animation */
-html.dark .loader-wrapper {
-  background: rgb(var(--background));
-}
-
-/* Modal de saída e de ajuda */
-html.dark .logout-modal,
-html.dark .help-modal {
-  background-color: rgb(var(--background));
-  color: rgb(var(--text));
-}
-
-html.dark .logout-modal::backdrop,
-html.dark .help-modal::backdrop {
-  @apply bg-gray-600/90 backdrop-blur-sm;
-}
-
-/* Gráfico do dashboard */
-html.dark #dashboardChart {
-  filter: drop-shadow(6px 6px 12px #00000070)
-    drop-shadow(6px 6px 12px #3a3a3a70);
-}
-
-/* Floating Menu */
-html.dark .menu-open-button,
-html.dark .menu-item {
-  box-shadow: 10px 10px 15px #00000070;
-}
-
-html.dark #menu-open:checked + .menu-open-button,
-html.dark .menu-open-button:hover,
-html.dark .menu-open-button:focus,
-html.dark .menu-item:hover,
-html.dark .menu-item:focus {
-  background-color: rgb(0, 88, 142);
-  outline: 0;
 }

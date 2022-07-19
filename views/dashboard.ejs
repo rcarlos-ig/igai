@@ -11,12 +11,12 @@
       <% if (hour >= 12) greeting = "Boa tarde";  %>
       <% if (hour >= 19) greeting = "Boa noite";  %>
       <div class="flex flex-col justify-center">
-        <p><%= greeting %>, <span class="font-medium text-lg"><%= user.name %></span>.</p>
-        <p class="mt-2 md:mt-4">E-mail: <span class="font-medium"><%= user.email %></span></p>
-        <p>Tipo de acesso: <span class="font-medium"><%= user.role === "admin" ? "Completo" : "Visualização" %></span></p>
-        <p>Nº de acessos: <span class="font-medium"><%= user.accesses %></span></p>
+        <p><%= greeting %>, <span class="font-semibold text-primary"><%= user.name %></span>.</p>
+        <p class="mt-2 md:mt-4">E-mail: <span class="font-semibold"><%= user.email %></span></p>
+        <p>Tipo de acesso: <span class="font-semibold"><%= user.role === "admin" ? "Completo" : "Visualização" %></span></p>
+        <p>Nº de acessos: <span class="font-semibold"><%= user.accesses %></span></p>
         <p>Último acesso: 
-          <span class="font-medium">
+          <span class="font-semibold">
             <% if (user.lastLogin) { %>
               <%= user.lastLogin.toLocaleString("default", {
                 day:"2-digit",
@@ -28,15 +28,15 @@
             <% } %>            
           </span>
         </p>
-        <p>Tema: <span class="font-medium" id="dashThemeText"><%= user.theme === "dark" ? "Escuro" : "Claro" %></span></p>
-        <p>Cadastrado em: <span class="font-medium"><%= user.createdAt.toLocaleString("default", {
+        <p>Tema: <span class="font-semibold" id="dashThemeText"><%= user.theme === "dark" ? "Escuro" : "Claro" %></span></p>
+        <p>Cadastrado em: <span class="font-semibold"><%= user.createdAt.toLocaleString("default", {
           day:"2-digit",
           month: "2-digit",
           year: "2-digit",
           hour: "2-digit",
           minute: "2-digit",
           }) %></span></p>
-        <p class="mt-6">Há <span class="font-medium text-lg text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-medium text-lg text-primary"><%= activeSchools.length %></span> estão ativas.</p>
+        <p class="mt-6">Há <span class="font-semibold text-primary"><%= schools.length %></span> unidades escolares cadastradas, das quais <span class="font-semibold text-primary"><%= activeSchools.length %></span> estão ativas.</p>
       </div>
     </div>
     <h3 class="xl:col-start-2 xl:col-end-3 xl:row-start-1 xl:row-end-2">Gráfico de Avaliações</h3>

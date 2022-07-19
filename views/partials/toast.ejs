@@ -1,8 +1,9 @@
 <script>
   const toastMessages = function (msg, msgType) {
     const toast = document.createElement("div");
-    const closeButton = document.createElement("span");
+    toast.classList.add("toast");
 
+    const closeButton = document.createElement("span");
     closeButton.innerHTML = "X";
     closeButton.classList.add("close-toast");
     toast.appendChild(closeButton);
