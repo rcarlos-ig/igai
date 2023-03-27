@@ -11,6 +11,7 @@ const compression = require("compression");
 const bodyParser = require("body-parser");
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
+const Router = require("./routes/routes");
 
 // DotEnv config
 dotenv.config();
@@ -67,13 +68,6 @@ app.use(compression());
 // Set the View Engine
 app.set("view engine", "ejs");
 
-// Set the static folder
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname + "/public", { maxAge: "30d" }));
-} else {
-  app.use(express.static(__dirname + "/public"));
-}
-
 // Use 'connect-flash' for flash messages
 app.use(flash());
 
@@ -104,7 +98,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Router
-app.use("/", require("./routes/routes"));
+app.use("/igaie", Router);
+
+// Set the static folder
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(__dirname + "/public", { maxAge: "30d" }));
+} else {
+  app.use(express.static(__dirname + "/public"));
+}
 
 // Sentry error handler
 if (process.env.NODE_ENV === "production") {
