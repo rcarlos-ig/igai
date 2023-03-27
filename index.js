@@ -102,7 +102,7 @@ app.use("/igaie", Router);
 
 // Set the static folder
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname + "/public", { maxAge: "30d" }));
+  app.use("/igaie", express.static(__dirname + "/public", { maxAge: "30d" }));
 } else {
   app.use(express.static(__dirname + "/public"));
 }
