@@ -817,6 +817,9 @@ video {
 .mt-12 {
   margin-top: 3rem;
 }
+.ml-2 {
+  margin-left: 0.5rem;
+}
 .mb-14 {
   margin-bottom: 3.5rem;
 }
@@ -889,9 +892,6 @@ video {
 .aspect-square {
   aspect-ratio: 1 / 1;
 }
-.h-full {
-  height: 100%;
-}
 .h-10 {
   height: 2.5rem;
 }
@@ -900,6 +900,9 @@ video {
 }
 .h-\[300px\] {
   height: 300px;
+}
+.h-full {
+  height: 100%;
 }
 .h-8 {
   height: 2rem;
@@ -2338,17 +2341,6 @@ html {
   scroll-behavior: smooth;
   font-size: 1rem;
   line-height: 1.5rem;
-}
-
-@media (min-width: 1280px) {
-
-  html {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-  }
-}
-
-html {
   font-family: "Nunito Sans", sans-serif;
   background-color: rgb(var(--background));
   color: rgb(var(--text));

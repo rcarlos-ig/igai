@@ -1,3 +1,9 @@
+<div class="flex justify-center mb-4">
+  <button id="print-table" class="button button-primary">Imprimir</button>
+  <button id="download-xlsx" class="button button-primary ml-2">
+    Download
+  </button>
+</div>
 <div
   class="h-[600px] mt-4 mb-8 scroll-smooth"
   id="tabulatorTable"
@@ -76,6 +82,12 @@
 
       const tabulatorTable = new Tabulator("#tabulatorTable", {
         height: "600px",
+        printAsHtml: true,
+        printRowRange: "active",
+        groupHeaderPrint: false,
+        printHeader:
+          "<h1>SEJIN - IGAIE</h1><small>Indicador Gerencial de Avaliação do Imóvel Educacional</small>",
+        printFooter: "<h2>Footer</h2>",
         data: tableData,
         columnHeaderVertAlign: "middle",
         columnDefaults: {
@@ -267,5 +279,20 @@
 
         searchCount.innerHTML = rows.length;
       });
+
+      document
+        .getElementById("print-table")
+        .addEventListener("click", function () {
+          tabulatorTable.print();
+        });
+
+      //trigger download of data.xlsx file
+      document
+        .getElementById("download-xlsx")
+        .addEventListener("click", function () {
+          tabulatorTable.download("xlsx", "data.xlsx", {
+            sheetName: "IGAIE",
+          });
+        });
     });
 </script>
