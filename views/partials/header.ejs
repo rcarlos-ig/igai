@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<% if (locals.user) { %>  
-  <html lang="pt-BR" class="no-js <%= user.theme === 'dark' ? 'dark' : '' %>" id="html">
-<% } else { %>
+<% if (locals.user) { %>
+<html
+  lang="pt-BR"
+  class="no-js <%= user.theme === 'dark' ? 'dark' : '' %>"
+  id="html"
+>
+  <% } else { %>
   <html lang="pt-BR" class="no-js" id="html">
-<% }; %>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <% }; %>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>SEJIN - IGAIE :: Indicador Gerencial de Avaliação do Imóvel Educacional</title>
+      <title>
+        SEJIN - IGAIE :: Indicador Gerencial de Avaliação do Imóvel Educacional
+      </title>
 
-    <script type="module">
-      document.documentElement.classList.replace("no-js", "js");
-    </script>
+      <script type="module">
+        document.documentElement.classList.replace("no-js", "js");
+      </script>
 
-    <!-- Theming -->
-    <% if (locals.user) { %>
+      <!-- Theming -->
+      <% if (locals.user) { %>
       <script>
         const userTheme = "<%= user.theme %>";
         document.cookie = `theme=${userTheme};SameSite=Strict`;
       </script>
-    <% } else { %>
+      <% } else { %>
       <script>
         const html = document.getElementById("html");
         const cookies = document.cookie;
@@ -30,101 +36,113 @@
           if (cookie.indexOf("theme") >= 0) {
             const theme = cookie.substr(6);
             if (theme === "dark") {
-              html.classList.add("dark")
+              html.classList.add("dark");
             } else {
-              html.classList.remove("dark")
-            };
+              html.classList.remove("dark");
+            }
           }
         }
       </script>
-    <% } %>
+      <% } %>
 
-    <!-- Google Fonts -->
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
+      <!-- Google Fonts -->
+      <link
+        rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&display=swap"
+        as="style"
+        onload="this.onload=null;this.rel='stylesheet'"
+      />
 
-    <!-- CSS -->
-    <% if (process.env.NODE_ENV === "production") { %>
-      <link rel="stylesheet" href="/css/styles.min.css" />
-    <% } else { %>
-      <link rel="stylesheet" href="/css/styles.css" />
-    <% } %>
-    <link
-      rel="preload"
-      href="/css/hint.min.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript><link rel="stylesheet" href="/css/hint.min.css" /></noscript>
-    <link
-      rel="preload"
-      href="/css/tabulator.min.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript><link rel="stylesheet" href="/css/tabulator.min.css" /></noscript>
+      <!-- CSS -->
+      <% if (process.env.NODE_ENV === "production") { %>
+      <link rel="stylesheet" href="./css/styles.min.css" />
+      <% } else { %>
+      <link rel="stylesheet" href="./css/styles.css" />
+      <% } %>
+      <link
+        rel="preload"
+        href="./css/hint.min.css"
+        as="style"
+        onload="this.onload=null;this.rel='stylesheet'"
+      />
+      <noscript><link rel="stylesheet" href="./css/hint.min.css" /></noscript>
+      <link
+        rel="preload"
+        href="./css/tabulator.min.css"
+        as="style"
+        onload="this.onload=null;this.rel='stylesheet'"
+      />
+      <noscript
+        ><link rel="stylesheet" href="./css/tabulator.min.css"
+      /></noscript>
 
-    <!-- META and Social -->
-    <meta
-      name="description"
-      content="Aplicação simples de controle do estado de conservação das unidades escolares da Rede Municipal de Angra dos Reis."
-    />
-    <meta
-      property="og:title"
-      content="SEJIN - IGAIE :: Indicador Gerencial de Avaliação do Imóvel Educacional"
-    />
-    <meta
-      property="og:description"
-      content="Aplicação simples de controle do estado de conservação das unidades escolares da Rede Municipal de Angra dos Reis."
-    />
-    <meta property="og:image" content="/img/og_SEC_logo.jpg" />
-    <meta property="og:locale" content="pt_BR" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta property="og:url" content="https://igaie.info/" />
+      <!-- META and Social -->
+      <meta
+        name="description"
+        content="Aplicação simples de controle do estado de conservação das unidades escolares da Rede Municipal de Angra dos Reis."
+      />
+      <meta
+        property="og:title"
+        content="SEJIN - IGAIE :: Indicador Gerencial de Avaliação do Imóvel Educacional"
+      />
+      <meta
+        property="og:description"
+        content="Aplicação simples de controle do estado de conservação das unidades escolares da Rede Municipal de Angra dos Reis."
+      />
+      <meta property="og:image" content="./img/og_SEC_logo.jpg" />
+      <meta property="og:locale" content="pt_BR" />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta property="og:url" content="https://igaie.info/" />
 
-    <link rel="canonical" href="https://igaie.info/" />
+      <link rel="canonical" href="https://igaie.info/" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="./apple-touch-icon.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="./favicon-32x32.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="./favicon-16x16.png"
+      />
+      <link rel="manifest" href="./site.webmanifest" />
 
-    <meta name="theme-color" content="#f9fafb" />
+      <meta name="theme-color" content="#f9fafb" />
 
-    <% if (process.env.NODE_ENV === "production") { %>
+      <% if (process.env.NODE_ENV === "production") { %>
       <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-P3W45MRGMT"></script>
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-P3W45MRGMT"
+      ></script>
       <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
 
-        gtag('config', 'G-P3W45MRGMT');
+        gtag("config", "G-P3W45MRGMT");
       </script>
+      <% } %>
+    </head>
 
-      <!-- Hotjar Tracking Code for https://igaie.info -->
-      <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:2990160,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-      </script>
-    <% } %>
-  </head>
-
-  <body>
-    <%- include('loader.ejs'); %>
-    <header>
-      <h1>SEJIN - IGAIE</h1>
-      <small>Indicador Gerencial de Avaliação do Imóvel Educacional</small>
-    </header>
-    <main>
+    <body>
+      <%- include('loader.ejs'); %>
+      <header>
+        <h1>SEJIN - IGAIE</h1>
+        <small>Indicador Gerencial de Avaliação do Imóvel Educacional</small>
+      </header>
+      <main></main>
+    </body>
+  </html>
+</html>

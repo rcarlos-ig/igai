@@ -10,7 +10,7 @@
     <h2 class="text-primary">O que é o IGAIE</h2>
     <img
       class="mb-6 img-filter mx-auto w-[320px] md:w-4/5 md:mb-8"
-      src="/img/help-1.svg"
+      src="./img/help-1.svg"
       alt="Imagem ilustrativa de um gráfico."
     />
     <p class="text-lg md:text-2xl">
@@ -25,7 +25,7 @@
     <h2 class="text-primary">Qual é o seu objetivo?</h2>
     <img
       class="mb-6 img-filter mx-auto w-[320px] md:w-4/5 md:mb-8"
-      src="/img/help-2.svg"
+      src="./img/help-2.svg"
       alt="Imagem ilustrativa de uma equipe trabalhando."
     />
     <p class="text-lg md:text-2xl">
@@ -42,7 +42,7 @@
     <h2 class="text-primary">E sua metodologia?</h2>
     <img
       class="mb-6 img-filter mx-auto w-[320px] md:w-4/5 md:mb-8"
-      src="/img/help-3.svg"
+      src="./img/help-3.svg"
       alt="Imagem ilustrativa de um gráfico."
     />
     <p class="text-lg md:text-2xl">
@@ -75,11 +75,15 @@
   });
   helpModalClose.addEventListener("click", () => {
     helpModal.classList.add("hide");
-    helpModal.addEventListener("animationend", function () {
-      helpModal.classList.remove("hide");
-      helpModal.close();
-      helpModal.removeEventListener("animationend", arguments.callee, false);
-    }, false)
+    helpModal.addEventListener(
+      "animationend",
+      function () {
+        helpModal.classList.remove("hide");
+        helpModal.close();
+        helpModal.removeEventListener("animationend", arguments.callee, false);
+      },
+      false
+    );
   });
 
   let activeSlide = 1;
