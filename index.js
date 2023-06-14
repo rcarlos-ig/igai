@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // MongoDB Connection
-const database = process.env.MONGOLAB_URI;
+const database = String(process.env.MONGOLAB_URI);
 mongoose
   .connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => console.log("Database Connected."))
@@ -104,7 +104,7 @@ app.use("/igaie", Router);
 if (process.env.NODE_ENV === "production") {
   app.use("/igaie", express.static(__dirname + "/public", { maxAge: "30d" }));
 } else {
-  app.use(express.static(__dirname + "/public"));
+  app.use("/igaie", express.static(__dirname + "/public"));
 }
 
 // Sentry error handler

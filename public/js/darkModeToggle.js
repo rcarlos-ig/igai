@@ -10,7 +10,6 @@ const lightIcon = document.getElementById("light");
 let dashThemeText = document.getElementById("dashThemeText");
 if (!dashThemeText) dashThemeText = undefined;
 
-
 if (darkModeToggleButton !== null) {
   darkModeToggleButton.addEventListener("click", function () {
     if (html.classList.contains("dark")) {
@@ -42,14 +41,14 @@ if (darkModeToggleButton !== null) {
 }
 
 function setUserTheme(theme) {
-  fetch("/user-theme", {
+  fetch("/igaie/user-theme", {
     method: "post",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ theme }),
-  });
+  }).catch((err) => console.error(err));
 }
 
 function fadeToggle(elementIn, elementOut) {
