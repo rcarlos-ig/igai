@@ -1,11 +1,11 @@
 {
   "name": "igai",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "main": "index.js",
   "scripts": {
     "test": "npx autocannon -c 50 -d 30 --workers 2 --renderStatusCodes --latency --debug --warmup [ -c 1 -d 2] https://localhost",
     "start": "node index.js",
-    "dev": "run-p css-watch nodemon",
+    "dev": "run-s css-build css-minify && run-p css-watch nodemon",
     "nodemon": "nodemon index.js",
     "css-build": "postcss ./tailwind.css -o public/css/styles.css",
     "css-minify": "cleancss public/css/styles.css -o public/css/styles.min.css",
