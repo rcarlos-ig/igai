@@ -3,14 +3,31 @@
 <div class="card min-w-[336px] w-5/6 max-w-md sm:w-3/4">
   <div class="w-full">
     <h2>Cadastrar unidade</h2>
-    <form method="post" action="/register-school">
+    <form method="post" action="igaie/register-school">
       <div class="form-line">
         <label for="codigo">Código<span class="required">*</span></label>
         <div>
           <% if (locals.codigo) { %>
-            <input type="number" name="codigo" id="codigo" placeholder="Código da escola" min="1" value="<%= codigo %>" required autofocus />
+          <input
+            type="number"
+            name="codigo"
+            id="codigo"
+            placeholder="Código da escola"
+            min="1"
+            value="<%= codigo %>"
+            required
+            autofocus
+          />
           <% } else { %>
-            <input type="number" name="codigo" id="codigo" placeholder="Código da escola" min="1" required autofocus />
+          <input
+            type="number"
+            name="codigo"
+            id="codigo"
+            placeholder="Código da escola"
+            min="1"
+            required
+            autofocus
+          />
           <% } %>
         </div>
       </div>
@@ -18,50 +35,119 @@
         <label for="nome">Nome<span class="required">*</span></label>
         <div>
           <% if (locals.nome) { %>
-            <input type="text" name="nome" id="nome" placeholder="Nome da escola" minlength="3" value="<%= nome %>" required />
+          <input
+            type="text"
+            name="nome"
+            id="nome"
+            placeholder="Nome da escola"
+            minlength="3"
+            value="<%= nome %>"
+            required
+          />
           <% } else { %>
-            <input type="text" name="nome" id="nome" placeholder="Nome da escola" minlength="3" required />
+          <input
+            type="text"
+            name="nome"
+            id="nome"
+            placeholder="Nome da escola"
+            minlength="3"
+            required
+          />
           <% } %>
-          <span class="hidden validation-error" id="nomeError" aria-live="polite">Nome precisa ter 3 caracteres ou mais.</span>
+          <span
+            class="hidden validation-error"
+            id="nomeError"
+            aria-live="polite"
+            >Nome precisa ter 3 caracteres ou mais.</span
+          >
         </div>
       </div>
       <div class="form-line">
         <label for="bairro">Bairro<span class="required">*</span></label>
         <div>
           <% if (locals.bairro) { %>
-            <input type="text" name="bairro" id="bairro" placeholder="Bairro da escola" minlength="3" value="<%= bairro %>" required />
+          <input
+            type="text"
+            name="bairro"
+            id="bairro"
+            placeholder="Bairro da escola"
+            minlength="3"
+            value="<%= bairro %>"
+            required
+          />
           <% } else { %>
-            <input type="text" name="bairro" id="bairro" placeholder="Bairro da escola" minlength="3" required />
+          <input
+            type="text"
+            name="bairro"
+            id="bairro"
+            placeholder="Bairro da escola"
+            minlength="3"
+            required
+          />
           <% } %>
-          <span class="hidden validation-error" id="bairroError" aria-live="polite">Bairro precisa ter 3 caracteres ou mais.</span>
+          <span
+            class="hidden validation-error"
+            id="bairroError"
+            aria-live="polite"
+            >Bairro precisa ter 3 caracteres ou mais.</span
+          >
         </div>
       </div>
       <div class="form-line">
         <label for="ocupacao">Ocupação<span class="required">*</span></label>
         <div>
           <% if (locals.ocupacao) { %>
-            <input type="text" name="ocupacao" id="ocupacao" placeholder="Tipo de ocupação da escola" minlength="3" value="<%= ocupacao %>" required />
+          <input
+            type="text"
+            name="ocupacao"
+            id="ocupacao"
+            placeholder="Tipo de ocupação da escola"
+            minlength="3"
+            value="<%= ocupacao %>"
+            required
+          />
           <% } else { %>
-            <input type="text" name="ocupacao" id="ocupacao" placeholder="Tipo de ocupação da escola" minlength="3" required />
+          <input
+            type="text"
+            name="ocupacao"
+            id="ocupacao"
+            placeholder="Tipo de ocupação da escola"
+            minlength="3"
+            required
+          />
           <% } %>
-          <span class="hidden validation-error" id="ocupacaoError" aria-live="polite">Ocupação precisa ter 3 caracteres ou mais.</span>
+          <span
+            class="hidden validation-error"
+            id="ocupacaoError"
+            aria-live="polite"
+            >Ocupação precisa ter 3 caracteres ou mais.</span
+          >
         </div>
       </div>
-      <div class="form-line">          
+      <div class="form-line">
         <div class="flex justify-center xl:justify-start">
-          <div class="flex justify-center items-center mx-auto mb-2 sm:mb-4 p-4 gap-4 sm:gap-8 w-[336px]" style="margin-left: 0; margin-right: 0;">
+          <div
+            class="flex justify-center items-center mx-auto mb-2 sm:mb-4 p-4 gap-4 sm:gap-8 w-[336px]"
+            style="margin-left: 0; margin-right: 0"
+          >
             <div class="switch-label">
               <span>Unidade ativa?</span>
             </div>
             <div class="switch-toggle">
-              <input type="checkbox" id="ativa" name="ativa">
+              <input type="checkbox" id="ativa" name="ativa" />
               <label for="ativa"></label>
             </div>
           </div>
         </div>
       </div>
       <div class="flex justify-end gap-4 mt-6">
-        <button type="button" class="button button-tertiary" onClick="window.location = '/dashboard'">Retornar</button>
+        <button
+          type="button"
+          class="button button-tertiary"
+          onClick="window.location = '/igaie/dashboard'"
+        >
+          Retornar
+        </button>
         <button type="submit" class="button button-primary">Cadastrar</button>
       </div>
     </form>
@@ -77,5 +163,5 @@
   });
 </script>
 
-<%- include('partials/floatingMenu.ejs'); %>
-<%- include('partials/footer.ejs'); %>
+<%- include('partials/floatingMenu.ejs'); %> <%- include('partials/footer.ejs');
+%>

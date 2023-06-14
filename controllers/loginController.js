@@ -17,22 +17,24 @@ const {
 // Logout
 const logout = (req, res) => {
   if (req.user) {
-    User.findById(req.user._id).then((user) => {
-      if (user) {
-        user.lastLogin = new Date();
-        user.save();
-      }
-      req.logout(function (err) {
-        if (err) return next(err);
-        req.session.destroy();
-        res.redirect("/login");
-      });
-    });
+    User.findById(req.user._id)
+      .then((user) => {
+        if (user) {
+          user.lastLogin = new Date();
+          user.save().catch((error) => console.log(error));
+        }
+        req.logout(function (err) {
+          if (err) return next(err);
+          req.session.destroy();
+          res.redirect("/igaie/login");
+        });
+      })
+      .catch((error) => console.log(error));
   } else {
     req.logout(function (err) {
       if (err) return next(err);
       req.session.destroy();
-      res.redirect("/login");
+      res.redirect("/igaie/login");
     });
   }
 };
@@ -103,17 +105,23 @@ const registerView = (req, res) => {
   // Check token
   Token.findOne({
     token: req.params.token,
-  }).then((token) => {
-    if (token) {
-      res.render("register", { token: token.token, errors: [""], user: req.user });
-    } else {
-      console.log("Invalid link or expired.");
-      res.render("login", {
-        errors: ["Link inválido ou expirado."],
-        user: req.user,
-      });
-    }
-  });
+  })
+    .then((token) => {
+      if (token) {
+        res.render("register", {
+          token: token.token,
+          errors: [""],
+          user: req.user,
+        });
+      } else {
+        console.log("Invalid link or expired.");
+        res.render("login", {
+          errors: ["Link inválido ou expirado."],
+          user: req.user,
+        });
+      }
+    })
+    .catch((error) => console.log(error));
 };
 
 // POST Request for Register page
@@ -123,45 +131,51 @@ const registerUser = (req, res) => {
   // Check token
   Token.findOne({
     token: token,
-  }).then((tokenFound) => {
-    if (!tokenFound) return;
-    // Check user
-    User.findOne({ email: email }).then((user) => {
-      if (user) {
-        res.render("register", {
-          name,
-          email,
-          password,
-          confirm,
-          errors: ["E-mail já cadastrado."],
-          token: tokenFound.token,
-        });
-      } else {
-        // New user
-        const newUser = new User({
-          name,
-          email,
-          password,
-          role: "basic",
-          theme: "light",
-        });
-        //Password Hashing
-        bcrypt.genSalt(10, (err, salt) =>
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser
-              .save() // Save nes user on database
-              .then(() => {
-                tokenFound.deleteOne().then(console.log("Deleted: " + tokenFound._id));
-                res.render("login", { success: ["Cadastro realizado."] });
+  })
+    .then((tokenFound) => {
+      if (!tokenFound) return;
+      // Check user
+      User.findOne({ email: email })
+        .then((user) => {
+          if (user) {
+            res.render("register", {
+              name,
+              email,
+              password,
+              confirm,
+              errors: ["E-mail já cadastrado."],
+              token: tokenFound.token,
+            });
+          } else {
+            // New user
+            const newUser = new User({
+              name,
+              email,
+              password,
+              role: "basic",
+              theme: "light",
+            });
+            //Password Hashing
+            bcrypt.genSalt(10, (err, salt) =>
+              bcrypt.hash(newUser.password, salt, (err, hash) => {
+                if (err) throw err;
+                newUser.password = hash;
+                newUser
+                  .save() // Save nes user on database
+                  .then(() => {
+                    tokenFound
+                      .deleteOne()
+                      .then(console.log("Deleted: " + tokenFound._id));
+                    res.render("login", { success: ["Cadastro realizado."] });
+                  })
+                  .catch((err) => console.log(err));
               })
-              .catch((err) => console.log(err));
-          })
-        );
-      }
-    });
-  });
+            );
+          }
+        })
+        .catch((error) => console.log(error));
+    })
+    .catch((error) => console.log(error));
 };
 
 // GET request For Login page
@@ -177,8 +191,8 @@ const loginView = (req, res) => {
 const loginUser = (req, res) => {
   // Authenticate user
   passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/login",
+    successRedirect: "/igaie/dashboard",
+    failureRedirect: "/igaie/login",
     failureFlash: true,
   })(req, res);
 };
@@ -193,48 +207,52 @@ const requestResetPassword = async (req, res) => {
   const { email } = req.body;
 
   // Check user
-  User.findOne({ email: email }).then((user) => {
-    if (user) {
-      // Check token
-      Token.findOne({ userId: user._id }).then(async (token) => {
-        if (token) {
-          console.log("token exists");
-          token.deleteOne();
-          console.log("token deleted");
-        }
+  User.findOne({ email: email })
+    .then((user) => {
+      if (user) {
+        // Check token
+        Token.findOne({ userId: user._id })
+          .then(async (token) => {
+            if (token) {
+              console.log("token exists");
+              token.deleteOne();
+              console.log("token deleted");
+            }
 
-        // Create new token
-        token = await new Token({
-          userId: user._id,
-          token: crypto.randomBytes(32).toString("hex"),
-        }).save();
+            // Create new token
+            token = await new Token({
+              userId: user._id,
+              token: crypto.randomBytes(32).toString("hex"),
+            }).save();
 
-        console.log("token created");
+            console.log("token created");
 
-        // Redefine password page link
-        const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
+            // Redefine password page link
+            const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
 
-        // Redefine password mail body
-        const html = await ejs.renderFile(
-          path.join(__dirname, "../", "views", "resetPasswordMail.ejs"),
-          { name: user.name, link: link }
-        );
+            // Redefine password mail body
+            const html = await ejs.renderFile(
+              path.join(__dirname, "../", "views", "resetPasswordMail.ejs"),
+              { name: user.name, link: link }
+            );
 
-        // Send the email
-        const result = await sendEmail(user.email, html);
+            // Send the email
+            const result = await sendEmail(user.email, html);
 
-        console.log(result);
+            console.log(result);
 
-        res.render("login", { success: "E-mail enviado com sucesso." });
-      });
-    } else {
-      console.log("User not found.");
+            res.render("login", { success: "E-mail enviado com sucesso." });
+          })
+          .catch((error) => console.log(error));
+      } else {
+        console.log("User not found.");
 
-      const errors = ["E-mail não cadastrado."];
+        const errors = ["E-mail não cadastrado."];
 
-      res.render("requestResetPassword", { errors });
-    }
-  });
+        res.render("requestResetPassword", { errors });
+      }
+    })
+    .catch((error) => console.log(error));
 };
 
 // Get Request for resetting password
@@ -250,54 +268,62 @@ const resetPassword = (req, res) => {
   const { newPassword } = req.body;
 
   // Check user
-  User.findById(req.params.userId).then((user) => {
-    if (user) {
-      // Check token
-      Token.findOne({
-        userId: user._id,
-        token: req.params.token,
-      }).then((token) => {
-        if (token) {
-          // Pasword hashing
-          bcrypt.genSalt(10, (err, salt) =>
-            bcrypt.hash(newPassword, salt, (err, hash) => {
-              if (err) throw err;
-              user.password = hash;
-              user
-                .save()
-                .then(() => {
-                  token.deleteOne().then(console.log("Deleted: " + token._id));
-                  res.redirect("/login");
+  User.findById(req.params.userId)
+    .then((user) => {
+      if (user) {
+        // Check token
+        Token.findOne({
+          userId: user._id,
+          token: req.params.token,
+        })
+          .then((token) => {
+            if (token) {
+              // Pasword hashing
+              bcrypt.genSalt(10, (err, salt) =>
+                bcrypt.hash(newPassword, salt, (err, hash) => {
+                  if (err) throw err;
+                  user.password = hash;
+                  user
+                    .save()
+                    .then(() => {
+                      token
+                        .deleteOne()
+                        .then(console.log("Deleted: " + token._id));
+                      res.redirect("igaie/login");
+                    })
+                    .catch((err) => console.log(err));
                 })
-                .catch((err) => console.log(err));
-            })
-          );
-        } else {
-          console.log("Invalid link or expired.");
+              );
+            } else {
+              console.log("Invalid link or expired.");
 
-          res.redirect("/login");
-        }
-      });
-    } else {
-      console.log("Invalid link or expired.");
+              res.redirect("igaie/login");
+            }
+          })
+          .catch((error) => console.log(error));
+      } else {
+        console.log("Invalid link or expired.");
 
-      res.redirect("/login");
-    }
-  });
+        res.redirect("igaie/login");
+      }
+    })
+    .catch((error) => console.log(error));
 };
 
 // POST request for setting the user theme
 const setUserTheme = (req, _res) => {
   const { theme } = req.body;
 
-  User.findById(req.user._id).then((user) => {
-    if (user) {
-      user.theme = theme;
-      user.save();
-    } else {
-      console.log("Invalid user ID.");
-    }
-  });
+  User.findById(req.user._id)
+    .then((user) => {
+      if (user) {
+        user.theme = theme;
+        user.save().catch((error) => console.log(error));
+      } else {
+        console.log("Invalid user ID.");
+      }
+    })
+    .catch((error) => console.log(error));
 };
 
 module.exports = {

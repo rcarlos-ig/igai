@@ -25,7 +25,7 @@
       <p>Bomba da cisterna: <span class="font-semibold"><%= school.bomba %></span></p>
       <p>Ativa: <span class="font-semibold"><%= school.ativa === true ? 'Sim' : 'Não' %></span></p>
       <div class="flex justify-end mt-4 sm:mt-2 sm:justify-start lg:justify-center">
-        <button type="button" class="button button-primary" onclick="window.location='<%= `/edit-school?unidade=${school.codigo}` %>'">Editar</button>
+        <button type="button" class="button button-primary" onclick="window.location='<%= `/igaie/edit-school?unidade=${school.codigo}` %>'">Editar</button>
       </div>
     </div>
     <h3 class="lg:col-start-2 lg:col-end-3 lg:row-start-1 lg:row-end-2">Avaliação</h3>
@@ -85,14 +85,14 @@
           </div>
         <% } %>
         <div class="flex justify-end gap-4 mt-12">
-          <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
+          <button type="button" class="button button-tertiary" onclick="window.location='/igaie/dashboard'">Retornar</button>
           <button type="submit" class="button button-primary">Salvar</button>
         </div>
       </form>
     <% } else { %>
       <h4>Escola inativa.</h4>
       <div class="flex justify-end gap-4 mt-12 px-6">
-        <button type="button" class="button button-tertiary" onclick="window.location='/dashboard'">Retornar</button>
+        <button type="button" class="button button-tertiary" onclick="window.location='/igaie/dashboard'">Retornar</button>
       </div>
     <% } %>
   </div>

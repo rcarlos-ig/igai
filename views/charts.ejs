@@ -1,10 +1,14 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="flex flex-col justify-center mb-8 mx-auto px-3 w-full md:w-11/12 lg:w-3/4">
+<div
+  class="flex flex-col justify-center mb-8 mx-auto px-3 w-full md:w-11/12 lg:w-3/4"
+>
   <h2 class="mb-8 sm:mb-12 xl:mb-16">Gráficos</h2>
   <h3 class="capitalize" id="graphTitle">Instalações</h3>
   <div class="card flex-col w-full min-w-[336px]">
-    <div class="relative w-full h-[300px] mt-4 mb-20 mx-auto sm:h-[400px] sm:mb-8 md:mb-12 xl:h-[600px]">
+    <div
+      class="relative w-full h-[300px] mt-4 mb-20 mx-auto sm:h-[400px] sm:mb-8 md:mb-12 xl:h-[600px]"
+    >
       <canvas id="chart"></canvas>
       <div id="legend-container" class="mt-1 md:mt-4"></div>
     </div>
@@ -18,13 +22,12 @@
       aria-label="Selecione um campo para criação do gráfico."
       onchange="updateChart()"
     >
-      <% for (let i = 4; i < 14; i++) { %>
-        <% if (fields[i][0] !== "reservatorio") { %>
-          <option class="replace" value="<%= fields[i][0] %>">
-            <%= fields[i][0].replace(/./, fields[i][0][0].toUpperCase()) %>
-          </option>
-        <% } %>
-      <% } %>
+      <% for (let i = 4; i < 14; i++) { %> <% if (fields[i][0] !==
+      "reservatorio") { %>
+      <option class="replace" value="<%= fields[i][0] %>">
+        <%= fields[i][0].replace(/./, fields[i][0][0].toUpperCase()) %>
+      </option>
+      <% } %> <% } %>
       <option value="ocupacao">Ocupação</option>
       <option value="avaliacao">IGAI/Avaliação</option>
     </select>
@@ -33,16 +36,12 @@
     <button
       type="button"
       class="button button-tertiary"
-      onclick="window.location='/dashboard'"
+      onclick="window.location='/igaie/dashboard'"
     >
       Retornar
     </button>
   </div>
 </div>
 
-<% if (locals.data) { %>
-  <%- include('partials/chartsScript.ejs') %> 
-<% } %>
-
-<%- include('partials/floatingMenu.ejs'); %>
-<%- include('partials/footer.ejs'); %>
+<% if (locals.data) { %> <%- include('partials/chartsScript.ejs') %> <% } %> <%-
+include('partials/floatingMenu.ejs'); %> <%- include('partials/footer.ejs'); %>

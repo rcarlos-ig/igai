@@ -104,7 +104,7 @@ app.use("/igaie", Router);
 if (process.env.NODE_ENV === "production") {
   app.use("/igaie", express.static(__dirname + "/public", { maxAge: "30d" }));
 } else {
-  app.use(express.static(__dirname + "/public"));
+  app.use("/igaie", express.static(__dirname + "/public"));
 }
 
 // Sentry error handler
