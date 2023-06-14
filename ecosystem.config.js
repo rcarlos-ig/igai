@@ -4,14 +4,14 @@ const appPackage = require("./package.json");
 module.exports = {
   apps: [
     {
-      name: "igai",
+      name: "IGAIE",
       script: "index.js",
       instances: "2",
       exec_mode: "cluster",
       watch: ".",
       env: {
         npm_package_version: appPackage.version,
-        NODE_ENV: "production"
+        NODE_ENV: "production",
       },
     },
   ],
@@ -30,3 +30,4 @@ module.exports = {
     },
   },
 };
+

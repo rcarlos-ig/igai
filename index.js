@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // MongoDB Connection
-const database = String(process.env.MONGOLAB_URI);
+const database = process.env.MONGOLAB_URI;
 mongoose
   .connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => console.log("Database Connected."))
