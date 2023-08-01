@@ -13,6 +13,12 @@ const sendEmail = async (email, html) => {
     },
   });
 
+  console.log(
+    process.env.MAIL_HOST,
+    process.env.MAIL_USER,
+    process.env.MAIL_PASS
+  );
+
   return transporter.sendMail({
     from: `SEJIN - IGAI ${process.env.MAIL_USER}`,
     to: email,
