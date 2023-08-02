@@ -166,7 +166,9 @@ const registerUser = (req, res) => {
                     tokenFound
                       .deleteOne()
                       .then(console.log("Deleted: " + tokenFound._id));
-                    res.render("login", { success: ["Cadastro realizado."] });
+
+                    const success = ["Cadastro realizado."];
+                    res.render("login", { success });
                   })
                   .catch((err) => console.log(err));
               })
@@ -228,7 +230,7 @@ const requestResetPassword = async (req, res) => {
             console.log("token created");
 
             // Redefine password page link
-            const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
+            const link = `${process.env.BASE_URL}/password-reset?user=${user._id}&token=${token.token}`;
 
             // Redefine password mail body
             const html = await ejs.renderFile(
@@ -241,7 +243,9 @@ const requestResetPassword = async (req, res) => {
 
             console.log(result);
 
-            res.render("login", { success: "E-mail enviado com sucesso." });
+            const success = ["E-mail enviado com sucesso."];
+
+            res.render("login", { success });
           })
           .catch((error) => console.log(error));
       } else {
@@ -258,8 +262,8 @@ const requestResetPassword = async (req, res) => {
 // Get Request for resetting password
 const resetPasswordView = (req, res) => {
   res.render("resetPassword", {
-    userId: req.params.userId,
-    token: req.params.token,
+    userId: req.query.user,
+    token: req.query.token,
   });
 };
 
@@ -268,13 +272,13 @@ const resetPassword = (req, res) => {
   const { newPassword } = req.body;
 
   // Check user
-  User.findById(req.params.userId)
+  User.findById(req.query.user)
     .then((user) => {
       if (user) {
         // Check token
         Token.findOne({
           userId: user._id,
-          token: req.params.token,
+          token: req.query.token,
         })
           .then((token) => {
             if (token) {
@@ -289,7 +293,10 @@ const resetPassword = (req, res) => {
                       token
                         .deleteOne()
                         .then(console.log("Deleted: " + token._id));
-                      res.redirect("igaie/login");
+
+                      const success = ["Senha criada com sucesso."];
+
+                      res.render("login", { success });
                     })
                     .catch((err) => console.log(err));
                 })
@@ -297,14 +304,18 @@ const resetPassword = (req, res) => {
             } else {
               console.log("Invalid link or expired.");
 
-              res.redirect("igaie/login");
+              const errors = ["Link inválido ou expirado."];
+
+              res.render("login", { errors });
             }
           })
           .catch((error) => console.log(error));
       } else {
         console.log("Invalid link or expired.");
 
-        res.redirect("igaie/login");
+        const errors = ["Link inválido ou expirado."];
+
+        res.render("login", { errors });
       }
     })
     .catch((error) => console.log(error));

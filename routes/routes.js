@@ -194,7 +194,7 @@ router.post(
 
 // Reset Password
 router.get("/resetPassword", requestResetPasswordView);
-router.get("/password-reset/:userId/:token", resetPasswordView);
+router.get("/password-reset", resetPasswordView);
 router.post(
   "/resetPassword",
   [
@@ -217,7 +217,7 @@ router.post(
   requestResetPassword
 );
 router.post(
-  "/password-reset/:userId/:token",
+  "/password-reset",
   [
     check("newPassword")
       .notEmpty()
@@ -240,8 +240,8 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render("resetPassword", {
-        userId: req.params.userId,
-        token: req.params.token,
+        userId: req.query.user,
+        token: req.query.token,
         errors: errors.array(),
       });
     } else {
