@@ -28,3 +28,4 @@ jobs:
       - run: npm install
       - run: npm run css-build
       - run: npm run css-minify
+      - run: pm2 restart ecosystem.config.js
