@@ -1,18 +1,6 @@
 // Requirements
 const express = require("express");
 const { check, validationResult } = require("express-validator");
-const client = require("prom-client");
-
-// Create a Registry which registers the metrics
-const register = new client.Registry();
-
-// Add a default label which is added to all metrics
-register.setDefaultLabels({
-  app: "igaie",
-});
-
-// Enable the collection of default metrics
-client.collectDefaultMetrics({ register });
 
 // Controller Imports
 const {
@@ -56,7 +44,7 @@ const router = express.Router();
 router.get("/", protectRoute, dashboardView);
 
 // Register user
-router.get("/register/:token", registerView);
+router.get("/register", registerView);
 router.post(
   "/register",
   [

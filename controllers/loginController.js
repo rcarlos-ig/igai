@@ -87,7 +87,7 @@ const createToken = async (req, res) => {
 
   let success = ["Token criado."];
 
-  const link = `<a href="/register/${token.token}" target="_blank" class="font-semibold underline">Registrar usuário</a>`;
+  const link = `<a href="/igaie/register?token=${token.token}" target="_blank" class="font-semibold underline">Registrar usuário</a>`;
   success.push(link);
 
   res.render("dashboard", {
@@ -104,7 +104,7 @@ const createToken = async (req, res) => {
 const registerView = (req, res) => {
   // Check token
   Token.findOne({
-    token: req.params.token,
+    token: req.query.token,
   })
     .then((token) => {
       if (token) {
