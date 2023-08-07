@@ -57,9 +57,9 @@ const loginCheck = (passport) => {
   });
 
   //; Deserialize user
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (error, user) => {
-      done(error, user);
+  passport.deserializeUser(async (id, done) => {
+    User.findById(id).then((user) => {
+      done(null, user);
     });
   });
 };
