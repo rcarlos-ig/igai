@@ -37,7 +37,6 @@ const loginCheck = (passport) => {
                 return done(null, user);
               } else {
                 console.log("Wrong password");
-                req.session.flash.error = [];
                 return done(null, false, {
                   message: "Usuário ou senha inválida.",
                 });
