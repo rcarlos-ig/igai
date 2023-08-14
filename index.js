@@ -10,6 +10,7 @@ const { loginCheck } = require("./controllers/auth/passport");
 const compression = require("compression");
 const bodyParser = require("body-parser");
 const Router = require("./routes/routes");
+const limit = require("express-limit").limit;
 
 // DotEnv config
 dotenv.config();
@@ -55,6 +56,7 @@ app.use(
     cookie: {
       maxAge: 10 * 60 * 1000, // Minutos * Segundos * Milisegundos
       sameSite: "strict",
+      secure: true,
     },
   })
 );
@@ -69,6 +71,15 @@ app.use(bodyParser.json());
 loginCheck(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Rate limiting for routes
+app.use(
+  limit({
+    max: 5,
+    period: 1000,
+    message: "Limite de acessos por segundo atingido.",
+  })
+);
 
 // Router
 app.use("/igaie/", Router);

@@ -23,7 +23,7 @@ const loginCheck = (passport) => {
           .then((user) => {
             if (!user) {
               console.log("Wrong email");
-              req.session.flash.error = [];
+              if (req.session.flash) req.session.flash.error = [];
               return done(null, false, {
                 message: "Usuário ou senha inválida.",
               });
@@ -37,6 +37,7 @@ const loginCheck = (passport) => {
                 return done(null, user);
               } else {
                 console.log("Wrong password");
+                if (req.session.flash) req.session.flash.error = [];
                 return done(null, false, {
                   message: "Usuário ou senha inválida.",
                 });

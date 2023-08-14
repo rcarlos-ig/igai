@@ -1,6 +1,6 @@
 {
   "name": "igai",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "main": "index.js",
   "scripts": {
     "test": "npx autocannon -c 50 -d 30 --workers 2 --renderStatusCodes --latency --debug --warmup [ -c 1 -d 2] https://localhost",
@@ -44,6 +44,7 @@
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-limit": "^1.0.0",
     "express-session": "^1.17.3",
     "express-validator": "^7.0.1",
     "mongoose": "^7.4.3",
