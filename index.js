@@ -41,9 +41,6 @@ app.use(compression());
 // Set the View Engine
 app.set("view engine", "ejs");
 
-// Use 'connect-flash' for flash messages
-app.use(flash());
-
 // BodyParsing
 app.use(express.urlencoded({ extended: false }));
 
@@ -56,11 +53,14 @@ app.use(
     resave: true,
     rolling: true,
     cookie: {
-      maxAge: 10 * 60 * 1000,
+      maxAge: 10 * 60 * 1000, // Minutos * Segundos * Milisegundos
       sameSite: "strict",
-    }, // Minutos * Segundos * Milisegundos
+    },
   })
 );
+
+// Use 'connect-flash' for flash messages
+app.use(flash());
 
 // Body parser
 app.use(bodyParser.json());

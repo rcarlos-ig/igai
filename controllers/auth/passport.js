@@ -23,30 +23,28 @@ const loginCheck = (passport) => {
           .then((user) => {
             if (!user) {
               console.log("Wrong email");
-              return done(
-                null,
-                false,
-                req.flash("error", "E-mail não cadastrado.")
-              );
+              req.session.flash.error = [];
+              return done(null, false, {
+                message: "Usuário ou senha inválida.",
+              });
             }
             //Match Password
-            bcrypt.compare(password, user.password, (error, isMatch) => {
-              if (error) throw error;
+            bcrypt.compare(password, user.password, (err, isMatch) => {
+              if (err) throw err;
               if (isMatch) {
                 user.accesses += 1;
                 user.save();
                 return done(null, user);
               } else {
                 console.log("Wrong password");
-                return done(
-                  null,
-                  false,
-                  req.flash("error", "Senha incorreta.")
-                );
+                req.session.flash.error = [];
+                return done(null, false, {
+                  message: "Usuário ou senha inválida.",
+                });
               }
             });
           })
-          .catch((error) => console.log(error));
+          .catch((err) => console.log(err));
       }
     )
   );
@@ -56,7 +54,7 @@ const loginCheck = (passport) => {
     done(null, user.id);
   });
 
-  //; Deserialize user
+  // Deserialize user
   passport.deserializeUser(async (id, done) => {
     User.findById(id).then((user) => {
       done(null, user);

@@ -182,9 +182,10 @@ const registerUser = (req, res) => {
 
 // GET request For Login page
 const loginView = (req, res) => {
-  let errors;
-  if (req.flash("error")) {
-    errors = [req.flash("error")];
+  let errors = [];
+  console.log(req.session.flash.error);
+  if (req.session.flash.error) {
+    errors.push(req.session.flash.error);
   }
   res.render("login", { errors });
 };
