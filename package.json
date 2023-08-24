@@ -47,7 +47,7 @@
     "express-session": "^1.17.3",
     "express-validator": "^7.0.1",
     "mongoose": "^7.4.2",
-    "nodemailer": "^6.7.5",
+    "nodemailer": "^6.9.4",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"
   },
