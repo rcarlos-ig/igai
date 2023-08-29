@@ -10,6 +10,7 @@ const { loginCheck } = require("./controllers/auth/passport");
 const compression = require("compression");
 const bodyParser = require("body-parser");
 const Router = require("./routes/routes");
+const helmet = require("helmet");
 
 // DotEnv config
 dotenv.config();
@@ -70,14 +71,35 @@ loginCheck(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Helmet for HEADERS
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'", "https://fonts.googleapis.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      scriptSrcAttr: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://fonts.googleapis.com",
+      ],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      connectSrc: ["'self'", "https://fonts.googleapis.com"],
+    },
+    reportOnly: false,
+  })
+);
+
 // Router
-app.use("/igaie/", Router);
+app.use(process.env.PREFIX, Router);
 
 // Set the static folder
 if (process.env.NODE_ENV === "production") {
-  app.use("/igaie", express.static(__dirname + "/public", { maxAge: "30d" }));
+  app.use(
+    process.env.PREFIX,
+    express.static(__dirname + "/public", { maxAge: "30d" })
+  );
 } else {
-  app.use("/igaie", express.static(__dirname + "/public"));
+  app.use(process.env.PREFIX, express.static(__dirname + "/public"));
 }
 
 // Server
@@ -88,6 +110,9 @@ const server = app.listen(port, () =>
 
 // Graceful Shutdown
 process.on("SIGTERM", () => {
+  mongoose.disconnect().then(() => {
+    console.log("Database connection closed.");
+  });
   console.log(`Server stopping ${new Date().toISOString()}`);
   server.close(() => process.exit());
 });

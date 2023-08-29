@@ -5,11 +5,11 @@ const protectRoute = (req, res, next) => {
   res.render("login");
 };
 
-const isAdmin = (req, res, next) => {
+const isSuperuser = (req, res, next) => {
   if (req.isAuthenticated()) {
-    let user = String(req.user._id);
+    let userRole = req.user.role;
 
-    if (user === "6217d8c12bfa7e0528d3174e") {
+    if (userRole === "superuser") {
       return next();
     }
 
@@ -22,5 +22,5 @@ const isAdmin = (req, res, next) => {
 
 module.exports = {
   protectRoute,
-  isAdmin,
+  isSuperuser,
 };

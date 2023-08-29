@@ -539,8 +539,6 @@ img {
 
 .menu-open-button,
 .menu-item {
-  width: 4rem;
-  height: 4rem;
   border-radius: 50%;
   background-color: rgb(var(--primary));
   cursor: pointer;
@@ -550,6 +548,8 @@ img {
 }
 
 .menu-open-button {
+  width: 4rem;
+  height: 4rem;
   display: flex;
   z-index: 2;
   animation: pulse 3s infinite;
@@ -559,6 +559,8 @@ img {
 .menu-item {
   bottom: 0;
   z-index: 1;
+  text-align: center;
+  padding-block: 0.7rem;
 }
 
 #menu-open:checked + .menu-open-button,
@@ -568,11 +570,6 @@ img {
 .menu-item:focus {
   background-color: rgb(var(--dark-primary));
   outline: 0;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
 }
 
 .icon svg {

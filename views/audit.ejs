@@ -9,15 +9,14 @@
   <h2 class="mb-8 sm:mb-12 xl:mb-16">Auditar unidades</h2>
   <%- include('partials/auditTable.ejs'); %>
   <div class="flex justify-center mt-8 sm:mt-12">
-    <button
-      type="button"
+    <a
+      href="<%= process.env.PREFIX %>/dashboard"
       class="button button-tertiary"
-      onclick="window.location='/igaie/dashboard'"
     >
       Retornar
-    </button>
+    </a>
   </div>
 </div>
 
-<%- include('partials/floatingMenu.ejs'); %> <%- include('partials/footer.ejs');
-%>
+<%- include('partials/floatingMenu.ejs'); %>
+<%- include('partials/footer.ejs'); %>

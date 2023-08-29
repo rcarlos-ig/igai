@@ -1,6 +1,7 @@
-function senhaOlho() {
-  const passwordInput = document.getElementById("password");
-  const eyeIcon = document.getElementById("senha-olho");
+function senhaOlho(input, icon) {
+  console.log(input, icon);
+  const passwordInput = document.getElementById(input);
+  const eyeIcon = document.getElementById(icon);
 
   if (passwordInput.type === "password") {
     passwordInput.type = "text";

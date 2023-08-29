@@ -12,7 +12,7 @@
 
 <script src="./js/tabulator.min.js" async></script>
 <script type="text/javascript">
-  const schools = fetch("/igaie/schools-data")
+  const schools = fetch("<%= process.env.PREFIX %>/schools-data")
     .then((response) => response.json())
     .then((schools) => {
       let tableData = [];
@@ -118,7 +118,7 @@
             field: "IGAIE",
             title: "IGAIE",
             formatter: "money",
-            formatterParams: { decimal: ",", precision: 1 },
+            formatterParams: { decimal: ",", precision: 2 },
             headerFilter: false,
             frozen: true,
           },

@@ -4,9 +4,9 @@
   aria-label="Tabela com os registros de utilização do sistema."
 ></div>
 
-<script src="./js/tabulator.min.js" async></script>
+<script src="./js/tabulator.min.js"></script>
 <script type="text/javascript">
-  const logs = fetch("/igaie/logs-data")
+  const logs = fetch("<%= process.env.PREFIX %>/logs-data")
     .then((response) => response.json())
     .then((logs) => {
       let tableData = [];

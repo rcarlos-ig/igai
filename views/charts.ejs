@@ -33,15 +33,17 @@
     </select>
   </div>
   <div class="flex justify-center gap-4 mt-8 sm:mt-12">
-    <button
-      type="button"
+    <a
+      href="<%= process.env.PREFIX %>/dashboard"
       class="button button-tertiary"
-      onclick="window.location='/igaie/dashboard'"
     >
       Retornar
-    </button>
+    </a>
   </div>
 </div>
 
-<% if (locals.data) { %> <%- include('partials/chartsScript.ejs') %> <% } %> <%-
-include('partials/floatingMenu.ejs'); %> <%- include('partials/footer.ejs'); %>
+<% if (locals.data) { %> 
+  <%- include('partials/chartsScript.ejs') %>
+<% } %>
+<%- include('partials/floatingMenu.ejs'); %>
+<%- include('partials/footer.ejs'); %>

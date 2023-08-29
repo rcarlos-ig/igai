@@ -21,32 +21,32 @@
   const buttonsData = [];
 
   const auditData = {
-    onclick: `onclick="window.location='/igaie/audit'"`,
+    href: `${prefix}/audit'"`,
     ariaLabel: "Auditar dados",
     icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg></span>`,
   };
   buttonsData.push(auditData);
 
   const createSchoolData = {
-    onclick: `onclick="window.location='/igaie/register-school'"`,
+    href: `${prefix}/register-school'"`,
     ariaLabel: "Cadastrar unidade",
     icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>`,
   };
-  if (role === "admin") buttonsData.push(createSchoolData);
+  if (role === "admin" || role === "superuser") buttonsData.push(createSchoolData);
 
   const chartsData = {
-    onclick: `onclick="window.location='/igaie/charts'"`,
+    href: `${prefix}/charts'"`,
     ariaLabel: "Gráficos",
     icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>`,
   };
   buttonsData.push(chartsData);
 
   const logData = {
-    onclick: `onclick="window.location='/igaie/log'"`,
+    href: `${prefix}/log'"`,
     ariaLabel: "Registro do sistema",
     icon: `<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></span>`,
   };
-  if (role === "admin") buttonsData.push(logData);
+  if (role === "admin" || role === "superuser") buttonsData.push(logData);
 
   const themeData = {
     id: "darkModeToggle",
@@ -66,15 +66,15 @@
   };
   buttonsData.push(logoutData);
 
-  if (role === "admin") {
+  if (role === "admin" || role === "superuser") {
     for (let count = 1; count <= buttonsData.length; count++) {
       const data = buttonsData[count - 1];
 
-      const button = `<button class="menu-item menu-item-${count} hint--left hint--info hint--medium hint--rounded hint--bounce" ${
-        data.onclick !== undefined ? data.onclick : ""
+      const button = `<a class="menu-item menu-item-${count} hint--left hint--info hint--medium hint--rounded hint--bounce" ${
+        data.href !== undefined ? "href='" + data.href : ""
       } aria-label="${data.ariaLabel}" ${
         data.id !== undefined ? "id='" + data.id + "'" : ""
-      }>${data.icon}</button>`;
+      }>${data.icon}</a>`;
 
       menu.innerHTML = menu.innerHTML + button;
     }
@@ -82,11 +82,11 @@
     for (let count = 3; count <= buttonsData.length + 2; count++) {
       const data = buttonsData[count - 3];
 
-      const button = `<button class="menu-item menu-item-${count} hint--left hint--info hint--medium hint--rounded hint--bounce" ${
-        data.onclick !== undefined ? data.onclick : ""
+      const button = `<a class="menu-item menu-item-${count} hint--left hint--info hint--medium hint--rounded hint--bounce" ${
+        data.href !== undefined ? "href='" + data.href : ""
       } aria-label="${data.ariaLabel}" ${
         data.id !== undefined ? "id='" + data.id + "'" : ""
-      }>${data.icon}</button>`;
+      }>${data.icon}</a>`;
 
       menu.innerHTML = menu.innerHTML + button;
     }

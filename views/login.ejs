@@ -4,7 +4,7 @@
   <div class="w-full">
     <h2>Entrar</h2>
     <div>
-      <form method="post" action="/igaie/login">
+      <form method="post" action="<%= process.env.PREFIX %>/login">
         <div class="form-line">
           <label for="email">E-mail</label>
           <div>
@@ -33,9 +33,9 @@
             <button
               type="button"
               role="button"
-              id="senha-olho"
+              id="senha-olho-login"
               class="senha-olho"
-              onclick="senhaOlho()"
+              onclick="senhaOlho('password', 'senha-olho-login')"
             ></button>
             <span
               class="validation-error"
@@ -45,9 +45,9 @@
               Senha precisa ter mais de 4 caracteres.
             </span>
             <div class="flex justify-center text-sm mt-1">
-              <a class="link" href="/igaie/resetPassword"
-                >Esqueci minha senha</a
-              >
+              <a class="link" href="<%= process.env.PREFIX %>/resetPassword">
+                Esqueci minha senha
+              </a>
             </div>
           </div>
         </div>

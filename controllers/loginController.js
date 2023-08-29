@@ -9,10 +9,6 @@ const ejs = require("ejs");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 const path = require("path");
-const {
-  getSchools,
-  getActiveSchools,
-} = require("../controllers/schoolController");
 
 // Logout
 const logout = (req, res) => {
@@ -26,7 +22,8 @@ const logout = (req, res) => {
         req.logout(function (err) {
           if (err) return next(err);
           req.session.destroy();
-          res.redirect("/igaie/login");
+          console.log("User logged out.");
+          res.redirect(process.env.PREFIX + "/login");
         });
       })
       .catch((error) => console.log(error));
@@ -34,70 +31,28 @@ const logout = (req, res) => {
     req.logout(function (err) {
       if (err) return next(err);
       req.session.destroy();
-      res.redirect("/igaie/login");
+      console.log("User logged out.");
+      res.redirect(process.env.PREFIX + "/login");
     });
   }
 };
 
 // Create Register Token
-const createToken = async (req, res) => {
-  const token = await new Token({
-    userId: "6217d8c12bfa7e0528d3174e",
+const createToken = async (req, res, next) => {
+  await new Token({
+    userId: req.user._id,
     token: crypto.randomBytes(32).toString("hex"),
-  }).save();
+  })
+    .save()
+    .then((token) => {
+      console.log("token created");
+      let success = ["Token criado."];
+      const link = `<a href="${process.env.PREFIX}/register?token=${token.token}" target="_blank" class="font-semibold underline">Registrar usuário</a>`;
+      success.push(link);
 
-  const schools = await getSchools();
-  const activeSchools = await getActiveSchools();
-
-  let chartLabels = [
-    "Não Avaliado",
-    "Ótimo",
-    "Bom",
-    "Regular",
-    "Ruim",
-    "Péssimo",
-  ];
-
-  let chartData = [0, 0, 0, 0, 0, 0];
-
-  activeSchools.forEach((school) => {
-    switch (school.avaliacao) {
-      case chartLabels[1]:
-        chartData[1] += 1;
-        break;
-      case chartLabels[2]:
-        chartData[2] += 1;
-        break;
-      case chartLabels[3]:
-        chartData[3] += 1;
-        break;
-      case chartLabels[4]:
-        chartData[4] += 1;
-        break;
-      case chartLabels[5]:
-        chartData[5] += 1;
-        break;
-      default:
-        chartData[0] += 1;
-        break;
-    }
-  });
-
-  console.log("token created");
-
-  let success = ["Token criado."];
-
-  const link = `<a href="/igaie/register?token=${token.token}" target="_blank" class="font-semibold underline">Registrar usuário</a>`;
-  success.push(link);
-
-  res.render("dashboard", {
-    user: req.user,
-    schools,
-    activeSchools,
-    chartData,
-    chartLabels,
-    success,
-  });
+      res.locals.success = success;
+      next();
+    });
 };
 
 // GET request for Register page
@@ -125,8 +80,8 @@ const registerView = (req, res) => {
 };
 
 // POST Request for Register page
-const registerUser = (req, res) => {
-  const { name, email, password, confirm, token } = req.body;
+const registerUser = (req, res, next) => {
+  const { name, email, password, token } = req.body;
 
   // Check token
   Token.findOne({
@@ -138,14 +93,12 @@ const registerUser = (req, res) => {
       User.findOne({ email: email })
         .then((user) => {
           if (user) {
-            res.render("register", {
-              name,
-              email,
-              password,
-              confirm,
-              errors: ["E-mail já cadastrado."],
-              token: tokenFound.token,
-            });
+            res.locals.name = name;
+            res.locals.email = email;
+            res.locals.errors = ["E-mail já cadastrado."];
+            res.locals.token = tokenFound.token;
+
+            res.render("register");
           } else {
             // New user
             const newUser = new User({
@@ -167,8 +120,8 @@ const registerUser = (req, res) => {
                       .deleteOne()
                       .then(console.log("Deleted: " + tokenFound._id));
 
-                    const success = ["Cadastro realizado."];
-                    res.render("login", { success });
+                    res.locals.success = ["Cadastro realizado."];
+                    next();
                   })
                   .catch((err) => console.log(err));
               })
@@ -182,30 +135,27 @@ const registerUser = (req, res) => {
 
 // GET request For Login page
 const loginView = (req, res) => {
-  let errors;
-  if (req.flash("error")) {
-    errors = [req.flash("error")];
-  }
-  res.render("login", { errors });
+  if (req.flash("info").length > 0) res.locals.errors = req.flash("error");
+  res.render("login");
 };
 
 //POST Request for Login page
 const loginUser = (req, res) => {
   // Authenticate user
   passport.authenticate("local", {
-    successRedirect: "/igaie/dashboard",
-    failureRedirect: "/igaie/login",
+    successRedirect: process.env.PREFIX + "/dashboard",
+    failureRedirect: process.env.PREFIX + "/login",
     failureFlash: true,
   })(req, res);
 };
 
 // GET Request for new password page
 const requestResetPasswordView = (_req, res) => {
-  res.render("requestResetPassword", {});
+  res.render("requestResetPassword");
 };
 
 // POST Request for new password page
-const requestResetPassword = async (req, res) => {
+const requestResetPassword = async (req, res, next) => {
   const { email } = req.body;
 
   // Check user
@@ -222,38 +172,37 @@ const requestResetPassword = async (req, res) => {
             }
 
             // Create new token
-            token = await new Token({
+            await new Token({
               userId: user._id,
               token: crypto.randomBytes(32).toString("hex"),
-            }).save();
+            })
+              .save()
+              .then(async (token) => {
+                console.log("token created");
+                // Redefine password page link
+                const link = `${process.env.BASE_URL}${process.env.PREFIX}/password-reset?user=${user._id}&token=${token.token}`;
 
-            console.log("token created");
+                // Redefine password mail body
+                const html = await ejs.renderFile(
+                  path.join(__dirname, "../", "views", "resetPasswordMail.ejs"),
+                  { name: user.name, link }
+                );
 
-            // Redefine password page link
-            const link = `${process.env.BASE_URL}/password-reset?user=${user._id}&token=${token.token}`;
+                // Send the email
+                await sendEmail(user.email, html).then((result) => {
+                  console.log(result.response);
+                });
 
-            // Redefine password mail body
-            const html = await ejs.renderFile(
-              path.join(__dirname, "../", "views", "resetPasswordMail.ejs"),
-              { name: user.name, link: link }
-            );
-
-            // Send the email
-            const result = await sendEmail(user.email, html);
-
-            console.log(result);
-
-            const success = ["E-mail enviado com sucesso."];
-
-            res.render("login", { success });
+                res.locals.success = ["E-mail enviado com sucesso."];
+                next();
+              });
           })
           .catch((error) => console.log(error));
       } else {
         console.log("User not found.");
 
-        const errors = ["E-mail não cadastrado."];
-
-        res.render("requestResetPassword", { errors });
+        res.locals.errors = ["E-mail não cadastrado."];
+        res.render("requestResetPassword");
       }
     })
     .catch((error) => console.log(error));
@@ -268,7 +217,7 @@ const resetPasswordView = (req, res) => {
 };
 
 // POST Request for resetting the password
-const resetPassword = (req, res) => {
+const resetPassword = (req, res, next) => {
   const { newPassword } = req.body;
 
   // Check user
@@ -294,28 +243,23 @@ const resetPassword = (req, res) => {
                         .deleteOne()
                         .then(console.log("Deleted: " + token._id));
 
-                      const success = ["Senha criada com sucesso."];
-
-                      res.render("login", { success });
+                      res.locals.success = ["Senha criada com sucesso."];
+                      next();
                     })
                     .catch((err) => console.log(err));
                 })
               );
             } else {
               console.log("Invalid link or expired.");
-
-              const errors = ["Link inválido ou expirado."];
-
-              res.render("login", { errors });
+              res.locals.errors = ["Link inválido ou expirado."];
+              next();
             }
           })
           .catch((error) => console.log(error));
       } else {
         console.log("Invalid link or expired.");
-
-        const errors = ["Link inválido ou expirado."];
-
-        res.render("login", { errors });
+        res.locals.errors = ["Link inválido ou expirado."];
+        next();
       }
     })
     .catch((error) => console.log(error));
@@ -330,8 +274,10 @@ const setUserTheme = (req, _res) => {
       if (user) {
         user.theme = theme;
         user.save().catch((error) => console.log(error));
+        return true;
       } else {
         console.log("Invalid user ID.");
+        return false;
       }
     })
     .catch((error) => console.log(error));

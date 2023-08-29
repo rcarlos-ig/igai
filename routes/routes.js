@@ -34,7 +34,7 @@ const {
 } = require("../controllers/logController");
 const { dashboardView } = require("../controllers/dashboardController");
 const { chartsDefaultView } = require("../controllers/chartsController");
-const { protectRoute, isAdmin } = require("../controllers/auth/protect");
+const { protectRoute, isSuperuser } = require("../controllers/auth/protect");
 
 // Set the Router
 const router = express.Router();
@@ -84,7 +84,8 @@ router.post(
       next();
     }
   },
-  registerUser
+  registerUser,
+  loginView
 );
 
 // Login
@@ -171,13 +172,14 @@ router.get("/school", protectRoute, schoolView);
 router.post(
   "/school",
   protectRoute,
+  schoolPost,
   function (req, _res, next) {
     req.action = "update";
     req.msg = "Indicadores da unidade atualizados.";
     next();
   },
   logging,
-  schoolPost
+  dashboardView
 );
 
 // Reset Password
@@ -202,7 +204,8 @@ router.post(
       next();
     }
   },
-  requestResetPassword
+  requestResetPassword,
+  loginView
 );
 router.post(
   "/password-reset",
@@ -236,7 +239,8 @@ router.post(
       next();
     }
   },
-  resetPassword
+  resetPassword,
+  loginView
 );
 
 // Edit School
@@ -283,7 +287,7 @@ router.get("/audit", protectRoute, auditSchoolView);
 router.post("/audit", protectRoute, auditSchool);
 
 // Create Register Token
-router.get("/create-token", isAdmin, createToken);
+router.get("/create-token", isSuperuser, createToken, dashboardView);
 
 // Log
 router.get("/log", protectRoute, logView);
@@ -299,11 +303,5 @@ router.get("/schools-data", protectRoute, getSchoolsData);
 
 // Logs data for tabulator
 router.get("/logs-data", protectRoute, getLogsData);
-
-// Return all metrics the Prometheus exposition format
-router.get("/metrics", async (_req, res) => {
-  res.setHeader("Content-Type", register.contentType);
-  res.end(await register.metrics());
-});
 
 module.exports = router;

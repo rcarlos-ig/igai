@@ -89,7 +89,7 @@ const registerSchoolView = (req, res) => {
 // POST Request that handles School register
 const registerSchool = (req, res) => {
   const { codigo, nome, bairro, ocupacao } = req.body;
-  let ativa = req.body.ativa === "on" ? true : false;
+  const ativa = req.body.ativa === "on";
 
   // Check school
   School.findOne({ codigo: codigo })
@@ -189,7 +189,7 @@ const schoolView = async (req, res) => {
 };
 
 // POST Request for the School page
-const schoolPost = (req, res) => {
+const schoolPost = (req, res, next) => {
   // Update School
   let data = req.body;
 
@@ -221,7 +221,8 @@ const schoolPost = (req, res) => {
       newHistoricData
         .save() // Save the new HistoricData on the database
         .then(function () {
-          res.redirect("igaie/dashboard");
+          res.locals.success = ["Dados atualizados com sucesso."];
+          next();
         })
         .catch((err) => console.log(err));
     })
@@ -246,8 +247,8 @@ const editSchoolView = (req, res) => {
 const editSchool = async (req, res) => {
   const data = req.body;
 
-  data.ativa = data.ativa === "on" ? true : false;
-  data["cisterna.possui"] = data["cisterna.possui"] === "on" ? true : false;
+  data.ativa = data.ativa === "on";
+  data["cisterna.possui"] = data["cisterna.possui"] === "on";
   data["cisterna.capacidade"] =
     data["cisterna.capacidade"] === "" ? 0 : data["cisterna.capacidade"];
   data["reservatorio.capacidade"] =

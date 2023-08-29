@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <% if (locals.user) { %>
-<html
-  lang="pt-BR"
-  class="no-js <%= user.theme === 'dark' ? 'dark' : '' %>"
-  id="html"
->
-  <% } else { %>
+  <html
+    lang="pt-BR"
+    class="no-js <%= user.theme === 'dark' ? 'dark' : '' %>"
+    id="html"
+  >
+<% } else { %>
   <html lang="pt-BR" class="no-js" id="html">
-    <% }; %>
+<% }; %>
     <head>
       <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,27 +22,27 @@
 
       <!-- Theming -->
       <% if (locals.user) { %>
-      <script>
-        const userTheme = "<%= user.theme %>";
-        document.cookie = `theme=${userTheme};SameSite=Strict`;
-      </script>
+        <script>
+          const userTheme = "<%= user.theme %>";
+          document.cookie = `theme=${userTheme};SameSite=Strict`;
+        </script>
       <% } else { %>
-      <script>
-        const html = document.getElementById("html");
-        const cookies = document.cookie;
-        const cookiesArray = cookies.split(";");
-        for (let i = 0; i < cookiesArray.length; i++) {
-          const cookie = cookiesArray[i];
-          if (cookie.indexOf("theme") >= 0) {
-            const theme = cookie.substr(6);
-            if (theme === "dark") {
-              html.classList.add("dark");
-            } else {
-              html.classList.remove("dark");
+        <script>
+          const html = document.getElementById("html");
+          const cookies = document.cookie;
+          const cookiesArray = cookies.split(";");
+          for (let i = 0; i < cookiesArray.length; i++) {
+            const cookie = cookiesArray[i];
+            if (cookie.indexOf("theme") >= 0) {
+              const theme = cookie.substr(6);
+              if (theme === "dark") {
+                html.classList.add("dark");
+              } else {
+                html.classList.remove("dark");
+              }
             }
           }
-        }
-      </script>
+        </script>
       <% } %>
 
       <!-- Google Fonts -->
@@ -55,9 +55,9 @@
 
       <!-- CSS -->
       <% if (process.env.NODE_ENV === "production") { %>
-      <link rel="stylesheet" href="./css/styles.min.css" />
+        <link rel="stylesheet" href="./css/styles.min.css" />
       <% } else { %>
-      <link rel="stylesheet" href="./css/styles.css" />
+        <link rel="stylesheet" href="./css/styles.css" />
       <% } %>
       <link
         rel="preload"
@@ -120,20 +120,15 @@
       <link rel="manifest" href="./site.webmanifest" />
 
       <meta name="theme-color" content="#f9fafb" />
-
-      <% if (process.env.NODE_ENV === "production") { %>
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-
-      <% } %>
     </head>
 
     <body>
+      <script>
+        const prefix = "<%= process.env.PREFIX %>";
+      </script>
       <%- include('loader.ejs'); %>
       <header>
         <h1>SEJIN - IGAIE</h1>
         <small>Indicador Gerencial de Avaliação do Imóvel Educacional</small>
       </header>
-      <main></main>
-    </body>
-  </html>
-</html>
+      <main>

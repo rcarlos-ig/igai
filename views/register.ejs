@@ -4,22 +4,11 @@
   <div class="w-full">
     <h2>Criar usuário</h2>
     <div>
-      <form method="post" action="/igaie/register">
+      <form method="post" action="<%= process.env.PREFIX %>/register">
         <input type="hidden" name="token" value="<%= token %>" />
         <div class="form-line">
           <label for="name">Nome<span class="required">*</span></label>
           <div>
-            <% if (locals.name) { %>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Digite seu nome"
-              minlength="3"
-              value="<%= name %>"
-              autofocus
-            />
-            <% } else { %>
             <input
               type="text"
               name="name"
@@ -27,8 +16,10 @@
               placeholder="Digite seu nome"
               minlength="3"
               autofocus
-            />
-            <% } %>
+              <% if (locals.name) { %> 
+                value="<%= name %>"
+              <% } %> 
+             />
             <span
               class="hidden validation-error"
               id="nomeError"
@@ -40,23 +31,16 @@
         <div class="form-line">
           <label for="email">E-mail<span class="required">*</span></label>
           <div>
-            <% if (locals.email) { %>
             <input
               type="email"
               name="email"
               id="email"
               placeholder="Digite seu e-mail"
-              value="<%= email %>"
               autofocus
+              <% if (locals.email) { %>
+                value="<%= email %>"
+              <% } %>
             />
-            <% } else { %>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Digite seu e-mail"
-            />
-            <% } %>
             <span class="validation-error" id="emailError" aria-live="polite">
               Digite um e-mail válido.
             </span>
@@ -65,16 +49,6 @@
         <div class="form-line">
           <label for="password">Senha<span class="required">*</span></label>
           <div>
-            <% if (locals.password) { %>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Digite sua senha"
-              minlength="4"
-              value="<%= password %>"
-            />
-            <% } else { %>
             <input
               type="password"
               name="password"
@@ -82,7 +56,6 @@
               placeholder="Digite sua senha"
               minlength="4"
             />
-            <% } %>
             <span
               class="validation-error"
               id="passwordError"
@@ -97,16 +70,6 @@
             >Confirme a senha<span class="required">*</span></label
           >
           <div>
-            <% if (locals.confirm) { %>
-            <input
-              type="password"
-              name="confirm"
-              id="confirm"
-              placeholder="Confirme sua senha"
-              minlength="4"
-              value="<%= confirm %>"
-            />
-            <% } else { %>
             <input
               type="password"
               name="confirm"
@@ -114,20 +77,18 @@
               placeholder="Confirme sua senha"
               minlength="4"
             />
-            <% } %>
             <span class="validation-error" id="confirmError" aria-live="polite">
               Confirmação precisa ter 3 caracteres ou mais.
             </span>
           </div>
         </div>
         <div class="flex justify-end gap-4 mt-6">
-          <button
-            type="button"
+          <a
+            href="<%= process.env.PREFIX %>/login"
             class="button button-tertiary"
-            onclick="window.location='/igaie/login'"
           >
             Início
-          </button>
+          </a>
           <button type="submit" class="button button-primary">
             Criar usuário
           </button>

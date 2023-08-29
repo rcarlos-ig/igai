@@ -3,7 +3,7 @@
 <div class="card min-w-[336px] w-5/6 max-w-lg sm:w-3/4 lg:w-1/2">
   <div class="w-full">
     <h2>Editar a unidade</h2>
-    <form method="post" action="/igaie/edit-school" id="editSchoolForm">
+    <form method="post" action="<%= process.env.PREFIX %>/edit-school" id="editSchoolForm">
       <div class="form-line">
         <label for="codigo">Código<span class="required">*</span></label>
         <div>
@@ -140,13 +140,12 @@
         </div>
       </div>
       <div class="flex justify-end gap-4 mt-8">
-        <button
-          type="button"
+        <a
+          href="<%= `${process.env.PREFIX}/school?unidade=${school.codigo}` %>"
           class="button button-tertiary"
-          onclick="window.location='<%= `/igaie/school?unidade=${school.codigo}` %>'"
         >
           Retornar
-        </button>
+        </a>
         <button
           type="submit"
           class="button button-primary"
@@ -168,5 +167,5 @@
   });
 </script>
 
-<%- include('partials/floatingMenu.ejs'); %> <%- include('partials/footer.ejs');
-%>
+<%- include('partials/floatingMenu.ejs'); %>
+<%- include('partials/footer.ejs'); %>

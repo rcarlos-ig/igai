@@ -75,6 +75,7 @@ web_modules/
 
 # dotenv environment variables file
 .env
+.env.development
 .env.test
 .env.production
 .env copy
@@ -112,6 +113,8 @@ dist
 # TernJS port file
 .tern-port
 
+# VSCode
+.vscode/
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
@@ -124,3 +127,6 @@ dist
 
 # SSL certificates and keys
 *.pem
+
+# Prettierignore
+.prettierignore

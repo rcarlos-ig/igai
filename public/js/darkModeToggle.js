@@ -1,8 +1,5 @@
 // Dark mode toggle
-if (html === undefined) {
-  const html = document.getElementById("html");
-}
-
+const html = html || document.documentElement;
 const darkModeToggleButton = document.querySelector("#darkModeToggle");
 const darkIcon = document.getElementById("dark");
 const lightIcon = document.getElementById("light");
@@ -41,7 +38,7 @@ if (darkModeToggleButton !== null) {
 }
 
 function setUserTheme(theme) {
-  fetch("/igaie/user-theme", {
+  fetch(prefix + "/user-theme", {
     method: "post",
     headers: {
       Accept: "application/json",

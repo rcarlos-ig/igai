@@ -22,12 +22,11 @@ const loginCheck = (passport) => {
         User.findOne({ email: email })
           .then((user) => {
             if (!user) {
-              console.log("Wrong email");
-              return done(
-                null,
-                false,
-                req.flash("error", "E-mail não cadastrado.")
-              );
+              console.log("Wrong email or password.");
+              return done(null, false, [
+                req.flash("error", "E-mail ou senha incorretos."),
+                req.flash("info", "Error found."),
+              ]);
             }
             //Match Password
             bcrypt.compare(password, user.password, (error, isMatch) => {
@@ -37,12 +36,11 @@ const loginCheck = (passport) => {
                 user.save();
                 return done(null, user);
               } else {
-                console.log("Wrong password");
-                return done(
-                  null,
-                  false,
-                  req.flash("error", "Senha incorreta.")
-                );
+                console.log("Wrong email or password.");
+                return done(null, false, [
+                  req.flash("error", "E-mail ou senha incorretos."),
+                  req.flash("info", "Error found."),
+                ]);
               }
             });
           })

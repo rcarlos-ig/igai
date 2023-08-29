@@ -3,57 +3,38 @@
 <div class="card min-w-[336px] w-5/6 max-w-md sm:w-3/4">
   <div class="w-full">
     <h2>Cadastrar unidade</h2>
-    <form method="post" action="igaie/register-school">
+    <form method="post" action="<%= process.env.PREFIX %>/register-school">
       <div class="form-line">
         <label for="codigo">Código<span class="required">*</span></label>
         <div>
+          <input
+          type="number"
+          name="codigo"
+          id="codigo"
+          placeholder="Código da escola"
+          min="1"
           <% if (locals.codigo) { %>
-          <input
-            type="number"
-            name="codigo"
-            id="codigo"
-            placeholder="Código da escola"
-            min="1"
             value="<%= codigo %>"
-            required
-            autofocus
-          />
-          <% } else { %>
-          <input
-            type="number"
-            name="codigo"
-            id="codigo"
-            placeholder="Código da escola"
-            min="1"
-            required
-            autofocus
-          />
           <% } %>
+          required
+          autofocus
+          />
         </div>
       </div>
       <div class="form-line">
         <label for="nome">Nome<span class="required">*</span></label>
         <div>
-          <% if (locals.nome) { %>
           <input
             type="text"
             name="nome"
             id="nome"
             placeholder="Nome da escola"
             minlength="3"
-            value="<%= nome %>"
+            <% if (locals.nome) { %>
+              value="<%= nome %>"
+            <% } %>
             required
           />
-          <% } else { %>
-          <input
-            type="text"
-            name="nome"
-            id="nome"
-            placeholder="Nome da escola"
-            minlength="3"
-            required
-          />
-          <% } %>
           <span
             class="hidden validation-error"
             id="nomeError"
@@ -65,26 +46,17 @@
       <div class="form-line">
         <label for="bairro">Bairro<span class="required">*</span></label>
         <div>
-          <% if (locals.bairro) { %>
           <input
             type="text"
             name="bairro"
             id="bairro"
             placeholder="Bairro da escola"
             minlength="3"
-            value="<%= bairro %>"
+            <% if (locals.bairro) { %>
+              value="<%= bairro %>"
+            <% } %>
             required
           />
-          <% } else { %>
-          <input
-            type="text"
-            name="bairro"
-            id="bairro"
-            placeholder="Bairro da escola"
-            minlength="3"
-            required
-          />
-          <% } %>
           <span
             class="hidden validation-error"
             id="bairroError"
@@ -96,26 +68,17 @@
       <div class="form-line">
         <label for="ocupacao">Ocupação<span class="required">*</span></label>
         <div>
-          <% if (locals.ocupacao) { %>
           <input
             type="text"
             name="ocupacao"
             id="ocupacao"
             placeholder="Tipo de ocupação da escola"
             minlength="3"
-            value="<%= ocupacao %>"
+            <% if (locals.ocupacao) { %>
+              value="<%= ocupacao %>"
+            <% } %>
             required
           />
-          <% } else { %>
-          <input
-            type="text"
-            name="ocupacao"
-            id="ocupacao"
-            placeholder="Tipo de ocupação da escola"
-            minlength="3"
-            required
-          />
-          <% } %>
           <span
             class="hidden validation-error"
             id="ocupacaoError"
@@ -141,13 +104,12 @@
         </div>
       </div>
       <div class="flex justify-end gap-4 mt-6">
-        <button
-          type="button"
+        <a
+          href="<%= process.env.PREFIX %>/dashboard"
           class="button button-tertiary"
-          onClick="window.location = '/igaie/dashboard'"
         >
           Retornar
-        </button>
+        </a>
         <button type="submit" class="button button-primary">Cadastrar</button>
       </div>
     </form>
@@ -163,5 +125,5 @@
   });
 </script>
 
-<%- include('partials/floatingMenu.ejs'); %> <%- include('partials/footer.ejs');
-%>
+<%- include('partials/floatingMenu.ejs'); %>
+<%- include('partials/footer.ejs'); %>
