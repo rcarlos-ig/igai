@@ -1,6 +1,6 @@
 {
   "name": "igai",
-  "version": "2.4.0",
+  "version": "2.2.1",
   "main": "index.js",
   "scripts": {
     "test": "npx autocannon -c 50 -d 30 --workers 2 --renderStatusCodes --latency --debug --warmup [ -c 1 -d 2] https://localhost",
@@ -10,7 +10,7 @@
     "css-build": "postcss ./tailwind.css -o public/css/styles.css && echo 'build complete'",
     "css-minify": "cleancss public/css/styles.css -o public/css/styles.min.css && echo 'minify complete'",
     "css-watch": "onchange \"./tailwind.css\" \"./views/**/*.ejs\" \"./public/**/*.js\" -- run-s css-build css-minify",
-    "commit": "git add . && git commit -a && git tag -a %npm_package_version% && git push --follow-tags",
+    "commit": "git add . && git commit -a && git tag -a $npm_package_version && git push --follow-tags",
     "patch": "npm --no-git-tag-version version patch && npm run commit",
     "minor": "npm --no-git-tag-version version minor && npm run commit",
     "major": "npm --no-git-tag-version version major && npm run commit"
